@@ -21,6 +21,9 @@ public class Main {
 
         StringType st = new StringType();
         st.useString();
+
+        AutoTranslate at = new AutoTranslate();
+        at.useAuto();
     }
 }
 
