@@ -24,6 +24,10 @@ public class Main {
 
         AutoTranslate at = new AutoTranslate();
         at.useAuto();
+
+        // 1/16일 오전수업 예제 2-9, 2-10호출
+        TranslateType tt = new TranslateType();
+        tt.useTranslate();
     }
 }
 
