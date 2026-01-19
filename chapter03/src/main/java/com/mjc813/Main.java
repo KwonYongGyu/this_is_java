@@ -23,6 +23,10 @@ public class Main {
         c3.BitShiftExample1();
         // p.103
         c3.BitShiftExample2();
+        //p.105
+        c3.AssignmentOperatorExample();
+        // p.106
+        c3.ConditionalOperationExample();
         //p.109~p110
         c3.chapter03Test();
 

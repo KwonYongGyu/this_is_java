@@ -209,8 +209,47 @@ public class chapter03 {
         System.out.println("result4: " + result4);
     }
     public void BitShiftExample2(){
-        int value = 772;
+        int value = 772;    //[0000000] [00000000] [00000011] [0000100]
 
+        // 우측으로 3byte(24bit) 이동하고 끝 1바이트만 읽음: [00000000]
+        byte byte1 = (byte) (value >>> 24);
+        int int1 = byte1 & 255;
+        System.out.println("첫 번째 바이트 부호 없는 값: " + int1);
+
+        // 우측으로 2byte(16bit) 이동하고 끝 1바이트만 읽음 :[00000000]
+        byte byte2 = (byte)     (value >>> 16);
+        int int2 = Byte.toUnsignedInt((byte2));
+        System.out.println("두 번째 바이트 부호 없는 값: " + int2);
+
+        // 우측으로 1byte(8bit) 이동하고 끝 1바이트만 읽음: [00000011]
+        byte byte3=(byte)       (value >>> 8);
+        int int3 = byte3 & 255;
+        System.out.println("세 번째 바이트 부호 없는 값: " + int3);
+
+        // 끝 1바이트만 읽음: [00000100]
+        byte byte4 = (byte) value;
+        int int4 = Byte.toUnsignedInt(byte4);
+        System.out.println("네 번째 바이트 부호 없는 값: " + int4);
+    }
+
+    public void AssignmentOperatorExample(){
+        int result = 0;
+        result +=10;
+        System.out.println("result: " + result);
+        result -=5;
+        System.out.println("result: " + result);
+        result *=3;
+        System.out.println("result: " + result);
+        result /=5;
+        System.out.println("result: " + result);
+        result %= 3;
+        System.out.println("result: " + result);
+    }
+
+    public void ConditionalOperationExample(){
+        int score =85;
+        char grade = (score > 90) ? 'A' : ( (score >80) ? 'B' : 'C' );
+        System.out.println(score + "점은" + grade + "등급입니다.");
     }
     public void chapter03Test(){
         // 문제 1
@@ -253,7 +292,15 @@ public class chapter03 {
         System.out.println( (x1>7) && (y1<=5)   );
         System.out.println( (x1%3 == 2) || (y1%2 != 1)  );
         // 문제 7
-
+        double x2 = 5.0;
+        double y2 = 0.0;
+        double z2 = 5 % y2;
+        if(Double.isNaN(z2)){
+            System.out.println("0.0으로 나눌 수 없습니다.");
+        } else{
+            double result1 = z + 10;
+            System.out.println("결과: " + result1);
+        }
 
     }
 
