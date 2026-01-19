@@ -294,6 +294,7 @@ public class chapter03 {
         // 문제 7
         double x2 = 5.0;
         double y2 = 0.0;
+
         double z2 = 5 % y2;
         if(Double.isNaN(z2)){
             System.out.println("0.0으로 나눌 수 없습니다.");
