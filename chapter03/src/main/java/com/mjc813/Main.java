@@ -10,6 +10,21 @@ public class Main {
         c3.Third02();
         c3.Third03();
         c3.Third04();
+        System.out.println("2x + 8 = 0 의 해, x 는 " + c3.equationFirst(2, 8));
+        System.out.println("5x - 30 = 0 의 해, x 는 " + c3.equationFirst(5, -30));
+        System.out.println("7x + 49 = 0 의 해, x 는 " + c3.equationFirst(7, 49));
+        // p.92
+        c3.CompareOperatorExample();
+        // p.94
+        c3.logicalOperatorExample();
+        // p.99
+        c3.BitLogicExample();
+        // p.101 ~ 102
+        c3.BitShiftExample1();
+        // p.103
+        c3.BitShiftExample2();
+        //p.109~p110
+        c3.chapter03Test();
 
     }
 }
