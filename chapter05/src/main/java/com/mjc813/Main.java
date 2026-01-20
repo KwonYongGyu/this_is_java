@@ -28,5 +28,7 @@ public class Main {
         ct05.ArrayCreateByValueListExample2();
         ct05.ArrayCreateByNewExample();
         ct05.ArrayLengthExample();
+        ct05.MultidimensionalArrayByValue();
+        ct05.MultidimensionalArrayByNewExample();
     }
 }
