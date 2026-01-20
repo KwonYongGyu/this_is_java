@@ -23,5 +23,10 @@ public class Main {
         ct05.ReplaceExample();
         ct05.SubStringExample();
         ct05.IndexOfContainsExample();
+        ct05.SplitExample();
+        ct05.ArrayCreateByValueListExample1();
+        ct05.ArrayCreateByValueListExample2();
+        ct05.ArrayCreateByNewExample();
+        ct05.ArrayLengthExample();
     }
 }
