@@ -5,6 +5,9 @@ public void main(String[]args) {
     ct.number02();
     ct.number03();
     ct.number04();
+    ct.number05();
+    ct.number06();
+    ct.number07();
     ct.checknumber02();
     ct.checknumber03();
     ct.checknumber04();
