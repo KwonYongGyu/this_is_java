@@ -570,12 +570,12 @@ public class Chapter05 {
         //		strArray 배열 원소 25개를 출력해보자
         String[] strArray = new String[dArray.length];
         for (i = 0; i < strArray.length; i++) {
-            strArray[i] = String.valueOf(dArray[i]) + String.valueOf(nArray[i]);
+            strArray[i] = dArray[i] + " => "+ nArray[i];
         }
         System.out.println("strArray 배열 원소: ");
         for (i = 0; i < strArray.length; i++) {
 
-            System.out.printf(" " + strArray[i] + "\t" + strArray[i] + "\n");
+            System.out.printf(" " + strArray[i] +"\n");
 
         }
     }
@@ -585,7 +585,16 @@ public class Chapter05 {
     //		2차원 배열 int[][] nArray = new int[number][number]; 배열을 생성한다.
     //		for 문을 이용하여서 원소에는 출력과 같이 되도록 숫자를 각 원소에 대입한다.
     public void practice01_6(){
+        int number = 0;
+        int[][] nArray = new int[number][number];
+        for(int i = 0; i< nArray.length; i++){
+            for(int k=0; k<nArray[i].length; k++){
+                nArray[i][k] = i + k + 1;   // 1부터 시작
 
+            }
+            System.out.println();
+        }
+        System.out.println("--------------------------");
 
     }
 }
