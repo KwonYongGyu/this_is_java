@@ -383,7 +383,7 @@ public class Chapter05 {
         englishscores[1] = new int[3];
         // 배열 항목 초기값 출력
         for (int i = 0; i < englishscores.length; i++) { // 반의 수만큼 바복
-            for (int k = 0; k < englishscores[i].length; k++) {   // 해당 반의 학생 ㅜㅅ 만큼 반복
+            for (int k = 0; k < englishscores[i].length; k++) {   // 해당 반의 학생 수 만큼 반복
                 System.out.println("englishscores[" + i + "][" + k + "]: "
                         + englishscores[i][k]);
             }
