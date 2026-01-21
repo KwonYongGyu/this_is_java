@@ -436,23 +436,26 @@ public class Chapter05 {
 //        System.out.print(" " + arr1);
         System.out.print("\n");
     }
+
     //  1-2 : char 형 1차원배열을 선언하고 길이는 20개 입니다
-    public void practice01_2(){
-        char [] arr2 = new char[20];
+    public void practice01_2() {
+        char[] arr2 = new char[20];
     }
+
     // 1-3 : boolean 형 2차원 배열을 3행 4열 만들고 값을 true 로 모두 설정하세요.
     public void practice01_3() {
         boolean[][] boolArray = new boolean[3][4];
         for (int i = 0; i < boolArray.length; i++) {
-            for(int k=0; k<boolArray[i].length; k++){
+            for (int k = 0; k < boolArray[i].length; k++) {
                 boolArray[i][k] = true;
             }
         }
     }
+
     // 1-4 String 형 1차원 배열을 선언하고 길이는 50개 입니다. 모든 원소를 "empty" 로 설정하세요.
-    public void practice01_4(){
-        String [] str1 = new String[50];
-        for(int i = 0; i< str1.length;i++){
+    public void practice01_4() {
+        String[] str1 = new String[50];
+        for (int i = 0; i < str1.length; i++) {
             str1[i] = "empty";
         }
     }
@@ -468,22 +471,21 @@ public class Chapter05 {
         int totalnumber1 = 0;
         for (int i = 0; i < intDemention2.length; i++) {
             for (int k = 0; k < intDemention2[i].length; k++) {
-                if (intDemention2[i][k]==0) {
-                    totalnumber0 +=1;
-                }
-                else{
-                    totalnumber1 +=1;
+                if (intDemention2[i][k] == 0) {
+                    totalnumber0 += 1;
+                } else {
+                    totalnumber1 += 1;
                 }
             }
         }
-        System.out.print("0인 원소의 개수: " + totalnumber0 + " \t" +  "1인 원소의 개수: " + totalnumber1);
+        System.out.print("0인 원소의 개수: " + totalnumber0 + " \t" + "1인 원소의 개수: " + totalnumber1);
         System.out.print("\n");
     }
 
 
     // 2번 : 0,1 로 이루어진 2차원 직사각형 배열이 있습니다. 0의 갯수와 1의 갯수를 출력하세요
     public void practice02_1() {
-        int[][] intDemention3 =  {
+        int[][] intDemention3 = {
                 {1, 0, 1, 0, 0, 1}
                 , {1, 0, 1, 1, 0, 1}
                 , {0, 1, 0, 1, 0, 0}
@@ -494,15 +496,14 @@ public class Chapter05 {
         int totalnumber1 = 0;
         for (int i = 0; i < intDemention3.length; i++) {
             for (int k = 0; k < intDemention3[i].length; k++) {
-                if (intDemention3[i][k]==0) {
-                    totalnumber0 +=1;
-                }
-                else{
-                    totalnumber1 +=1;
+                if (intDemention3[i][k] == 0) {
+                    totalnumber0 += 1;
+                } else {
+                    totalnumber1 += 1;
                 }
             }
         }
-        System.out.print("0인 원소의 개수: " + totalnumber0 + " \t" +  "1인 원소의 개수: " + totalnumber1);
+        System.out.print("0인 원소의 개수: " + totalnumber0 + " \t" + "1인 원소의 개수: " + totalnumber1);
         System.out.print("\n");
     }
     // 3번 : 입력이 아래와 같을때 출력을 아래와 같이 만드세요.
@@ -516,7 +517,7 @@ public class Chapter05 {
     //	**
     //	* ***
 
-    public void practice03(){
+    public void practice03() {
         char[][] chInput = {
                 {'*', ' ', '*', '*', ' '}
                 , {'*', '*', ' ', ' ', ' '}
@@ -528,19 +529,44 @@ public class Chapter05 {
         // 행열을 바꿔서 출력
         int i = chInput.length;
         int k = chInput[0].length;
-        char [][] chOutput= new char[k][i];
-        for(i = 0; i< chInput.length; i++){
-            for( k = 0; k<chInput[i].length;k++){
+        char[][] chOutput = new char[k][i];
+        for (i = 0; i < chInput.length; i++) {
+            for (k = 0; k < chInput[i].length; k++) {
                 chOutput[k][i] = chInput[i][k];
             }
         }
         // 출력은 따로 for문을 새로 만들어 주는게 안전하다.
         System.out.println("출력배열입니다.");
-        for(i = 0; i< chOutput.length; i++){
-            for( k = 0; k<chOutput[i].length;k++){
-                System.out.printf(" "+ chOutput[i][k]);
+        for (i = 0; i < chOutput.length; i++) {
+            for (k = 0; k < chOutput[i].length; k++) {
+                System.out.printf(" " + chOutput[i][k]);
             }
             System.out.println();
         }
+    }
+
+    // 과제 3 : 배열 숙성 과제
+    // 1-1 : 1차원 배열 double[] dArray 갯수 25개 배열을 생성한다.
+    public void practice01_5() {
+        double[] dArray = new double[25];
+        int i = 0;
+        for ( i = 0; i < dArray.length; i++) {
+            dArray[i] =  (double) (Math.random() * 99.99999) + 1;
+        }
+        //  1-2 : 1차원 배열 int[] nArray 갯수 25개 배열을 생성한다.
+        int [] nArray = new int[dArray.length];
+        int totalSum = 0;
+        int totalAvg = 0;
+        for( i=0; i< nArray.length; i++){
+            nArray[i] = (int)dArray[i];
+            totalSum += nArray[i];
+            totalAvg = totalSum / nArray.length;
+        }
+
+        System.out.print("합: " + totalSum + "\t" + "평균: " + totalAvg + "\n");
+    }
+
+    public void practice01_6(){
+
     }
 }

@@ -41,5 +41,7 @@ public class Main {
         ct05.practice02_1();
         ct05.practice03();
 //        ct05.practice03_1();
+        ct05.practice01_5();
+
     }
 }
