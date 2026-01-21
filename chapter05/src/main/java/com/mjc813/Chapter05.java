@@ -479,6 +479,32 @@ public class Chapter05 {
         System.out.print("0인 원소의 개수: " + totalnumber0 + " \t" +  "1인 원소의 개수: " + totalnumber1);
         System.out.print("\n");
     }
+
+
+    // 2번 : 0,1 로 이루어진 2차원 직사각형 배열이 있습니다. 0의 갯수와 1의 갯수를 출력하세요
+    public void practice02_1() {
+        int[][] intDemention3 =  {
+                {1, 0, 1, 0, 0, 1}
+                , {1, 0, 1, 1, 0, 1}
+                , {0, 1, 0, 1, 0, 0}
+                , {1, 0, 0, 1, 0, 1}
+                , {1, 0, 1, 0, 0, 1}
+        };
+        int totalnumber0 = 0;
+        int totalnumber1 = 0;
+        for (int i = 0; i < intDemention3.length; i++) {
+            for (int k = 0; k < intDemention3[i].length; k++) {
+                if (intDemention3[i][k]==0) {
+                    totalnumber0 +=1;
+                }
+                else{
+                    totalnumber1 +=1;
+                }
+            }
+        }
+        System.out.print("0인 원소의 개수: " + totalnumber0 + " \t" +  "1인 원소의 개수: " + totalnumber1);
+        System.out.print("\n");
+    }
     // 3번 : 입력이 아래와 같을때 출력을 아래와 같이 만드세요.
     //입력 =>
     //	char[][] chInput = {
@@ -489,4 +515,32 @@ public class Chapter05 {
     //	****
     //	**
     //	* ***
+
+    public void practice03(){
+        char[][] chInput = {
+                {'*', ' ', '*', '*', ' '}
+                , {'*', '*', ' ', ' ', ' '}
+                , {'*', ' ', '*', ' ', '*'}
+                , {' ', '*', '*', ' ', '*'}
+                , {'*', ' ', '*', ' ', '*'}
+                , {' ', ' ', '*', '*', '*'}
+        };
+        // 행열을 바꿔서 출력
+        int i = chInput.length;
+        int k = chInput[0].length;
+        char [][] chOutput= new char[k][i];
+        for(i = 0; i< chInput.length; i++){
+            for( k = 0; k<chInput[i].length;k++){
+                chOutput[k][i] = chInput[i][k];
+            }
+        }
+        // 출력은 따로 for문을 새로 만들어 주는게 안전하다.
+        System.out.println("출력배열입니다.");
+        for(i = 0; i< chOutput.length; i++){
+            for( k = 0; k<chOutput[i].length;k++){
+                System.out.printf(" "+ chOutput[i][k]);
+            }
+            System.out.println();
+        }
+    }
 }
