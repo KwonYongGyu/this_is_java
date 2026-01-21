@@ -41,7 +41,9 @@ public class Main {
         ct05.practice02_1();
         ct05.practice03();
 //        ct05.practice03_1();
+        // 배열 숙성 과제
         ct05.practice01_5();
+        ct05.practice01_6();
 
     }
 }

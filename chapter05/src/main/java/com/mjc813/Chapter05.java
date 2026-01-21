@@ -550,23 +550,42 @@ public class Chapter05 {
     public void practice01_5() {
         double[] dArray = new double[25];
         int i = 0;
-        for ( i = 0; i < dArray.length; i++) {
-            dArray[i] =  (double) (Math.random() * 99.99999) + 1;
+        for (i = 0; i < dArray.length; i++) {
+            dArray[i] = (double) (Math.random() * 99.99999) + 1;
         }
         //  1-2 : 1차원 배열 int[] nArray 갯수 25개 배열을 생성한다.
-        int [] nArray = new int[dArray.length];
+        int[] nArray = new int[dArray.length];
         int totalSum = 0;
         int totalAvg = 0;
-        for( i=0; i< nArray.length; i++){
-            nArray[i] = (int)dArray[i];
+        for (i = 0; i < nArray.length; i++) {
+            nArray[i] = (int) dArray[i];
             totalSum += nArray[i];
             totalAvg = totalSum / nArray.length;
         }
 
         System.out.print("합: " + totalSum + "\t" + "평균: " + totalAvg + "\n");
+        // 1-3 : 1차원 배열 String[] strArray 갯수 25개 배열을 생성한다.
+        //		이 배열의 원소는 dArray원소의 값 => nArray원소의 값을 문자열로 합쳐서 저장한다.
+        //		예 : "0.983723 => 0", "76.56734005613602345 => 76"
+        //		strArray 배열 원소 25개를 출력해보자
+        String[] strArray = new String[dArray.length];
+        for (i = 0; i < strArray.length; i++) {
+            strArray[i] = String.valueOf(dArray[i]) + String.valueOf(nArray[i]);
+        }
+        System.out.println("strArray 배열 원소: ");
+        for (i = 0; i < strArray.length; i++) {
+
+            System.out.printf(" " + strArray[i] + "\t" + strArray[i] + "\n");
+
+        }
     }
 
+    //2-1 :
+    //		입력 => 숫자를 입력 받는다. 예를 들어 number 가 3이다.
+    //		2차원 배열 int[][] nArray = new int[number][number]; 배열을 생성한다.
+    //		for 문을 이용하여서 원소에는 출력과 같이 되도록 숫자를 각 원소에 대입한다.
     public void practice01_6(){
+
 
     }
 }
