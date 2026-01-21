@@ -13,22 +13,31 @@ public class Main {
 //            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
 //            IO.println("i = " + i);
         Chapter05 ct05 = new Chapter05();
-        ct05.ReferenceVariableCompareExample();
-        ct05.NullPointerExceptionExample();
-        ct05.GarbageObjectExample();
-        ct05.EqualsExample();
-        ct05.EmptyStringExample();
-        ct05.CharAtExample();
-        ct05.LengthExample();
-        ct05.ReplaceExample();
-        ct05.SubStringExample();
-        ct05.IndexOfContainsExample();
-        ct05.SplitExample();
-        ct05.ArrayCreateByValueListExample1();
-        ct05.ArrayCreateByValueListExample2();
-        ct05.ArrayCreateByNewExample();
-        ct05.ArrayLengthExample();
-        ct05.MultidimensionalArrayByValue();
-        ct05.MultidimensionalArrayByNewExample();
+        // 01/20
+//        ct05.ReferenceVariableCompareExample();
+//        ct05.NullPointerExceptionExample();
+//        ct05.GarbageObjectExample();
+//        ct05.EqualsExample();
+//        ct05.EmptyStringExample();
+//        ct05.CharAtExample();
+//        ct05.LengthExample();
+//        ct05.ReplaceExample();
+//        ct05.SubStringExample();
+//        ct05.IndexOfContainsExample();
+//        ct05.SplitExample();
+//        ct05.ArrayCreateByValueListExample1();
+//        ct05.ArrayCreateByValueListExample2();
+//        ct05.ArrayCreateByNewExample();
+//        ct05.ArrayLengthExample();
+//        ct05.MultidimensionalArrayByValue();
+//        ct05.MultidimensionalArrayByNewExample();
+        // 01/21 배열문에서 for 활용 연습
+        ct05.practice01();
+        ct05.practice01_1();
+        ct05.practice01_2();
+        ct05.practice01_3();
+        ct05.practice01_4();
+        ct05.practice02();
+        ct05.practice03();
     }
 }

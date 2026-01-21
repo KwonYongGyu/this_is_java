@@ -408,4 +408,85 @@ public class Chapter05 {
         System.out.println("전체 학생의 영어 평균 점수 : " + totalEnglishAvg);
     }
 
+    // 10개의 boolean 값이 원소인 1차원 배열의 짝수번째 인덱스가 true 이고 다른 인덱스는 false 로 만들어서 출력하세요
+    public void practice01() {
+        boolean[] boolArray = new boolean[10];
+        // 배열 초기값 출력
+        for (int i = 0; i < boolArray.length; i++) {
+
+            if (i % 2 == 0) {
+                // 배열 항목의 값 변경
+                boolArray[i] = true;
+            }
+
+            System.out.print(" " + boolArray[i]);
+
+        }
+        System.out.print("\n");
+    }
+
+    // 1-1 : 30개의 int 형 배열을 선언하고 모든 원소의 값을 인덱스 번호로 대입하세요.
+    public void practice01_1() {
+        int[] arr1 = new int[30];
+        for (int i = 0; i < 30; i++) {
+            arr1[i] = i;
+        }
+
+        System.out.print("arr1: " + java.util.Arrays.toString(arr1));
+//        System.out.print(" " + arr1);
+        System.out.print("\n");
+    }
+    //  1-2 : char 형 1차원배열을 선언하고 길이는 20개 입니다
+    public void practice01_2(){
+        char [] arr2 = new char[20];
+    }
+    // 1-3 : boolean 형 2차원 배열을 3행 4열 만들고 값을 true 로 모두 설정하세요.
+    public void practice01_3() {
+        boolean[][] boolArray = new boolean[3][4];
+        for (int i = 0; i < boolArray.length; i++) {
+            for(int k=0; k<boolArray[i].length; k++){
+                boolArray[i][k] = true;
+            }
+        }
+    }
+    // 1-4 String 형 1차원 배열을 선언하고 길이는 50개 입니다. 모든 원소를 "empty" 로 설정하세요.
+    public void practice01_4(){
+        String [] str1 = new String[50];
+        for(int i = 0; i< str1.length;i++){
+            str1[i] = "empty";
+        }
+    }
+
+    // 2번 : 0,1 로 이루어진 2차원 직사각형 배열이 있습니다. 0의 갯수와 1의 갯수를 출력하세요
+    public void practice02() {
+        int[][] intDemention2 = {
+                {0, 0, 1, 1, 0, 0}, {1, 0, 0, 1, 0, 0}
+                , {0, 1, 0, 1, 0, 0}, {0, 0, 1, 1, 0, 1}
+                , {1, 0, 0, 0, 1, 0}
+        };
+        int totalnumber0 = 0;
+        int totalnumber1 = 0;
+        for (int i = 0; i < intDemention2.length; i++) {
+            for (int k = 0; k < intDemention2[i].length; k++) {
+                if (intDemention2[i][k]==0) {
+                    totalnumber0 +=1;
+                }
+                else{
+                    totalnumber1 +=1;
+                }
+            }
+        }
+        System.out.print("0인 원소의 개수: " + totalnumber0 + " \t" +  "1인 원소의 개수: " + totalnumber1);
+        System.out.print("\n");
+    }
+    // 3번 : 입력이 아래와 같을때 출력을 아래와 같이 만드세요.
+    //입력 =>
+    //	char[][] chInput = {
+    //		{'*', '*', '*', '*', ' '},
+    //		{'*', '*', ' ', ' ', ' '},
+    //		{'*', ' ', '*', '*', '*'}
+    //	};
+    //	****
+    //	**
+    //	* ***
 }
