@@ -2,6 +2,7 @@ package com.mjc813;
 
 import java.util.Arrays;
 import java.util.Calendar;  // Calendar는 java.util 패키지에 있으므로 import가 필요함
+import java.util.Scanner;
 
 public class Chapter05 {
     // p.150
@@ -762,4 +763,98 @@ public class Chapter05 {
         ,SATURDAY
         ,SUNDAY
     }
+
+    // 확인문제
+    public void Test(){
+        // 문제 7
+        int[] array = {1, 5, 3, 8, 2};
+        int max = array[0];
+        for(int i = 0; i<array.length; i++){
+            if(array[i] > max){
+                max = array[i];
+            }
+        }
+        System.out.println("최대값: " + max);
+
+        // 문제 8
+        int [][] array1 = {
+            {95, 86}
+            ,{83, 92, 96}
+            ,{78, 83, 93, 87, 88}
+        };
+        int sum = 0;
+        int avg = 0;
+        int count = 0;
+        for(int i = 0; i<array1.length; i++){
+            for(int k=0; k<array1[i].length; k++){
+                sum += array1[i][k];
+                count++;
+            }
+
+        }
+        avg = sum / count;
+        System.out.println("총합: " + sum + "\t" +  "전체 평균: " + avg);
+
+
+        // 문제 9
+        Scanner scanner = new Scanner(System.in);   // Scanner 생성
+        boolean run = true; // while문의 조건식을 위한 변수 선언
+        int [] scores = null;
+        int studentNum = 0;
+
+        while (run){
+            System.out.println("-----------------");
+            System.out.println("1.학생수 | 2.점수입력 | 3.점수리스트 | 4.분석 | 5.종료");
+            System.out.println("-----------------");
+            System.out.print("선택> ");
+
+            String selectNo = scanner.nextLine();
+
+            if (selectNo.equals("1")) {
+                System.out.print("학생수> ");
+                studentNum = Integer.parseInt(scanner.nextLine());
+                scores = new int[studentNum]; // 입력받은 수만큼 배열 생성
+            }
+            else if (selectNo.equals("2")) {
+                if (scores == null) {
+                    System.out.println("학생수를 먼저 입력하세요.");
+                    continue;
+                }
+                for (int i = 0; i < scores.length; i++) {
+                    System.out.print("scores[" + i + "]> ");
+                    scores[i] = Integer.parseInt(scanner.nextLine());
+                }
+            }
+            else if (selectNo.equals("3")) {
+                if (scores == null) {
+                    System.out.println("입력된 점수가 없습니다.");
+                    continue;
+                }
+                for (int i = 0; i < scores.length; i++) {
+                    System.out.println("scores[" + i + "]: " + scores[i]);
+                }
+            }
+            else if (selectNo.equals("4")) {
+                if (scores == null) {
+                    System.out.println("분석할 데이터가 없습니다.");
+                    continue;
+                }
+                int max1 = 0;
+                int sum1 = 0;
+                for (int score : scores) {
+                    if (score > max1) max1 = score; // 최고 점수 찾기
+                    sum1 += score;                // 총합 구하기
+                }
+                double avg1 = (double) sum1 / studentNum;
+                System.out.println("최고 점수: " + max1);
+                System.out.println("평균 점수: " + avg1);
+            }
+            else if (selectNo.equals("5")) {
+                run = false;
+            }
+        }
+
+        System.out.println("프로그램 종료");
+    }
+   
 }

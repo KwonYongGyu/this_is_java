@@ -51,5 +51,6 @@ public class Main {
         ct05.AdvancedForExample();
         ct05.MainStringArrayArgument(args);
         ct05.WeekExample();
+        ct05.Test();
     }
 }
