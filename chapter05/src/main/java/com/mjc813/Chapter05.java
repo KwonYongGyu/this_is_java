@@ -1,5 +1,8 @@
 package com.mjc813;
 
+import java.util.Arrays;
+import java.util.Calendar;  // Calendar는 java.util 패키지에 있으므로 import가 필요함
+
 public class Chapter05 {
     // p.150
     public void ReferenceVariableCompareExample() {
@@ -411,7 +414,7 @@ public class Chapter05 {
     // 10개의 boolean 값이 원소인 1차원 배열의 짝수번째 인덱스가 true 이고 다른 인덱스는 false 로 만들어서 출력하세요
     public void practice01() {
         boolean[] boolArray = new boolean[10];
-        // 배열 초기값 출력
+
         for (int i = 0; i < boolArray.length; i++) {
 
             if (i % 2 == 0) {
@@ -428,11 +431,11 @@ public class Chapter05 {
     // 1-1 : 30개의 int 형 배열을 선언하고 모든 원소의 값을 인덱스 번호로 대입하세요.
     public void practice01_1() {
         int[] arr1 = new int[30];
-        for (int i = 0; i < 30; i++) {
+        for (int i = 0; i < arr1.length; i++) {
             arr1[i] = i;
         }
 
-        System.out.print("arr1: " + java.util.Arrays.toString(arr1));
+        System.out.print("arr1: " + Arrays.toString(arr1));
 //        System.out.print(" " + arr1);
         System.out.print("\n");
     }
@@ -440,6 +443,7 @@ public class Chapter05 {
     //  1-2 : char 형 1차원배열을 선언하고 길이는 20개 입니다
     public void practice01_2() {
         char[] arr2 = new char[20];
+
     }
 
     // 1-3 : boolean 형 2차원 배열을 3행 4열 만들고 값을 true 로 모두 설정하세요.
@@ -467,18 +471,18 @@ public class Chapter05 {
                 , {0, 1, 0, 1, 0, 0}, {0, 0, 1, 1, 0, 1}
                 , {1, 0, 0, 0, 1, 0}
         };
-        int totalnumber0 = 0;
-        int totalnumber1 = 0;
+        int totalNumber0 = 0;
+        int totalNumber1 = 0;
         for (int i = 0; i < intDemention2.length; i++) {
             for (int k = 0; k < intDemention2[i].length; k++) {
                 if (intDemention2[i][k] == 0) {
-                    totalnumber0 += 1;
+                    totalNumber0 += 1;
                 } else {
-                    totalnumber1 += 1;
+                    totalNumber1 += 1;
                 }
             }
         }
-        System.out.print("0인 원소의 개수: " + totalnumber0 + " \t" + "1인 원소의 개수: " + totalnumber1);
+        System.out.print("0인 원소의 개수: " + totalNumber0 + " \t" + "1인 원소의 개수: " + totalNumber1);
         System.out.print("\n");
     }
 
@@ -551,6 +555,7 @@ public class Chapter05 {
         double[] dArray = new double[25];
         int i = 0;
         for (i = 0; i < dArray.length; i++) {
+            // (double)을 하지 않아도 99.99999를 곱하기 때문에 double형으로 나온다.
             dArray[i] = (double) (Math.random() * 99.99999) + 1;
         }
         //  1-2 : 1차원 배열 int[] nArray 갯수 25개 배열을 생성한다.
@@ -596,5 +601,165 @@ public class Chapter05 {
         }
         System.out.println("--------------------------");
 
+    }
+    // 2-2 :
+    //		입력 => 숫자를 입력 받는다. 예를 들어 number 가 3이다.
+    //		2차원 배열 char[][] square = new char[number][number];
+    //		for 문을 이용하여 출력처럼 데이터(한글 'ㅂ' 누르고 '한자'키를 누른다)를 대입해서 출력한다.
+    //		출력 =>
+    //		3행 3열
+    //		┌─┐
+    //		│ │
+    //		└─┘
+    //		예를 들어 입력이 7이면
+    //		출력 =>
+    //		7행 7열
+    //		┌─────┐
+    //		│     │
+    //		│     │
+    //		│     │
+    //		│     │
+    //		│     │
+    //		└─────┘
+    public void practice01_7(){
+
+    }
+    // 2-3 : 2차원 배열 char[][] chDiamond = new char[5][5]; 정방형만 가능
+    //		이 배열이 아래와 같이 출력되도록 값'*'을 for 문으로 직접 만들어서 for 문으로 출력한다.
+    //		출력예제:
+    //  *
+    // ***
+    //*****
+    // ***
+    //  *
+    //
+    //   *
+    //  ***
+    // *****
+    //*******
+    // *****
+    //  ***
+    //   *
+    public void practice01_8(){
+
+    }
+    // p.188
+    public void ArrayReferenceObjectExample(){
+        String[] strArray = new String[3];
+
+        strArray[0] = "Java";
+        strArray[1] = "Java";
+        strArray[2] = new String("Java");   // new로 새로운 객체 생성 내용만 같고 다른 주소를 가짐
+
+        System.out.println( strArray[0] == strArray[1] );   // true: 같은 객체 참조
+        System.out.println( strArray[0] == strArray[2] );   // false: 다른 객체를 참조
+        System.out.println( strArray[0].equals(strArray[2]));   // true: 문자열이 동일
+
+
+    }
+    // p.189
+    public void ArrayCopyByForExample(){
+        // 길이 3인 배열
+        int[] oldIntArray = { 1, 2, 3 };
+        // 길이 5인 배열을 새로 생성
+        int[] newIntArray = new int[5];
+        // 배열 항목 복사
+        for(int i=0; i<oldIntArray.length;i++){
+            newIntArray[i] = oldIntArray[i];
+        }
+        // 배열 항목 출력
+        for(int i=0; i<newIntArray.length;i++){
+            System.out.print(newIntArray[i] + ", ");
+        }
+        System.out.println();
+    }
+    //p. 190
+    public void ArrayCopyExample(){
+        // 길이 3인 배열
+        String[] oldStrArray = { "java", "array", "copy" };
+        // 길이 5인 배열
+        String[] newStrArray = new String[5];
+        // 배열 항목 복사
+        System.arraycopy( oldStrArray, 0, newStrArray, 0, oldStrArray.length);
+        // 오래된 배열의 0번째 인덱스부터 복사해서 새 배열의 0번째 칸부터 붙여넣기 길이는 오래된 배열의 길이 즉 3칸만큼
+        // 배열 항목 출력
+        for(int i=0; i<newStrArray.length; i++){
+            System.out.print(newStrArray[i] + ", ");
+        }
+        System.out.println();
+    }
+    // p.192
+    public void AdvancedForExample(){
+        // 배열 변수 선언과 배열 생성
+        int[] scores = { 95, 71, 84, 93, 87 };
+        // 배열 항목 전체 합 구하기
+        int sum = 0;
+        for(int score : scores){
+            // 배열 scores에 가져올 항목이 존재하면 타입변수 score로 이동, 밑의 실행문 실행
+            // 가져올 항목이 없으면 for문을 빠져나간다.
+            sum = sum + score;
+        }
+        System.out.println("점수 총합 = " + sum);
+        // 배열 항목 전체 평균 구하기
+        double avg = (double) sum / scores.length;
+        System.out.println("점수 평균 = " + avg);
+    }
+    // p.194
+    public void MainStringArrayArgument(String[]args){
+//        if(args.length !=2){    // 입력된 데이터 개수가 두 개가 아닐 경우
+//            System.out.println("프로그램 입력값이 부족");
+//            System.exit(0); // 프로그램 강제 종료
+//        }
+//
+//        String strNum1 = args[0];   // 첫 번째 데이터 얻기
+//        String strNum2 = args[1];   // 두 번째 데이터 얻기
+//
+//        int num1 = Integer.parseInt(strNum1);   // 문자열을 정수로 변환
+//        int num2 = Integer.parseInt(strNum2);   // 문자열을 정수로 변환
+//
+//        int result = num1 + num2;
+//        System.out.println(num1 + " + " + num2 + " = " + result);
+    }
+    // p.199
+    public void WeekExample(){
+        // Week 열거 타임 변수 선언
+        Week today = null;  // Week 타입 변수 today 선언
+
+        // Calendar 얻기
+        Calendar cal = Calendar.getInstance();
+        // 컴퓨터 날짜 및 시간 정보를 가진 Calendar 객체를 얻고 번지를
+        // cal 변수에 대입, Calendar 얻기
+
+        // 오늘의 요일 얻기(1~7)
+        int week = cal.get(Calendar.DAY_OF_WEEK);   // 일(1) ~ 토(7)까지의 숫자를 얻고 week 변수에 대입
+
+        // 숫자를 열거 상수로 변환해서 변수에 대입
+        switch(week){
+            case 1: today = Week.SUNDAY;        break;
+            case 2: today = Week.MONDAY;        break;
+            case 3: today = Week.TUESDAY;       break;
+            case 4: today = Week.WEDNESDAY;     break;
+            case 5: today = Week.THURSDAY;      break;
+            case 6: today = Week.FRIDAY;        break;
+            case 7: today = Week.SATURDAY;      break;
+        }
+
+        // 열거 타입 변수를 활용
+        if(today == Week.SUNDAY){
+            System.out.println("일요일에는 축구를 합니다.");
+        }
+        else{
+            System.out.println("열심히 자바를 공부합니다.");
+        }
+
+    }
+    public enum Week{
+        MONDAY
+        ,TUESDAY
+        ,WEDNESDAY
+        ,THURSDAY
+        ,FRIDAY
+        ,SATURDAY
+        ,SUNDAY
     }
 }

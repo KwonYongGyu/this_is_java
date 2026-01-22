@@ -32,18 +32,24 @@ public class Main {
 //        ct05.MultidimensionalArrayByValue();
 //        ct05.MultidimensionalArrayByNewExample();
         // 01/21 배열문에서 for 활용 연습
-        ct05.practice01();
-        ct05.practice01_1();
-        ct05.practice01_2();
-        ct05.practice01_3();
-        ct05.practice01_4();
-        ct05.practice02();
-        ct05.practice02_1();
-        ct05.practice03();
+//        ct05.practice01();
+//        ct05.practice01_1();
+//        ct05.practice01_2();
+//        ct05.practice01_3();
+//        ct05.practice01_4();
+//        ct05.practice02();
+//        ct05.practice02_1();
+//        ct05.practice03();
 //        ct05.practice03_1();
         // 배열 숙성 과제
-        ct05.practice01_5();
-        ct05.practice01_6();
-
+//        ct05.practice01_5();
+//        ct05.practice01_6();
+    // 01-22 배열 변수와 알고리즘
+        ct05.ArrayReferenceObjectExample();
+        ct05.ArrayCopyByForExample();
+        ct05.ArrayCopyExample();
+        ct05.AdvancedForExample();
+        ct05.MainStringArrayArgument(args);
+        ct05.WeekExample();
     }
 }
