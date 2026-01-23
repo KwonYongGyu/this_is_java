@@ -833,6 +833,7 @@ public class Chapter05 {
                 for (int i = 0; i < scores.length; i++) {
                     System.out.println("scores[" + i + "]: " + scores[i]);
                 }
+
             }
             else if (selectNo.equals("4")) {
                 if (scores == null) {
