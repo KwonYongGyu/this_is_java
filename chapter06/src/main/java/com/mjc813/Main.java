@@ -21,6 +21,9 @@ public class Main {
         ch06.KoeranExample();
         ch06.CarExample3();
         ch06.CarExample4();
-//        ch06.Car();
+        ch06.CalculatorExample();
+        ch06.ComputerExample();
+        ch06.CarExample5();
+        ch06.RectangleCalculatorExample();
     }
 }

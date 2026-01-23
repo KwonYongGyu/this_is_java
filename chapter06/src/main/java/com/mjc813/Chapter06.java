@@ -1,5 +1,7 @@
 package com.mjc813;
 
+import javax.annotation.processing.SupportedSourceVersion;
+
 public class Chapter06 {
 
     public class Student {
@@ -111,6 +113,88 @@ public class Chapter06 {
 
     }
 
+//    p.235
+    public void CalculatorExample(){
+        // Calculator 객체 생성
+        Calculator myCalc = new Calculator();
+
+        // 리턴값이 없는 powerOn() 메소드 호출
+        myCalc.powerOn();
+
+        // plus 메소드 호출 시 5와 6을 매개값으로 제공하고,
+        // 덧셈 결과를 리턴받아 result1 변수에 대입
+        int result1= myCalc.plus(5, 6);
+        System.out.println("result1: " + result1);
+
+        int x = 10;
+        int y = 4;
+        // divide() 메소드 호출 시 변수 x와 y의 값을 매개값으로 제공하고,
+        // 나눗셈 결과를 리턴받아 result2 변수에 대입
+        double result2 = myCalc.divide(x, y);
+        System.out.println("result2: " + result2);
+
+        // 리턴값이 없는 powerOff() 메소드 호출
+        myCalc.powerOff();
+    }
+
+    // p.237
+    public void ComputerExample(){
+        // Computer 객체 생성
+        Computer myCom = new Computer();
+
+        // sum() 메소드 호출 시 매개값 1, 2, 3을 제공하고
+        // 합산 결과를 리턴받아 result1 변수에 대입
+        int result1 = myCom.sum(1, 2, 3);
+        System.out.println("result1: " + result1);
+
+        // sum() 메소드를 호출 시 매개값 1, 2, 3, 4, 5를 제공하고
+        // 합산 결과를 리턴받아 result2 변수에 대입
+        int result2 = myCom.sum(1, 2, 3, 4, 5);
+        System.out.println("result2: " + result2);
+
+        // sum() 메소드 호출 시 배열을 제공하고
+        // 합산 결과를 리턴받아 result3 변수에 대입
+        int[] values = { 1, 2, 3, 4, 5 };
+        int result3 = myCom.sum(values);
+        System.out.println("result3: " + result3);
+
+        // sum() 메소드 호출 시 배열을 제공하고
+        // 합산 결과를 리턴받아 result3 변수에 대입
+        int result4 = myCom.sum(new int[] { 1, 2, 3, 4, 5 });
+        System.out.println("result4: " + result4);
+    }
+
+    public void CarExample5(){
+        // Car5 객체 생성
+        Car5 myCar = new Car5();
+
+        // 리턴값이 없는 setGas() 메소드 호출
+        myCar.setGas(5);
+
+        //isLeftGas() 메소드를 호출해서 받은 리턴값이 true일 경우 if 블록 실행
+        if(myCar.ifLeftGas()){
+            System.out.println("출발합니다.");
+
+            // 리턴값이 없는 run() 메소드 호출
+            myCar.run();
+        }
+
+        System.out.println("gas를 주입하세요.");
+    }
+    // p.243
+    public void RectangleCalculatorExample(){
+        // 객체 생성
+        RectangleCalculator rc = new RectangleCalculator();
+
+        // 정사각형의 넓이 구하기
+        double result1 = rc.areaRectangle(10);
+
+        // 직사각형의 넓이 구하기
+        double result2 = rc.areaRectangle(10, 20);
+
+        System.out.println("정사각형의 넓이=" + result1);
+        System.out.println("직사각형의 넓이=" + result2);
+    }
 }
 
 
