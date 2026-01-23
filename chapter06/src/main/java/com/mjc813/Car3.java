@@ -8,18 +8,18 @@ public class Car3 {
     int maxSpeed;
 
     // 생성자 선언
-    Car(){
+    Car3(){
 
     }
-    Car(String model){
+    Car3(String model){
         this.model = model;
     }
 
-    Car(String model, String color){
+    Car3(String model, String color){
         this.model = model;
         this.color = color;
     }
-    Car(String model, String color, int maxSpeed){
+    Car3(String model, String color, int maxSpeed){
         this.model = model;
         this.color = color;
         this.maxSpeed = maxSpeed;

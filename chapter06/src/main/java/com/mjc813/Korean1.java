@@ -8,7 +8,7 @@ public class Korean1 {
 
     // 생성자 선언
     public Korean1(String n, String s){
-        name = name;
-        ssn = ssn;
+        this.name = name;
+        this.ssn = ssn;
     }
 }
