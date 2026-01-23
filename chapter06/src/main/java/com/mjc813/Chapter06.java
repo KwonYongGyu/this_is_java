@@ -103,7 +103,7 @@ public class Chapter06 {
         System.out.println("car2.company : " + car2.company);
         System.out.println("car2.model : " + car2.model);
         System.out.println("car2.color : " + car2.color);
-        System.out.println();
+        System.out.println("--------------------------------------------------------------------------");
 
         Car4 car3 = new Car4("택시", "검정", 200);
         System.out.println("car3.company : " + car3.company);
@@ -194,6 +194,45 @@ public class Chapter06 {
 
         System.out.println("정사각형의 넓이=" + result1);
         System.out.println("직사각형의 넓이=" + result2);
+    }
+
+    public void SmartPhoneExample(){
+//        Car4 car1 = new Car4("자가용");
+//        System.out.println("car1.company : " + car1.company);
+//        System.out.println("car1.model : " + car1.model);
+//        System.out.println();
+//
+//        Car4 car2 = new Car4("자가용", "빨강");
+//        System.out.println("car2.company : " + car2.company);
+//        System.out.println("car2.model : " + car2.model);
+//        System.out.println("car2.color : " + car2.color);
+//        System.out.println();
+//
+//        Car4 car3 = new Car4("택시", "검정", 200);
+//        System.out.println("car3.company : " + car3.company);
+//        System.out.println("car3.model : " + car3.model);
+//        System.out.println("car3.color : " + car3.color);
+//        System.out.println("car3.maxSpeed : " + car3.maxSpeed);
+//        String company ;
+//        String model;
+//        String operatingSystem; // 운영체제
+//        String display;    // 화면 인치 6.7,   6.1
+//        String weight; // 25+ 190g, 14Pro 206g
+//        String batterySize; // 4900mAh, 3200mAh
+//        String usb; //Type-C, Lightning(USB2.0)
+        SmartPhone sp1 = new SmartPhone("삼성", "Galaxy S25+", "One UI 7.0", "6.7inch","190g", "4900mAh", "Type-C");
+        SmartPhone sp2 = new SmartPhone("애플", "iPhone 14Pro", "iOS 18", "6.1inch","206g", "3200mAh", "Lightning(USB2.0)");
+
+
+
+        System.out.printf("%-15s\t%-25s\t%-25s%n", "Company", sp1.company, sp2.company);
+        System.out.printf("%-15s\t%-25s\t%-25s%n", "Model", sp1.model, sp2.model);
+        System.out.printf("%-15s\t%-25s\t%-25s%n", "OS", sp1.operatingSystem, sp2.operatingSystem);
+        System.out.printf("%-15s\t%-25s\t%-25s%n", "Display", sp1.display, sp2.display);
+        System.out.printf("%-15s\t%-25s\t%-25s%n", "Weight", sp1.weight, sp2.weight);
+        System.out.printf("%-15s\t%-25s\t%-25s%n", "Battery", sp1.batterySize, sp2.batterySize);
+        System.out.printf("%-15s\t%-25s\t%-25s%n", "USB", sp1.usb, sp2.usb);
+
     }
 }
 

@@ -14,16 +14,18 @@ public class Main {
 //            IO.println("i = " + i);
 //        }
         Chapter06 ch06 = new Chapter06();
-        ch06.StudentExample();
-        ch06.CarExample();
-        ch06.CarExample1();
-        ch06.CarExample2();
-        ch06.KoeranExample();
-        ch06.CarExample3();
-        ch06.CarExample4();
-        ch06.CalculatorExample();
-        ch06.ComputerExample();
-        ch06.CarExample5();
-        ch06.RectangleCalculatorExample();
+//        ch06.StudentExample();
+//        ch06.CarExample();
+//        ch06.CarExample1();
+//        ch06.CarExample2();
+//        ch06.KoeranExample();
+//        ch06.CarExample3();
+//        ch06.CarExample4();
+//        ch06.CalculatorExample();
+//        ch06.ComputerExample();
+//        ch06.CarExample5();
+//        ch06.RectangleCalculatorExample();
+        // 스마트폰 기종 비교
+        ch06.SmartPhoneExample();
     }
 }
