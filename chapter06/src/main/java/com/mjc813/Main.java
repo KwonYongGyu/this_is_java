@@ -13,5 +13,14 @@ public class Main {
 //            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
 //            IO.println("i = " + i);
 //        }
+        Chapter06 ch06 = new Chapter06();
+        ch06.StudentExample();
+        ch06.CarExample();
+        ch06.CarExample1();
+        ch06.CarExample2();
+        ch06.KoeranExample();
+        ch06.CarExample3();
+        ch06.CarExample4();
+//        ch06.Car();
     }
 }
