@@ -27,5 +27,7 @@ public class Main {
 //        ch06.RectangleCalculatorExample();
         // 스마트폰 기종 비교
         ch06.SmartPhoneExample();
+        ch06.nintendoExample();
+        ch06.RpgGameCharacterInfoExample();
     }
 }

@@ -219,11 +219,44 @@ public class Chapter06 {
 
     }
 
-    public void nintendoExample(){
+    public void nintendoExample() {
 
+        NintendoGameInfo game1 = new NintendoGameInfo(
+                "마리오 골프", "스포츠", "전체이용가", 20000
+                , "https://pimg.mk.co.kr/news/cms/202504/06/news-p.v1.20250404.ad221f845db2489a86c2ff50f32c53fa_P1.png");
+
+        NintendoGameInfo game2 = new NintendoGameInfo(
+                "젤다의 전설", "RPG", "전체이용가", 30000
+                , "https://store.nintendo.co.kr/media/catalog/product/cache/3be328691086628caca32d01ffcc430a/f/i/file.jpg");
+
+        System.out.println("=== 닌텐도 게임 목록 ===");
+        game1.displayInfo();
+        game2.displayInfo();
     }
     public void RpgGameCharacterInfoExample(){
+        RpgGameCharacterInfo char1 = new RpgGameCharacterInfo(
+                "신사임당", "마법사", "여자", "2010-01-01", 203, 395, 10, 20, 10, 10
+        );
 
+        RpgGameCharacterInfo char2 = new RpgGameCharacterInfo(
+                "흑색전사", "전사", "여자", "2010-01-01", 203, 395, 20, 5, 10, 5
+        );
+
+        RpgGameCharacterInfo char3 = new RpgGameCharacterInfo(
+                "도적고양이", "도적", "여자", "2010-01-01", 203, 395, 15, 10, 20, 15
+        );
+
+        RpgGameCharacterInfo char4 = new RpgGameCharacterInfo(
+                "못난이궁수", "궁수", "여자", "2010-01-01", 203, 395, 15, 10, 20, 15
+        );
+
+
+        // 2. 정보 출력
+        System.out.println("=== RPG 캐릭터 목록 ===");
+        char1.displayCharacter();
+        char2.displayCharacter();
+        char3.displayCharacter();
+        char4.displayCharacter();
     }
 }
 
