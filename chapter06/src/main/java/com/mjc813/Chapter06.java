@@ -3,6 +3,7 @@ package com.mjc813;
 import javax.annotation.processing.SupportedSourceVersion;
 
 import static com.mjc813.Car7.simulate;
+
 import ch06.sec12.hankook.SnowTire;
 import ch06.sec12.kumho.AllSeasonTire;
 
@@ -71,7 +72,8 @@ public class Chapter06 {
 
 
     }
-    public void CarExample3(){
+
+    public void CarExample3() {
         Car3 car1 = new Car3();
         System.out.println("car1.company : " + car1.company);
         System.out.println();
@@ -97,7 +99,7 @@ public class Chapter06 {
     }
 
     // p.231
-    public void CarExample4(){
+    public void CarExample4() {
         Car4 car1 = new Car4("자가용");
         System.out.println("car1.company : " + car1.company);
         System.out.println("car1.model : " + car1.model);
@@ -117,8 +119,8 @@ public class Chapter06 {
 
     }
 
-//    p.235
-    public void CalculatorExample(){
+    //    p.235
+    public void CalculatorExample() {
         // Calculator 객체 생성
         Calculator myCalc = new Calculator();
 
@@ -127,7 +129,7 @@ public class Chapter06 {
 
         // plus 메소드 호출 시 5와 6을 매개값으로 제공하고,
         // 덧셈 결과를 리턴받아 result1 변수에 대입
-        int result1= myCalc.plus(5, 6);
+        int result1 = myCalc.plus(5, 6);
         System.out.println("result1: " + result1);
 
         int x = 10;
@@ -142,7 +144,7 @@ public class Chapter06 {
     }
 
     // p.237
-    public void ComputerExample(){
+    public void ComputerExample() {
         // Computer 객체 생성
         Computer myCom = new Computer();
 
@@ -158,17 +160,17 @@ public class Chapter06 {
 
         // sum() 메소드 호출 시 배열을 제공하고
         // 합산 결과를 리턴받아 result3 변수에 대입
-        int[] values = { 1, 2, 3, 4, 5 };
+        int[] values = {1, 2, 3, 4, 5};
         int result3 = myCom.sum(values);
         System.out.println("result3: " + result3);
 
         // sum() 메소드 호출 시 배열을 제공하고
         // 합산 결과를 리턴받아 result3 변수에 대입
-        int result4 = myCom.sum(new int[] { 1, 2, 3, 4, 5 });
+        int result4 = myCom.sum(new int[]{1, 2, 3, 4, 5});
         System.out.println("result4: " + result4);
     }
 
-    public void CarExample5(){
+    public void CarExample5() {
         // Car5 객체 생성
         Car5 myCar = new Car5();
 
@@ -176,7 +178,7 @@ public class Chapter06 {
         myCar.setGas(5);
 
         //isLeftGas() 메소드를 호출해서 받은 리턴값이 true일 경우 if 블록 실행
-        if(myCar.ifLeftGas()){
+        if (myCar.ifLeftGas()) {
             System.out.println("출발합니다.");
 
             // 리턴값이 없는 run() 메소드 호출
@@ -185,8 +187,9 @@ public class Chapter06 {
 
         System.out.println("gas를 주입하세요.");
     }
+
     // p.243
-    public void RectangleCalculatorExample(){
+    public void RectangleCalculatorExample() {
         // 객체 생성
         RectangleCalculator rc = new RectangleCalculator();
 
@@ -200,7 +203,7 @@ public class Chapter06 {
         System.out.println("직사각형의 넓이=" + result2);
     }
 
-    public void SmartPhoneExample(){
+    public void SmartPhoneExample() {
 //        String company ;
 //        String model;
 //        String operatingSystem; // 운영체제
@@ -208,9 +211,8 @@ public class Chapter06 {
 //        String weight; // 25+ 190g, 14Pro 206g
 //        String batterySize; // 4900mAh, 3200mAh
 //        String usb; //Type-C, Lightning(USB2.0)
-        SmartPhone sp1 = new SmartPhone("삼성", "Galaxy S25+", "One UI 7.0", "6.7inch","190g", "4900mAh", "Type-C");
-        SmartPhone sp2 = new SmartPhone("애플", "iPhone 14Pro", "iOS 18", "6.1inch","206g", "3200mAh", "Lightning(USB2.0)");
-
+        SmartPhone sp1 = new SmartPhone("삼성", "Galaxy S25+", "One UI 7.0", "6.7inch", "190g", "4900mAh", "Type-C");
+        SmartPhone sp2 = new SmartPhone("애플", "iPhone 14Pro", "iOS 18", "6.1inch", "206g", "3200mAh", "Lightning(USB2.0)");
 
 
         System.out.printf("%-15s\t%-25s\t%-25s%n", "Company", sp1.company, sp2.company);
@@ -237,7 +239,8 @@ public class Chapter06 {
         game1.displayInfo();
         game2.displayInfo();
     }
-    public void RpgGameCharacterInfoExample(){
+
+    public void RpgGameCharacterInfoExample() {
         RpgGameCharacterInfo char1 = new RpgGameCharacterInfo(
                 "신사임당", "마법사", "여자", "2010-01-01", 203, 395, 10, 20, 10, 10
         );
@@ -264,37 +267,41 @@ public class Chapter06 {
     }
 
     // p.245
-    public void CarExample6(){
+    public void CarExample6() {
         Car6 myCar = new Car6("포르쉐");
         Car6 yourCar = new Car6("벤츠");
 
         myCar.run();
         yourCar.run();
     }
+
     // p.249
-    public void CalculatorExample1(){
+    public void CalculatorExample1() {
         double result1 = 10 * 0 * Calculator1.pi;
-        int result2 = Calculator1.plus(10,5);
-        int result3 = Calculator1.minus(10,5);
+        int result2 = Calculator1.plus(10, 5);
+        int result3 = Calculator1.minus(10, 5);
 
         System.out.println("result1 : " + result1);
         System.out.println("result2 : " + result2);
         System.out.println("result3 : " + result3);
     }
+
     // p.251
-    public void TelevisionExample(){
+    public void TelevisionExample() {
         System.out.println(Television.info);
     }
+
     // p.254
-    public void CarExample7(){
+    public void CarExample7() {
         simulate();
 
         Car7 myCar = new Car7();
         myCar.speed = 60;
         myCar.run();
     }
+
     // p.256
-    public void KoreanExample2(){
+    public void KoreanExample2() {
         // 객체 생성 시 주민등록번호와 이름 전달
         Korean2 k2 = new Korean2("123456-1234567", "감자바");
 
@@ -310,13 +317,15 @@ public class Chapter06 {
         // 비 final 필드는 값 변경 가능
         k2.name = "김자바";
     }
-     public void EarthExample(){
+
+    public void EarthExample() {
         // 상수 읽기
-         System.out.println("지구의 반지름: " + Earth.EARTH_RADIUS + "km");
-         System.out.println("지구의 표면적: " + Earth.EARTH_SURFACE_AREA + "km^2");
-     }
-     // p.263
-    public void CarExample8(){
+        System.out.println("지구의 반지름: " + Earth.EARTH_RADIUS + "km");
+        System.out.println("지구의 표면적: " + Earth.EARTH_SURFACE_AREA + "km^2");
+    }
+
+    // p.263
+    public void CarExample8() {
         // 부품 필드 선언
         ch06.sec12.hankook.Tire tire1 = new ch06.sec12.hankook.Tire();
         ch06.sec12.kumho.Tire tire2 = new ch06.sec12.kumho.Tire();
@@ -324,8 +333,9 @@ public class Chapter06 {
         AllSeasonTire tire4 = new AllSeasonTire();
 
     }
+
     // p.274
-    public void CarExample9(){
+    public void CarExample9() {
         Car9 myCar = new Car9();
 
         // 잘못된 속도 변경
@@ -337,24 +347,50 @@ public class Chapter06 {
         System.out.println("현재 속도: " + myCar.getSpeed());
 
         // 멈춤
-        if(!myCar.isStop()){
+        if (!myCar.isStop()) {
             myCar.setStop(true);
         }
         System.out.println("현재 속도: " + myCar.getSpeed());
     }
 
     // p.276
-     public void SingletonExample(){
+    public void SingletonExample() {
         Singleton obj1 = Singleton.getInstance();
         Singleton obj2 = Singleton.getInstance();
 
         // 동일한 객체를 참조하는지 확인
-        if(obj1 == obj2){
+        if (obj1 == obj2) {
             System.out.println("같은 Singleton 객체입니다.");
-        }
-        else{
+        } else {
             System.out.println("다른 Singletion 객체입니다.");
         }
+    }
+
+    // 확인문제
+    // 13 ~ 15
+    public void MemberExample() {
+        Member user1 = new Member("홍길동", "hong");
+        user1.displayMember();
+
+        MemberService memberService = new MemberService();
+        boolean result = memberService.login("hong", "12345");
+        if (result) {
+            System.out.println("로그인 되었습니다.");
+            memberService.logout("hong");
+        } else {
+            System.out.println("id 또는 password가 올바르지 않습니다.");
+        }
+
+    }
+
+    // 16
+    public void PrinterExample() {
+        Printer printer = new Printer();
+        printer.println(10);
+        printer.println(true);
+        printer.println(5.7);
+        printer.println("홍길동");
+
     }
 
 }

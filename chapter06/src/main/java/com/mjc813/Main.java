@@ -30,14 +30,18 @@ public class Main {
 //        ch06.nintendoExample();
 //        ch06.RpgGameCharacterInfoExample();
         // 01/26
-        ch06.CarExample6();
-        ch06.CalculatorExample1();
-        ch06.TelevisionExample();
-        ch06.CarExample7();
-        ch06.KoreanExample2();
-        ch06.EarthExample();
-        ch06.CarExample8();
-        ch06.CarExample9();
-        ch06.SingletonExample();
+//        ch06.CarExample6();
+//        ch06.CalculatorExample1();
+//        ch06.TelevisionExample();
+//        ch06.CarExample7();
+//        ch06.KoreanExample2();
+//        ch06.EarthExample();
+//        ch06.CarExample8();
+//        ch06.CarExample9();
+//        ch06.SingletonExample();
+        // 확인문제
+        ch06.MemberExample();
+        ch06.PrinterExample();
+
     }
 }
