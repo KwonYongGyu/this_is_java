@@ -2,6 +2,10 @@ package com.mjc813;
 
 import javax.annotation.processing.SupportedSourceVersion;
 
+import static com.mjc813.Car7.simulate;
+import ch06.sec12.hankook.SnowTire;
+import ch06.sec12.kumho.AllSeasonTire;
+
 public class Chapter06 {
 
     public class Student {
@@ -258,6 +262,101 @@ public class Chapter06 {
         char3.displayCharacter();
         char4.displayCharacter();
     }
+
+    // p.245
+    public void CarExample6(){
+        Car6 myCar = new Car6("포르쉐");
+        Car6 yourCar = new Car6("벤츠");
+
+        myCar.run();
+        yourCar.run();
+    }
+    // p.249
+    public void CalculatorExample1(){
+        double result1 = 10 * 0 * Calculator1.pi;
+        int result2 = Calculator1.plus(10,5);
+        int result3 = Calculator1.minus(10,5);
+
+        System.out.println("result1 : " + result1);
+        System.out.println("result2 : " + result2);
+        System.out.println("result3 : " + result3);
+    }
+    // p.251
+    public void TelevisionExample(){
+        System.out.println(Television.info);
+    }
+    // p.254
+    public void CarExample7(){
+        simulate();
+
+        Car7 myCar = new Car7();
+        myCar.speed = 60;
+        myCar.run();
+    }
+    // p.256
+    public void KoreanExample2(){
+        // 객체 생성 시 주민등록번호와 이름 전달
+        Korean2 k2 = new Korean2("123456-1234567", "감자바");
+
+        // 필드값 읽기
+        System.out.println(k2.nation);
+        System.out.println(k2.ssn);
+        System.out.println(k2.name);
+
+        // Final 필드는 값을 변경할 수 없음
+        // k2.nation = "USA";
+        // k2.ssn = "123-12-1234";
+
+        // 비 final 필드는 값 변경 가능
+        k2.name = "김자바";
+    }
+     public void EarthExample(){
+        // 상수 읽기
+         System.out.println("지구의 반지름: " + Earth.EARTH_RADIUS + "km");
+         System.out.println("지구의 표면적: " + Earth.EARTH_SURFACE_AREA + "km^2");
+     }
+     // p.263
+    public void CarExample8(){
+        // 부품 필드 선언
+        ch06.sec12.hankook.Tire tire1 = new ch06.sec12.hankook.Tire();
+        ch06.sec12.kumho.Tire tire2 = new ch06.sec12.kumho.Tire();
+        SnowTire tire3 = new SnowTire();
+        AllSeasonTire tire4 = new AllSeasonTire();
+
+    }
+    // p.274
+    public void CarExample9(){
+        Car9 myCar = new Car9();
+
+        // 잘못된 속도 변경
+        myCar.setSpeed(-50);
+        System.out.println("현재 속도: " + myCar.getSpeed());
+
+        // 올바른 속도 변경
+        myCar.setSpeed(60);
+        System.out.println("현재 속도: " + myCar.getSpeed());
+
+        // 멈춤
+        if(!myCar.isStop()){
+            myCar.setStop(true);
+        }
+        System.out.println("현재 속도: " + myCar.getSpeed());
+    }
+
+    // p.276
+     public void SingletonExample(){
+        Singleton obj1 = Singleton.getInstance();
+        Singleton obj2 = Singleton.getInstance();
+
+        // 동일한 객체를 참조하는지 확인
+        if(obj1 == obj2){
+            System.out.println("같은 Singleton 객체입니다.");
+        }
+        else{
+            System.out.println("다른 Singletion 객체입니다.");
+        }
+    }
+
 }
 
 
