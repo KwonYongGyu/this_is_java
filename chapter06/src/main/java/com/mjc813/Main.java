@@ -42,6 +42,8 @@ public class Main {
         // 확인문제
         ch06.MemberExample();
         ch06.PrinterExample();
-
+        ch06.ShopServiceExample();
+        ch06.AccountExample();
+        ch06.BankApplication();
     }
 }

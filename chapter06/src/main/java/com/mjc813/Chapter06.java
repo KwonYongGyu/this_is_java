@@ -1,11 +1,11 @@
 package com.mjc813;
 
-import javax.annotation.processing.SupportedSourceVersion;
-
 import static com.mjc813.Car7.simulate;
 
 import ch06.sec12.hankook.SnowTire;
 import ch06.sec12.kumho.AllSeasonTire;
+
+import java.util.Scanner;
 
 public class Chapter06 {
 
@@ -385,12 +385,126 @@ public class Chapter06 {
 
     // 16
     public void PrinterExample() {
-        Printer printer = new Printer();
-        printer.println(10);
-        printer.println(true);
-        printer.println(5.7);
-        printer.println("홍길동");
+//        Printer printer = new Printer();
+//        rinter.println(10);
+//        printer.println(true);
+//        printer.println(5.7);
+//        printer.println("홍길동");
+        // 17 정적 메소드 호출
+        Printer.println(10);
+        Printer.println(true);
+        Printer.println(5.7);
+        Printer.println("홍길동");
 
+    }
+
+    // 18
+    public void ShopServiceExample() {
+        ShopService obj1 = ShopService.getInstance();
+        ShopService obj2 = ShopService.getInstance();
+
+        if (obj1 == obj2) {
+            System.out.println("같은 ShopService 객체입니다.");
+        } else {
+            System.out.println("다른 ShopService 객체입니다.");
+        }
+    }
+
+    //19
+    public void AccountExample() {
+        Account account = new Account();
+
+        account.setBalance(10000);
+        System.out.println("현재 잔고: " + account.getBalance());
+
+        account.setBalance(-100); // 0 이하 잔고 바뀌지 않음
+        System.out.println("현재 잔고: " + account.getBalance());
+
+        account.setBalance(2000000); // 1,000,000 초과 잔고 바뀌지 않음
+        System.out.println("현재 잔고: " + account.getBalance());
+
+        account.setBalance(300000);
+        System.out.println("현재 잔고: " + account.getBalance());
+    }
+
+    public void BankApplication() {
+        Account1[] accountArray = new Account1[100];
+        Scanner scanner = new Scanner(System.in); // Scanner 생성
+        boolean run = true; // while문의 조건식을 위한 변수 선언
+
+        while (run) {
+            System.out.println("--------------------------------------------------");
+            System.out.println("1.계좌생성 | 2.계좌목록 | 3.예금 | 4.출금 | 5.종료");
+            System.out.println("--------------------------------------------------");
+            System.out.print("선택> ");
+
+            int selectNo = Integer.parseInt(scanner.nextLine());
+
+            if (selectNo == 1) {
+                // 계좌 생성
+                System.out.println("----------\n계좌생성\n----------");
+                System.out.print("계좌번호: ");
+                String ano = scanner.nextLine();
+                System.out.print("계좌주: ");
+                String owner = scanner.nextLine();
+                System.out.print("초기입금액: ");
+                int balance = Integer.parseInt(scanner.nextLine());
+
+                Account1 newAccount = new Account1(ano, owner, balance);
+                for (int i = 0; i < accountArray.length; i++) {
+                    if (accountArray[i] == null) {
+                        accountArray[i] = newAccount;
+                        System.out.println("결과: 계좌가 생성되었습니다.");
+                        break;
+                    }
+                }
+
+            } else if (selectNo == 2) {
+                // 계좌 목록
+                System.out.println("----------\n계좌목록\n----------");
+                for (Account1 account : accountArray) {
+                    if (account != null) {
+                        System.out.printf("%s\t%s\t%d\n", account.getAno(), account.getOwner(), account.getBalance());
+                    }
+                }
+
+            } else if (selectNo == 3) {
+                // 예금
+                System.out.println("----------\n예금\n----------");
+                System.out.print("계좌번호: ");
+                String ano = scanner.nextLine();
+                System.out.print("예금액: ");
+                int money = Integer.parseInt(scanner.nextLine());
+
+                for (Account1 account : accountArray) {
+                    if (account != null && account.getAno().equals(ano)) {
+                        account.setBalance(account.getBalance() + money);
+                        System.out.println("결과: 예금이 성공되었습니다.");
+                        break;
+                    }
+                }
+
+            } else if (selectNo == 4) {
+                // 출금
+                System.out.println("----------\n출금\n----------");
+                System.out.print("계좌번호: ");
+                String ano = scanner.nextLine();
+                System.out.print("출금액: ");
+                int money = Integer.parseInt(scanner.nextLine());
+
+                for (Account1 account : accountArray) {
+                    if (account != null && account.getAno().equals(ano)) {
+                        account.setBalance(account.getBalance() - money);
+                        System.out.println("결과: 출금이 성공되었습니다.");
+                        break;
+                    }
+                }
+            // 종료
+            } else if (selectNo == 5) {
+                run = false;
+            }
+        }
+        System.out.println("프로그램 종료");
     }
 
 }
