@@ -7,7 +7,9 @@ public class Main {
     Chapter07 ch07 = new Chapter07();
 //    ch07.SmartPhoneExample();
 //    ch07.ComputerExample();
-    ch07.SupersonicAirplaneExample();
-    ch07.ChildExample();
+//    ch07.SupersonicAirplaneExample();
+//    ch07.ChildExample();
+        // 개인과제 4 수강 클래스
+        ch07.GetGradeExample();
     }
 }

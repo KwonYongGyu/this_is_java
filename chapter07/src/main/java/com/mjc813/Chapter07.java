@@ -1,7 +1,6 @@
 package com.mjc813;
 
-import java.nio.file.attribute.UserPrincipal;
-import java.util.stream.StreamSupport;
+import java.util.Scanner;
 
 public class Chapter07 {
     public void SmartPhoneExample(){
@@ -81,4 +80,39 @@ public class Chapter07 {
         parent.method2();
         // parent.method3(); (호출 불가능)
     }
+    // 개인과제 4
+    //학생이 강의를 수강해서 성적을 받는 생활을 클래스 설계 해보세요.
+    //	클래스는 학생, 강의과목, 학생이 과목을 수강 하고 성적을 받는 과정의
+    //	데이터가 잘 저장되고 표현 되도록 설계 해보세요.
+    //	정답은 없으므로 여러분의 경험에 기반하여 클래스를 만들어 봅니다.
+    //	속성과 동작을 잘 구분하여 만들고 Lombok 을 활용 합니다.
+    //	클래스 이름 속성, 동작 이름은 자유롭습니다.
+    //	설계한 소스는 개인과제 git 리포지토리에 올립니다.
+    //	기한은 약 1~3시간 정도 개발할 양이면 됩니다. 너무 적어도 많아도 안됩니다.
+    public void GetGradeExample(){
+//        AttendLecture[] AttendArray = new AttendLecture[];
+        Scanner scanner = new Scanner(System.in);
+        boolean run = true; // while문의 조건식을 위한 변수 선언
+
+        while(run){
+            System.out.println("--------------------------------------------------");
+            System.out.println("1.학생정보 | 2.수강과목 | 3.성적 | 4.등급 | 5.수업관리 | 6.종료");
+            System.out.println("--------------------------------------------------");
+            System.out.print("선택> ");
+
+            int selectNo = Integer.parseInt(scanner.nextLine());
+
+            if (selectNo == 1) {
+                // 학생
+                System.out.println("----------\\학생정보\\n----------\"");
+                System.out.print("이름: ");
+                String studentName = scanner.nextLine();
+                System.out.print("학번: ");
+                String studentId = scanner.nextLine();
+
+                GetGrade gg = new GetGrade(studentName, studentId);
+            }
+        }
+    }
+
 }
