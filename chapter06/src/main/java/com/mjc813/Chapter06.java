@@ -426,7 +426,7 @@ public class Chapter06 {
         account.setBalance(300000);
         System.out.println("현재 잔고: " + account.getBalance());
     }
-
+    // 20
     public void BankApplication() {
         Account1[] accountArray = new Account1[100];
         Scanner scanner = new Scanner(System.in); // Scanner 생성
