@@ -96,11 +96,12 @@ public class Chapter07 {
     //	기한은 약 1~3시간 정도 개발할 양이면 됩니다. 너무 적어도 많아도 안됩니다.
     public void GetGradeExample() {
         Scanner scanner = new Scanner(System.in);
-        // 여러 명의 학생 정보를 저장할 리스트
+        // 학생정보 저장
         List<GetGrade> studentList = new ArrayList<>();
 
-        // 현재 입력 중인 정보를 임시 저장할 변수들
-        String name = "", id = "", lecture = "";
+        String name = "";
+        String id = "";
+        String lecture = "";
         int score = 0;
         boolean run = true;
 
