@@ -10,6 +10,15 @@ public class Main {
 //    ch07.SupersonicAirplaneExample();
 //    ch07.ChildExample();
         // 개인과제 4 수강 클래스
-        ch07.GetGradeExample();
+//        ch07.GetGradeExample();
+        // 01-28 다형성, 추상화
+//        ch07.CarExample1();// Getter/Setter와 생성자로 소스 변경버전
+//        ch07.DriverExample();
+//        ch07.InstanceofExampleMain();
+//        ch07.PhoneExample1();
+//        ch07.AbstractMethodExample();
+        ch07.SealedExample();
     }
+
+
 }

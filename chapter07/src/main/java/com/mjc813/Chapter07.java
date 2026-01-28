@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import static com.mjc813.InstanceofExample.personInfo;
+
 public class Chapter07 {
     public void SmartPhoneExample() {
         SmartPhone myPhone = new SmartPhone("갤럭시", "은색");
@@ -168,6 +170,132 @@ public class Chapter07 {
                     System.out.println("잘못된 선택입니다.");
             }
         }
+    }
+
+    // p.318 다형성
+    public void CarExample1() {
+        // Car 객체 생성
+//        Car1 myCar = new Car1();
+        // 생성자 사용 방법
+        Car1 myCar1 = new Car1(new HankookTire());
+        myCar1.run();
+        Car1 myCar2 = new Car1(new KumhoTire());
+        myCar2.run();
+        // Tire 객체 장착
+//        myCar.tire = new Tire();
+//        myCar.run();
+        // Setter 사용 방법
+//        myCar.setTire(new Tire());
+//        myCar.run();
+
+        // HankookTire 객체 장착
+//        myCar.tire = new HankookTire();
+//        myCar.run();
+//        myCar.setTire(new HankookTire());
+//        myCar.run();
+
+        // KumhoTire 객체 장착
+//        myCar.tire = new Kumhotire();
+//        myCar.run();
+//        myCar.setTire(new Kumhotire());
+//        myCar.run();
+
+
+    }
+
+    // p.322 매개변수의 다형성
+    public void DriverExample() {
+    // Driver 객체 생성
+        Driver driver = new Driver();
+
+        // 매개값으로 Bus 객체를 제공하고 driver() 메소드 호출
+        Bus bus = new Bus();
+        driver.drive(bus);
+        // driver.drive(bus);
+        // 와 동일
+
+        // 매개값으로 Taxi 객체를 제공하고 driver() 메소드 호출
+        Taxi taxi = new Taxi();
+        driver.drive(taxi);
+        // driver.drive(taxi);
+        // 와 동일
+    }
+
+    // p.324
+    public void InstanceofExampleMain(){
+        Person p1 = new Person("홍길동");
+        personInfo(p1);
+
+        System.out.println();
+
+        // Student 객체를 매개값으로 제공하고 personInfo() 메소드 호출
+        Person p2 = new Student("김길동", 10);
+        personInfo(p2);
+
+        // 이름 수정시(Setter 활용 예시)
+        p1.setName("이길동");
+        // personInfo(p1) // 이름이 변경된것을 확인 가능
+    }
+
+    // p.328
+    public void PhoneExample1(){
+        SmartPhone1 smartPhone = new SmartPhone1("홍길동");
+
+        smartPhone.turnOn();
+        smartPhone.internetSearch();
+        smartPhone.turnOff();
+    }
+    // p.331
+    public void AbstractMethodExample(){
+//        Dog dog = new Dog();
+//        dog.sound();
+//
+//        Cat cat = new Cat();
+//        cat.sound();
+//
+//        // 매개변수의 다형성
+//        animalSound(new Dog()); // (dog);
+//        animalSound(new Cat()); // (cat);
+        Dog dog = new Dog();
+        System.out.println("동물 종류: " + dog.getKind()); // Getter 사용
+        dog.sound();
+        dog.breath();
+
+        System.out.println();
+
+        Cat cat = new Cat();
+        System.out.println("동물 종류: " + cat.getKind()); // Getter 사용
+        cat.sound();
+        cat.breath();
+
+        System.out.println("\n--- 매개변수 다형성 실행 ---");
+        animalSound(new Dog());
+        animalSound(new Cat());
+    }
+
+    private void animalSound(Animal animal) {
+        // animal이 어떤 자식 객체냐에 따라 각기 다른 sound()가 실행됨
+        System.out.print(animal.getKind() + "의 소리: ");
+        animal.sound();
+    }
+
+//    private void animalSound(Animal animal) {
+//        animal.sound();
+//    }
+    // p.334
+    public void SealedExample(){
+        Person1 p = new Person1();
+        p.setName("홀길동");
+
+        Employee e = new Employee("김철수");
+        Manager m = new Manager("이영희");
+        Director d = new Director("박본부");
+
+        p.work();
+        e.work();
+        m.work();
+        d.work();
+
     }
 
 }
