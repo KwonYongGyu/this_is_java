@@ -17,7 +17,11 @@ public class Main {
 //        ch07.InstanceofExampleMain();
 //        ch07.PhoneExample1();
 //        ch07.AbstractMethodExample();
-        ch07.SealedExample();
+//        ch07.SealedExample();
+        // 01-29
+        ch07.ChildExample1();
+        // 개인과제
+        ch07.Animal1Example();
     }
 
 

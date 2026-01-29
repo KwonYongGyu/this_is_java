@@ -298,4 +298,46 @@ public class Chapter07 {
 
     }
 
+
+    // 1/29일
+    public void ChildExample1(){
+        Child1 child = new Child1();
+    }
+    // 개인과제
+    public void Animal1Example(){
+        Animal1 rabbit = new Rabbit("2살", "40cm");
+        Animal1 tiger = new Tiger("6살", "250cm");
+        Animal1 fox = new Fox("4살", "80cm");
+        Animal1 swan = new Swan("3살", "110cm");
+
+        System.out.println("==== 동물 상태 보고 ====");
+        printInfo(rabbit);
+        printInfo(tiger);
+        printInfo(fox);
+        printInfo(swan);
+
+        System.out.println("\n==== 먹이사슬 ====");
+        // 토끼는 Swan만 먹는다
+        System.out.println("1. 토끼의 식사: " + rabbit.eat(swan));
+        System.out.println("2. 토끼의 식사: " + rabbit.eat(tiger));
+
+        // 호랑이는 토끼만 먹는다
+        System.out.println("3. 호랑이의 식사: " + tiger.eat(rabbit));
+
+        // 여우는 Swan, 토끼를 먹는다
+        System.out.println("4. 여우의 식사(Swan): " + fox.eat(swan));
+        System.out.println("5. 여우의 식사(Rabbit): " + fox.eat(rabbit));
+
+        // Swam은 먹지 못함
+        System.out.println("6. Swan의 식사: " + swan.eat(fox));
+    }
+
+    public static void printInfo(Animal1 animal) {
+        System.out.println("[" + animal.getClass().getSimpleName() + "]");
+        System.out.println(" - 울음소리: " + animal.sound());
+        System.out.println(" - 나이: " + animal.age());
+        System.out.println(" - 크기: " + animal.size());
+        animal.breathe();
+    }
+
 }
