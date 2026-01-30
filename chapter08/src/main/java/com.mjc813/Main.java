@@ -5,16 +5,16 @@ package com.mjc813;
 public class Main {
     public static void main(String[] args) {
         Chapter08 ch08 = new Chapter08();
-//            ch08.RemoteControlExample();
+            ch08.RemoteControlExample();
 
 
         // 확인문제 5번
-        ch08.ConfirmationProblem5();
-        // 확인문제 6번
-        ch08.ConfirmationProblem6();
-        // 확인문제 7번
-        ch08.ConfirmationProblem7();
-        // 확인문제 8번
-        ch08.ConfirmationProblem8();
+//        ch08.ConfirmationProblem5();
+//        // 확인문제 6번
+//        ch08.ConfirmationProblem6();
+//        // 확인문제 7번
+//        ch08.ConfirmationProblem7();
+//        // 확인문제 8번
+//        ch08.ConfirmationProblem8();
     }
 }
