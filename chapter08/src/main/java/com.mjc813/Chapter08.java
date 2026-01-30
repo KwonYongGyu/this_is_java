@@ -6,18 +6,19 @@ import static com.mjc813.SoundExample.printSound;
 public class Chapter08 {
 
     public void RemoteControlExample() {
-        //p.343
-//        RemoteControl rc;
-//        rc = new Television();
-//        rc.turnOn();
-        //p.348
+
         RemoteControl rc;
         rc = new Television();
         rc.turnOn();
+        // p.354
+        rc.setVolume(5);
+        rc.turnOff();
 
         rc = new Audio();
         rc.turnOn();
-        
+        rc.setVolume(5);
+        rc.turnOff();
+
         // p.349
         System.out.println("리모콘 최대 불륨: " + RemoteControl.MAX_VOLUME);
         System.out.println("리모콘 최저 불륨: " + RemoteControl.MIN_VOLUME);
