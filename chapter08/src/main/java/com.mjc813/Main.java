@@ -5,7 +5,10 @@ package com.mjc813;
 public class Main {
     public static void main(String[] args) {
         Chapter08 ch08 = new Chapter08();
-            ch08.RemoteControlExample();
+//            ch08.RemoteControlExample();
+//        ch08.ServiceExample();
+//        ch08.ExtendsExample();
+        ch08.PromotionExample();
 
 
         // 확인문제 5번
