@@ -8,9 +8,12 @@ public class Main {
 //            ch08.RemoteControlExample();
 //        ch08.ServiceExample();
 //        ch08.ExtendsExample();
-        ch08.PromotionExample();
-
-
+//        ch08.PromotionExample();
+//        ch08.CastingExample();
+//        ch08.CarExample();
+//        ch08.DriverExample();
+//        ch08.InstanceofExample();
+        ch08.SealedExample();
         // 확인문제 5번
 //        ch08.ConfirmationProblem5();
 //        // 확인문제 6번

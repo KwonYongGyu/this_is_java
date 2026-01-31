@@ -125,7 +125,74 @@ public class Chapter08 {
         bus.run();
         bus.checkFare();
     }
+    // p.379
+    public void CarExample(){
+        // 자동차 객체 생성
+        Car myCar = new Car();
 
+        // run() 메소드 실행
+        myCar.run();
+
+        // 타이어 객체 교체
+        myCar.tire1 = new KumhoTire();
+        myCar.tire2 = new KumhoTire();
+
+        //run() 메소드 실행(다형성: 실행 결과가 다름)
+        myCar.run();
+    }
+    // p.383
+public void DriverExample(){
+        Driver driver = new Driver();
+
+        Bus bus = new Bus();
+        Taxi taxi = new Taxi();
+        // 매개값으로 구현 객체 대입(다형성: 실행 결과가 다름)
+    driver.drive(bus);
+    driver.drive(taxi);
+}
+//p.385
+    public void InstanceofExample(){
+        // 구현 객체 생성
+        Taxi taxi = new Taxi();
+        Bus bus = new Bus();
+
+        //ride() 메소드 호출 시 구현 객체를 매개값으로 전달
+        ride(taxi);
+        System.out.println();
+        ride(bus);
+    }
+    // 인터페이스에 매개변수를 갖는 메소드
+    public static void ride(Vehicle vehicle){
+        if(vehicle instanceof Bus bus){
+            bus.checkFare();
+        }
+        vehicle.run();
+    }
+    //p.388~389
+    public void SealedExample(){
+        ImplClass impl = new ImplClass();
+
+        InterfaceA ia = impl;
+        ia.methodA();
+
+        System.out.println();
+
+
+        InterfaceB ib = impl;
+        ib.methodA();
+        ib.methodB();
+
+        System.out.println();
+
+
+        InterfaceC ic = impl;
+        ib.methodA();
+        ib.methodB();
+        ic.methodC();
+
+        System.out.println();
+
+    }
 
     // 확인문제 5.
     public void ConfirmationProblem5() {
