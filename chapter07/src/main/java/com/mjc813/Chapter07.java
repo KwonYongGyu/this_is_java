@@ -297,7 +297,48 @@ public class Chapter07 {
         d.work();
 
     }
+    // 확인문제 8
+    public void SnowTireExample(){
+        SnowTire snowTire = new SnowTire();
+        Tire1 tire1 = snowTire;
 
+        snowTire.run();
+        tire1.run();
+    }
+    // 확인문제 9
+//    public void extendsExample(){
+//        B1 b = new B1();
+//        // new B1();
+//        // (B1) new A1();
+//        // new D1();
+//        // new E1();
+//
+//        void method(B1 b){
+//
+//        }
+//        method(new B1())
+//    }
+// 확인문제 11
+    public void MainActivityExample(){
+        MainActivity main = new MainActivity();
+        main.onCreate();
+    }
+    // 확인문제 12
+//    public void Example(){
+////        C12 c = new C12();
+////        A12 a = new A12();
+//        public static void action(A12 a){
+//            a.method1();
+//            if(a instanceof C12 c){
+//                C12 c;
+//                c.method2();
+//            }
+//        }
+//        action(new A12());
+//        action(new B12());
+//        action(new C12());
+//
+//    }
 
     // 1/29일
     public void ChildExample1(){

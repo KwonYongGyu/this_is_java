@@ -19,9 +19,13 @@ public class Main {
 //        ch07.AbstractMethodExample();
 //        ch07.SealedExample();
         // 01-29
-        ch07.ChildExample1();
+//        ch07.ChildExample1();
         // 개인과제
-        ch07.Animal1Example();
+//        ch07.Animal1Example();
+        // 확인문제 8
+//        ch07.SnowTireExample();
+        // 확인문제 11
+        ch07.MainActivityExample();
     }
 
 
