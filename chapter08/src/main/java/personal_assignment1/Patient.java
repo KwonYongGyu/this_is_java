@@ -1,4 +1,5 @@
 package personal_assignment1;
+
 import lombok.*;
 
 import java.time.LocalDate;
@@ -8,15 +9,16 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class Patient {
-    private String name;    // 이름
-    private String id;      // 동물 종의 식별번호
-    private LocalDate admissionDate; // 입원날짜
-    private Doctor assignedDoctor; // 담당 의사
-    private LocalDate dischargeDate; // 퇴원날짜
-    private PetOwner owner; // 보호자
-    private int visitCount; // 면회 횟수
-    public Patient(String name, String id, LocalDate admissionDate, Doctor assignedDoctor, PetOwner owner){
+public abstract class Patient {
+    String name;    // 이름
+    String id;      // 동물 종의 식별번호
+    LocalDate admissionDate; // 입원날짜
+    Doctor assignedDoctor; // 담당 의사
+    LocalDate dischargeDate; // 퇴원날짜
+    PetOwner owner; // 보호자
+    int visitCount; // 면회 횟수
+
+    Patient(String name, String id, LocalDate admissionDate, Doctor assignedDoctor, PetOwner owner) {
         this.name = name;
         this.id = id;
         this.admissionDate = admissionDate;
