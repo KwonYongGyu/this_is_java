@@ -11,7 +11,7 @@ public class Nurse {
     private String name;
 
     // 1. 약을 준다 (Object pet 파라미터 유지)
-    public void administerMedicine(Object pet, String name, String id) {
+    public void administerMedicine(Patient pet) {
         // 괄호 오타 수정: (ID: " + id + ") -> 이 부분의 괄호를 하나 제거했습니다.
         System.out.println("간호사: " + name + "(ID: " + id + ") 환자에게 약을 먹였습니다.");
     }
