@@ -10,7 +10,7 @@ public class AnimalHospital {
     private Nurse mainNurse = new Nurse();       // 주인공 간호사
     private int patientCount = 0;
 
-    // 입원 로직
+    // 입원
     public boolean admit(Object pet) {
         if (patientCount < 100) {
             patients[patientCount++] = pet;
@@ -19,7 +19,7 @@ public class AnimalHospital {
         return false;
     }
 
-    // 약 주기 로직
+    // 약 주기
     public void giveMedicine() {
         for (int i = 0; i < patientCount; i++) {
             Object p = patients[i];
@@ -31,7 +31,7 @@ public class AnimalHospital {
         }
     }
 
-    // 면회 로직
+    // 면회
     public void processVisitation(PetOwner owner, Object pet) {
         // 간호사가 면회 조건을 체크하여 허락하면 면회 진행
         if (mainNurse.allowVisitation(owner, pet, currentTime)) {
@@ -40,7 +40,7 @@ public class AnimalHospital {
         }
     }
 
-    // 면회 횟수 업데이트를 위한 헬퍼 메서드
+    // 면회 횟수 업데이트
     private void updateVisitCount(Object pet) {
         if (pet instanceof Cat) ((Cat) pet).setVisitCount(1);
         else if (pet instanceof Parrot) ((Parrot) pet).setVisitCount(1);

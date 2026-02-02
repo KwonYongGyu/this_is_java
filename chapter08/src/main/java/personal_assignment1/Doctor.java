@@ -8,4 +8,5 @@ import lombok.*;
 @ToString
 public class Doctor {
     private String name; // 의사 이름
+    private String major; // 의사별 전공
 }
