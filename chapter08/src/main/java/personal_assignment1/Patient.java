@@ -16,14 +16,14 @@ public class Patient {
     private LocalDate dischargeDate; // 퇴원날짜
     private PetOwner owner; // 보호자
     private int visitCount; // 면회 횟수
-    public Patient(String name, String id, LocalDate admissionDate, Doctor assignedDoctor,
-               LocalDate dischargeDate, PetOwner owner){
-    this.name = name;
-    this.id = id;
-    this.admissionDate = admissionDate;
-    this.assignedDoctor = assignedDoctor;
-    this.dischargeDate = dischargeDate;
-    this.owner = owner;
-    this.visitCount = 0;
+    public Patient(String name, String id, LocalDate admissionDate, Doctor assignedDoctor, PetOwner owner){
+        this.name = name;
+        this.id = id;
+        this.admissionDate = admissionDate;
+        this.assignedDoctor = assignedDoctor;
+        this.owner = owner;
+        this.visitCount = 0;
     }
+
+
 }

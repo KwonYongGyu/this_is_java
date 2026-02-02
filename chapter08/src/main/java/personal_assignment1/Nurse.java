@@ -12,11 +12,11 @@ public class Nurse {
 
     // 1. 약을 준다
     public void administerMedicine(Patient pet) {
-        System.out.println("간호사: " + name + "(ID: " + id + ") 환자에게 약을 먹였습니다.");
+        System.out.println("간호사 " + name + ": " + pet.getName() + "(ID: " + pet.getId() + ") 환자에게 약을 먹였습니다.");
     }
 
     // 2. 면회를 허락한다
-    public boolean allowVisitation(PetOwner visitor, Object pet, int currentTime) {
+    public boolean allowVisitation(PetOwner visitor, Patient pet, int currentTime) {
         // 시간 조건 (15~20시)
         if (currentTime < 15 || currentTime > 20) {
             System.out.println("간호사: 면회는 불가합니다. (사유: 면회시간이 아닙니다. 면회시간은 15~20시 입니다.)");
@@ -24,14 +24,13 @@ public class Nurse {
         }
 
         // 보호자 일치 확인
-        if (!getOwnerName(pet).equals(visitor.getName())) {
-            System.out.println("간호사: 면회는 불가합니다. (사유: 해당 환자의 보호자가 아닙니다.)");
+        if (pet.getOwner() == null || !pet.getOwner().getName().equals(visitor.getName())) {
+            System.out.println("간호사: 해당 환자의 보호자가 아닙니다.");
             return false;
         }
 
-        // 동물 면회 횟수 확인 (하루 1회)
-        if (getVisitCount(pet) >= 1) {
-            System.out.println("간호사: 면회는 불가합니다. (사유: 해당 환자는 오늘 이미 면회를 했습니다.)");
+        if (pet.getVisitCount() >= 1) {
+            System.out.println("간호사: 이미 오늘 면회를 마쳤습니다.");
             return false;
         }
 

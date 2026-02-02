@@ -24,14 +24,12 @@ public class execution {
 
 
         // 3. 동물 환자 생성
-        Cat cat = new Cat("나비", "C001", LocalDate.now(), doctorLee, "김철수", owner1, 0);
-
-        SmallDog sdog = new SmallDog("초코", "S-D001", LocalDate.now(), doctorPark, "홍길동", owner2, 0);
-        SmallDog sdog1 = new SmallDog("마루", "S-D001", LocalDate.now(), doctorPark, "박대한", owner3, 0);
-        BigDog bdog = new BigDog("보리" , "B-D001",LocalDate.now(), doctorJang, "박대한", owner3, 0);
-        Rabbit rabbit = new Rabbit("라떼" , "R001",LocalDate.now(), doctorSuk, "이영희", owner4, 0);
-        Parrot parrot = new Parrot("나나" , "P001",LocalDate.now(), doctorNo, "강재용", owner5, 0);
-
+        Cat cat = new Cat("나비", "C001", LocalDate.now(), doctorLee, owner1);
+        SmallDog sdog = new SmallDog("초코", "S-D001", LocalDate.now(), doctorPark, owner2);
+        SmallDog sdog1 = new SmallDog("마루", "S-D002", LocalDate.now(), doctorPark, owner3);
+        BigDog bdog = new BigDog("보리" , "B-D001", LocalDate.now(), doctorJang, owner3);
+        Rabbit rabbit = new Rabbit("라떼" , "R001", LocalDate.now(), doctorSuk, owner4);
+        Parrot parrot = new Parrot("나나" , "P001", LocalDate.now(), doctorNo, owner5);
         // 4. 병원 입원 처리
         hospital.admit(cat);
         hospital.admit(sdog);
@@ -47,7 +45,7 @@ public class execution {
 
         System.out.println("\n=== 면회 시나리오 ===");
 
-        // 상황 A: 오전 10시 (면회 시간 아님)
+        // 상황 A: 오전 10시 (면회 불가 시간)
         hospital.setCurrentTime(10);
         System.out.println("[오전 10시 면회 시도]");
         hospital.processVisitation(owner1, cat);
@@ -65,7 +63,7 @@ public class execution {
         // 상황 D: 주인이 다른 반려동물을 면회 시도 (주인 횟수 제한 없음)
         System.out.println("\n[오후 6시 다른 반려동물 면회 시도]");
         hospital.setCurrentTime(18);
-        hospital.processVisitation(owner1, sdog); // 성공 (초코는 오늘 첫 면회)
+        hospital.processVisitation(owner3, bdog); // 성공 (보리는 오늘 첫 면회)
     }
 }
 
