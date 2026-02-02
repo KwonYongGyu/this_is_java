@@ -9,9 +9,8 @@ import lombok.*;
 @ToString
 public class PetOwner {
     private String name;
-    public void visit(Object pet){
-    // 주인이 동물을 면회한다.
-        System.out.println(name + "님이 반려동물과 면회하고 있습니다.");
-    }
 
+    public void visit(Patient pet) {
+        System.out.println(this.name + "님이 반려동물 [" + pet.getName() + "]와(과) 면회하고 있습니다.");
+    }
 }

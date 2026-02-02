@@ -12,4 +12,8 @@ public class SmallDog extends Patient {
     public SmallDog(String name, String id, LocalDate now, Doctor doctor, PetOwner owner) {
         super(name, id, now, doctor, owner);
     }
+    @Override
+    public String getSpecies(){
+        return "소형견";
+    }
 }

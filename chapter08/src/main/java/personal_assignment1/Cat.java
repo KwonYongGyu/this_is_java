@@ -1,8 +1,10 @@
-package personal_assignment1;
 
+package personal_assignment1;
 import lombok.*;
 
+import java.util.Locale;
 import java.time.LocalDate;
+
 
 @Getter
 @Setter
@@ -11,6 +13,11 @@ import java.time.LocalDate;
 @ToString
 public class Cat extends Patient {
     public Cat(String name, String id, LocalDate now, Doctor doctor, PetOwner owner) {
-        super(name, id, now, doctor, owner); // 부모 생성자 호출!
+        super(name, id, now, doctor, owner);
+    }
+
+    @Override
+    public String getSpecies() {
+        return "고양이";
     }
 }
