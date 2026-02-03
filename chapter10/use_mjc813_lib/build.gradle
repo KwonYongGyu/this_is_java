@@ -1,0 +1,23 @@
+plugins {
+    id 'java'
+}
+
+group = 'com.mjc813'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+}
+
+dependencies {
+    implementation('com.mjc813:mjc813_lib:1.1.1.1.2')
+    // 괄호가 없어도 된다. 그냥 보기가 더 좋다.
+    testImplementation platform('org.junit:junit-bom:5.10.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+test {
+    useJUnitPlatform()
+}

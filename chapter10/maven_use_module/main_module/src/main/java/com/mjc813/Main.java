@@ -1,5 +1,7 @@
 package com.mjc813;
 
+import com.mjc813_2.TransJson2;
+
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
@@ -16,5 +18,6 @@ public class Main {
         }
         System.out.println(tj.hashCode());
         System.out.println(res.hashCode());
+        TransJson2 tr2 = new TransJson2(); // 외부에서 사용
     }
 }
