@@ -2,12 +2,15 @@ package personal_assignment1;
 
 import lombok.*;
 
-@Getter @Setter @NoArgsConstructor @AllArgsConstructor
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Nurse {
     private String name = "천장미";
 
     public void administerMedicine(Patient pet) {
-        System.out.println("간호사 " + name + ": [" + pet.getSpecies() + "] "
+        System.out.println(name +" 간호사" +  ": [" + pet.getSpecies() + "] "
                 + pet.getName() + " 환자에게 약을 먹였습니다.");
     }
 

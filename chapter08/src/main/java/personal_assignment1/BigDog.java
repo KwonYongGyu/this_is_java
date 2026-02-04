@@ -1,4 +1,5 @@
 package personal_assignment1;
+
 import lombok.*;
 
 import java.util.Locale;
@@ -14,8 +15,9 @@ public class BigDog extends Patient {
     public BigDog(String name, String id, LocalDate now, Doctor doctor, PetOwner owner) {
         super(name, id, now, doctor, owner);
     }
+
     @Override
-    public String getSpecies(){
+    public String getSpecies() {
         return "대형견";
     }
 }

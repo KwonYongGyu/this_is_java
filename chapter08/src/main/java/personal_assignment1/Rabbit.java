@@ -1,4 +1,5 @@
 package personal_assignment1;
+
 import lombok.*;
 
 import java.time.LocalDate;
@@ -12,8 +13,9 @@ public class Rabbit extends Patient {
     public Rabbit(String name, String id, LocalDate now, Doctor doctor, PetOwner owner) {
         super(name, id, now, doctor, owner);
     }
+
     @Override
-    public String getSpecies(){
+    public String getSpecies() {
         return "토끼";
     }
 }
