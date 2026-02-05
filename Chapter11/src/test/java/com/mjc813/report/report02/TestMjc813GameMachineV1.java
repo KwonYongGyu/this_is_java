@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class TestMjc813GameMachineV1 {
 	@Test
-	public void TestRunGame1() {
+	public void TestRunGame1() throws BatteryLessThan5Exception, Game1IsNullException{
 		Mjc813GameMachineV1 mjc813gameM1 = new Mjc813GameMachineV1();
 		BatteryLessThan5Exception exception1 = assertThrows(BatteryLessThan5Exception.class, () -> {
 			mjc813gameM1.runGame1();
