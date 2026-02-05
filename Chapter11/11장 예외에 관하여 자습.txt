@@ -7,7 +7,7 @@
 
 2. 예외의 가계도
 자바에서 예외는 모두 객체이다. 부모 - 자식 관계가 존재한다.
-Trowable : 모든 에러와 예외의 조상
+Throwable : 모든 에러와 예외의 조상
 Error : 하드웨어 고장처럼 프로그래머가 코드로 고칠 수 없는 심각한 문제(무시해야 함)
 Exception(Checked Exception) : 컴파일러가 꼭 예외처리 해야한다고 알려주는 예외
 RuntimeException(Unchecked Exception) : 실행해 봐야 하는 예외로 프로그래머의 실수인 경우가 많아 컴파일러가 체크하지 않는다.(0으로 나누기, null 참조 등)
