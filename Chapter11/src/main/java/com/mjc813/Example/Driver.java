@@ -1,4 +1,4 @@
-package com.mjc813.Example;
+package com.mjc813.example;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -6,5 +6,5 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 public class Driver {
-    private final String name;
+	private final String name;
 }

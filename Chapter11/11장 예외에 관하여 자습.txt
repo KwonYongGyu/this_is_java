@@ -44,8 +44,25 @@ public class Battery5PercentLessThanException extends RuntimeException {
 		super("배터리가 5% 미만이라 위험합니다.!");
 	}
 }
-요약정리
+2/5일 요약정리
 1. 예외처리는 프로그램이 죽지 않게 우회로를 만드는것이다.
 2. try는 시도, catch는 수습, finally는 무조건 마무리한다.
 3. 다형성 덕분에 조상 타입(Exception)으로 모든 자식예외를 한 번에 잡을 수 있다.
 4. 내가 직접 예외를 만들 때는 RuntimeException을 상속 받으면 편하다.
+
+2/6일
+1. 하나의 catch에 여러 개를 넣을 땐 | 기호를 쓴다.
+2. 이때 부모 - 자식 관계가 섞여 있으면 안된다.(컴파일 에러 발생)
+3. 서로 다른 예외이지만 처리 방법이 같을 때만 묶어서 쓴다.
+4. 여러 개의 catch 블록을 사용할땐 반드시 자식 클래스(구체적인 예외)부터 먼저 작성해야 한다.
+    자바의 다형성 때문으로 부모인 Exception이 먼저 나오면 컴파일러가
+    "어차피 아래 코드는 실행될 일이 없는데 왜 썼어?"라며 에러를 낸다.
+    try {
+        // 예외 발생 코드
+    } catch (Exception e) {
+        // 모든 예외가 여기서 다 걸러짐! (부모가 다 먹어버림)
+        System.out.println("나머지 예외들은 실행될 기회가 없어요.");
+    } catch (NullPointerException e) {
+        // 컴파일 에러: Unreachable catch block
+        System.out.println("나는 절대 실행 안 됨...");
+    }
