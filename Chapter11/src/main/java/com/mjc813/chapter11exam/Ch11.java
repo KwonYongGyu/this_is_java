@@ -1,5 +1,7 @@
 package com.mjc813.chapter11exam;
 
+import javax.accessibility.AccessibleContext;
+
 public class Ch11 {
     // 문자열 길이를 출력하는 메서드
     public void printLength1(String data) {
@@ -151,4 +153,31 @@ public class Ch11 {
             System.out.println("예외 처리: " + e.getMessage());
         }
     }
+    // 예외 떠넘기기
+    public void runExample7(){
+        try{
+            findClass();
+        } catch(ClassNotFoundException e) { // 호출한 곳에서 예외 처리
+            System.out.println("예외 처리: " + e.toString());
+        }
+    }
+    public static void findClass() throws ClassNotFoundException {
+        Class.forName("java.lang.String2");
+    }
+    // 사용자 정의 예외
+    public void runExample8(){
+        Account account = new Account();
+        // 예금하기
+        account.deposit(1000);
+        System.out.println("예금액: " + account.getBalance());
+
+        // 출금하기
+        try {
+            account.withdraw(30000);
+        } catch (InsufficientException e) { // 예외 처리 코드와 함께 withdraw() 메소드 호출
+            String message = e.getMessage();
+            System.out.println(message);
+        }
+    }
+
 }
