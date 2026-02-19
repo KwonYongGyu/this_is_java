@@ -4,6 +4,9 @@ import com.mjc813.ch15set.Member;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class Chapter12 {
@@ -264,7 +267,7 @@ public class Chapter12 {
         // 선택 번호
         int[] selectNumber = new int[6];
         Random random = new Random(3);
-        System.out.println("선택번호: " );
+        System.out.print("선택번호: " );
         for(int i =0; i<6; i++){
             selectNumber[i] = random.nextInt(45) + 1;
             System.out.print(selectNumber[i] + " ");
@@ -277,8 +280,119 @@ public class Chapter12 {
         System.out.print("당첨번호: ");
         for(int i = 0; i < 6 ; i++){
             winningNumber[i] = random.nextInt(45) + 1;
-            System.out.println(winningNumber[i] + " ");
+            System.out.print(winningNumber[i] + " ");
         }
         System.out.println();
+
+        // 당첨여부
+        Arrays.sort(selectNumber);
+        Arrays.sort(winningNumber);
+        boolean result = Arrays.equals(selectNumber, winningNumber);
+        System.out.print("당첨여부: ");
+        if(result) {
+            System.out.println("1등에 당첨되셨습니다.");
+        } else {
+            System.out.println("당첨되지 않았습니다.");
+        }
+    }
+
+    public void DateExample(){
+        Date now = new Date();
+        String strNow1 = now.toString();
+        System.out.println(strNow1);
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
+        String strNow2 = sdf.format(now);
+        System.out.println(strNow2);
+    }
+
+    public void CalendarExample(){
+        Calendar now = Calendar.getInstance();
+
+        int year = now.get(Calendar.YEAR);
+        int month = now.get(Calendar.MONTH) + 1;
+        int day = now.get(Calendar.DAY_OF_MONTH);
+
+        int week = now.get(Calendar.DAY_OF_WEEK);
+        String strWeek = null;
+        switch(week) {
+            case Calendar.MONDAY:
+                strWeek = "월";
+                break;
+            case Calendar.TUESDAY:
+                strWeek = "화";
+                break;
+            case Calendar.WEDNESDAY:
+                strWeek = "수";
+                break;
+            case Calendar.THURSDAY:
+                strWeek = "목";
+                break;
+            case Calendar.FRIDAY:
+                strWeek = "금";
+                break;
+            case Calendar.SATURDAY:
+                strWeek = "토";
+                break;
+            default:
+                strWeek = "일";
+        }
+
+        int amPm = now.get(Calendar.AM_PM);
+        String strAmPm = null;
+        if(amPm == Calendar.AM) {
+            strAmPm = "오전";
+        } else {
+            strAmPm = "오후";
+        }
+
+        int hour = now.get(Calendar.HOUR);
+        int minute = now.get(Calendar.MINUTE);
+        int second = now.get(Calendar.SECOND);
+
+        System.out.print(year + "년 ");
+        System.out.print(month + "월 ");
+        System.out.println(day + "일 ");
+        System.out.print(strWeek + "요일 ");
+        System.out.println(strAmPm + " ");
+        System.out.print(hour + "시 ");
+        System.out.print(minute + "분 ");
+        System.out.println(second + "초 ");
+    }
+
+    public void LosAngelesExample(){
+        TimeZone timeZone = TimeZone.getTimeZone("America/Los_Angeles");
+        Calendar now = Calendar.getInstance( timeZone );
+
+        int amPm = now.get(Calendar.AM_PM);
+        String strAmPm = null;
+        if(amPm == Calendar.AM) {
+            strAmPm = "오전";
+        } else {
+            strAmPm = "오후";
+        }
+        int hour = now.get(Calendar.HOUR);
+        int minute = now.get(Calendar.MINUTE);
+        int second = now.get(Calendar.SECOND);
+
+        System.out.print(strAmPm + " ");
+        System.out.print(hour + "시 ");
+        System.out.print(minute + "분 ");
+        System.out.println(second + "초 ");
+    }
+
+    public void DateTimeOperationExample(){
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy.MM.dd a HH:mm:ss");
+        System.out.println("현재 시간: " + now.format(dtf));
+
+        LocalDateTime result1 = now.plusYears(1);
+        System.out.println("1년 덧셈: " + result1.format(dtf));
+
+        LocalDateTime result2 = now.minusMonths(2);
+        System.out.println("2월 뺄셈: " + result2.format(dtf));
+
+        LocalDateTime result3 = now.plusDays(7);
+        System.out.println("7월 덧셈: " + result3.format(dtf));
     }
 }
