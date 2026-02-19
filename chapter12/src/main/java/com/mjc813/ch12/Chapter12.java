@@ -4,9 +4,13 @@ import com.mjc813.ch15set.Member;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.*;
+import java.text.ChoiceFormat;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 
 public class Chapter12 {
@@ -395,4 +399,96 @@ public class Chapter12 {
         LocalDateTime result3 = now.plusDays(7);
         System.out.println("7월 덧셈: " + result3.format(dtf));
     }
+
+    public void DateTimeCompareExample(){
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy.MM.dd a HH:mm:ss");
+
+        LocalDateTime startDateTime = LocalDateTime.of(2021,    1, 1, 0, 0, 0);
+        System.out.println("시작일: " + startDateTime.format(dtf));
+
+        LocalDateTime endDateTime = LocalDateTime.of(2021,  12, 31, 0, 0, 0);
+        System.out.println("종료일: " + endDateTime.format(dtf));
+
+        if(startDateTime.isBefore(endDateTime)) {
+            System.out.println("진행 중입니다.");
+        } else if(startDateTime.isEqual(endDateTime)) {
+            System.out.println("종료합니다.");
+        } else if (startDateTime.isAfter(endDateTime)) {
+            System.out.println("종료했습니다.");
+        }
+
+        long remainYear = startDateTime.until(endDateTime, ChronoUnit.YEARS);
+        long remainMonth = startDateTime.until(endDateTime, ChronoUnit.MONTHS);
+        long remainDay = startDateTime.until(endDateTime, ChronoUnit.DAYS);
+        long remainHour = startDateTime.until(endDateTime, ChronoUnit.HOURS);
+        long remainMinute = startDateTime.until(endDateTime, ChronoUnit.MINUTES);
+        long remainSecond = startDateTime.until(endDateTime, ChronoUnit.SECONDS);
+        System.out.println("남은 해: " + remainYear);
+        System.out.println("남은 월: " + remainMonth);
+        System.out.println("남은 일: " + remainDay);
+        System.out.println("남은 시간: " + remainHour);
+        System.out.println("남은 분: " + remainMinute);
+        System.out.println("남은 초: " + remainSecond);
+
+    }
+
+    public void DecimalFormatExample(){
+        double num = 1234567.89;
+
+        DecimalFormat df;
+
+        // 정수 자리까지 표기
+        df = new DecimalFormat("#,###");
+        System.out.println( df.format(num) );
+
+        // 무조건 소수 첫째 자리까지 표기
+        df = new DecimalFormat("#,###.0");
+        System.out.println( df.format(num) );
+
+    }
+
+    public void SimpleDateFormatExample(){
+         Date now = new Date();
+
+         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+         System.out.println( sdf.format(now) );
+
+         sdf = new SimpleDateFormat("yyyy년 MM월 dd일");
+         System.out.println( sdf.format(now) );
+
+         sdf = new SimpleDateFormat("yyyy.MM.dd a HH:mm:ss");
+         System.out.println( sdf.format(now) );
+
+         sdf = new SimpleDateFormat("오늘은 E요일");
+         System.out.println( sdf.format(now) );
+
+        sdf = new SimpleDateFormat("오늘은 D번째 날");
+        System.out.println( sdf.format(now) );
+
+        sdf = new SimpleDateFormat("오늘은 d번째 날");
+        System.out.println( sdf.format(now) );
+    }
+
+    public void GetClassExample(){
+        // how1
+        Class clazz = Car.class;
+
+        System.out.println("패키지: " + clazz.getPackage().getName());
+        System.out.println("클래스 간단 이름: " + clazz.getSimpleName());
+        System.out.println("클래스 전체 이름: " + clazz.getName());
+    }
+
+//    public void ReflectionExample throws Exception(){
+
+//    public void GetResourceExample(){
+//        Class clazz = Car.class;
+//
+//        String photo1Path = clazz.getResource("photo1.jpg").getPath();
+//        String photo2Path = clazz.getResource("images/photo2.jpg").getPath();
+//
+//        System.out.println(photo1Path);
+//        System.out.println(photo2Path);
+//    }
+
+
 }
