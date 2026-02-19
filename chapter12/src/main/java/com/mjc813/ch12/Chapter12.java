@@ -209,4 +209,76 @@ public class Chapter12 {
             System.out.println(token);
         }
     }
+
+    public void BoxingUnBoxingExample(){
+        //Boxing
+        Integer obj = 100;
+        System.out.println("value: " + obj.intValue());
+
+        //Unboxing
+        int value = obj;
+        System.out.println("value: " + value);
+
+        // 연산 시 Unboxing
+        int result = obj + 100;
+        System.out.println("result: " + result);
+    }
+
+    public void ValueCompareExample(){
+        // -128 ~ 127 초과값일 경우
+        Integer obj1 = 300;
+        Integer obj2 = 300;
+        System.out.println("==: " + (obj1==obj2));
+        System.out.println("equals(): " + obj1.equals(obj2));
+        System.out.println();
+
+        // -128 ~ 127 범위값일 경우
+        Integer obj3 = 10;
+        Integer obj4 = 10;
+        System.out.println("==: " + (obj3 == obj4));
+        System.out.println("equals: " + obj3.equals(obj4));
+    }
+
+    public void MathExample(){
+        // 큰 정수 또는 작은 정수 얻기
+        double v1 = Math.ceil(5.3);
+        double v2 = Math.floor(5.3);
+        System.out.println("v1=" + v1);
+        System.out.println("v2=" + v2);
+
+        // 큰값 또는 작은값 얻기
+        long v3 = Math.max(3, 7);
+        long v4 = Math.min(3, 7);
+        System.out.println("v3=" + v3);
+        System.out.println("v4=" + v4);
+
+        // 소수 이하 두 자리 얻기
+        double value = 12.3456;
+        double temp1 = value * 100;
+        long temp2 = Math.round(temp1);
+        double v5 = temp2 / 100.0;
+        System.out.println("v5=" + v5);
+    }
+
+    public void RandomExample(){
+        // 선택 번호
+        int[] selectNumber = new int[6];
+        Random random = new Random(3);
+        System.out.println("선택번호: " );
+        for(int i =0; i<6; i++){
+            selectNumber[i] = random.nextInt(45) + 1;
+            System.out.print(selectNumber[i] + " ");
+        }
+        System.out.println();
+
+        // 당첨 번호
+        int[] winningNumber = new int[6];
+        random = new Random(5);
+        System.out.print("당첨번호: ");
+        for(int i = 0; i < 6 ; i++){
+            winningNumber[i] = random.nextInt(45) + 1;
+            System.out.println(winningNumber[i] + " ");
+        }
+        System.out.println();
+    }
 }
