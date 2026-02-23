@@ -7,7 +7,7 @@ public class Main {
     public static void main(String[]args) throws IOException {
         Chapter12 ch12 = new Chapter12();
 //        ch12.EqualsExample();
-//        ch12.HashCodeExample();
+        ch12.HashCodeExample();
 //        ch12.HashSetExample();
 //        ch12.ToStringExample();
 //        ch12.RecordExample();
