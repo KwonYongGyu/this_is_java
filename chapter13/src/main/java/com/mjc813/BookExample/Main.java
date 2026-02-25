@@ -1,6 +1,6 @@
-package com.mjc813.BookExample;
+package com.mjc813.bookExample;
 
-import static com.mjc813.BookExample.GenericExample.compare;
+import static com.mjc813.bookExample.GenericExample.compare;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
