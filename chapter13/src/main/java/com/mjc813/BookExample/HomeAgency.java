@@ -1,4 +1,4 @@
-package com.mjc813.bookExample;
+package com.mjc813.BookExample;
 
 public class HomeAgency extends Rentable<Home> {
     @Override

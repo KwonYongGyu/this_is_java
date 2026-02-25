@@ -1,4 +1,4 @@
-package com.mjc813.bookExample;
+package com.mjc813.BookExample;
 
 public class Course {
     // 모든 사람이면 등록 가능

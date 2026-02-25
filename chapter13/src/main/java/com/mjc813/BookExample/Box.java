@@ -1,4 +1,4 @@
-package com.mjc813.bookExample;
+package com.mjc813.BookExample;
 
 public class Box<T>{
     public T content;   // 타입 파라미터 T로 사용
