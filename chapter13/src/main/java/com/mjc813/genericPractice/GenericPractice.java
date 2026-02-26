@@ -29,7 +29,7 @@ public class GenericPractice <K, V> {
     }
 
     // m5.change (키1, 키2) 라는 메소드는 키1의 값과 키2의 값을 서로 교환한다.
-    public void chane(K key1, K key2) {
+    public void change(K key1, K key2) {
         if(storage.containsKey(key1) && storage.containsKey(key2)) {
             V temp = storage.get(key1); // key1의 값을 임시 저장
             storage.put(key1, storage.get(key2));   // key2의 값을 key1 자리에 넣기
