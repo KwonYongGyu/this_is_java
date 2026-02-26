@@ -1,4 +1,4 @@
-package com.mjc813.BookExample;
+package com.mjc813.bookExample;
 
 public class GenericExample {
     public static <T extends Number> boolean compare(T t1, T t2) {

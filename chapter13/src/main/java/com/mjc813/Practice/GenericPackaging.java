@@ -1,4 +1,4 @@
-package com.mjc813.Practice;
+package com.mjc813.practice;
 
 public class GenericPackaging<T> {
     private Object[] list = new Object[10]; // 내부 배열은 Object로 관리

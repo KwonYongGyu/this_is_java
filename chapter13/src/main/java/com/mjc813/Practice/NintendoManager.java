@@ -1,4 +1,4 @@
-package com.mjc813.Practice;
+package com.mjc813.practice;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,10 +28,12 @@ public class NintendoManager implements CRUD<NintendoGame>{
         // index 위치의 데이터를 삭제하고, 삭제된 데이터를 리턴
         return storage.remove(index);
     }
+
     @Override
-    public NintendoGame set(int index) {
+    public com.mjc813.practice.NintendoGame set(int index) {
         return null;
     }
+
 
     @Override
     public NintendoGame get(int index) {

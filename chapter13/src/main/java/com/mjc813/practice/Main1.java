@@ -1,13 +1,11 @@
-package com.mjc813.Practice;
+package com.mjc813.practice;
 
-import javax.swing.plaf.synth.SynthUI;
-
-public class Main {
+public class Main1 {
     public static void main(String[] args) {
         NintendoManager manager = new NintendoManager();
 
         // 추가
-        manager.add(new NintendoGame("마리오 카트", Grade.All, 64800));
+        manager.add(new NintendoGame("마리오 카트", Grade.ALL, 64800));
         manager.add(new NintendoGame("젤다의 전설", Grade.AGE12_OVER, 74800));
 
         // 조회
@@ -17,6 +15,7 @@ public class Main {
         // Json 확인
         System.out.println("전체 Json: " + manager.getJsonAllItems());
 
-
+        Task task = new Task();
+        task.task3();
     }
 }

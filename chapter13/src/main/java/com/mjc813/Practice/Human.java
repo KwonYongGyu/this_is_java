@@ -1,4 +1,4 @@
-package com.mjc813.Practice;
+package com.mjc813.practice;
 
 import lombok.Data;
 
@@ -7,6 +7,7 @@ public class Human {
     private String name;
     private int age;
 
-    public Human(String 홍길동, int i) {
+    public Human(int i) {
     }
+
 }

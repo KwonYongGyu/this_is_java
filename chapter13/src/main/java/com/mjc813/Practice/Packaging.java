@@ -1,4 +1,4 @@
-package com.mjc813.Practice;
+package com.mjc813.practice;
 
 import lombok.Data;
 

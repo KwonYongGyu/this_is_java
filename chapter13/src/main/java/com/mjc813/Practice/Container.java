@@ -1,4 +1,4 @@
-package com.mjc813.Practice;
+package com.mjc813.practice;
 
 public class Container <T> {
     // T 타입의 데이터를 저장할 멤버 변수

@@ -1,7 +1,7 @@
-package com.mjc813.Practice;
+package com.mjc813.practice;
 
 public enum Grade {
-    All,
+    ALL,
     AGE12_OVER,
     AGE15_OVER,
 }

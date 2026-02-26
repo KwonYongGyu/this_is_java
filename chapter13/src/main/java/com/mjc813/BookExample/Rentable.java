@@ -1,4 +1,4 @@
-package com.mjc813.BookExample;
+package com.mjc813.bookExample;
 
 public class Rentable<P> {
     P rent() {

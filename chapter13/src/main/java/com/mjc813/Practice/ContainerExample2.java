@@ -1,4 +1,4 @@
-package com.mjc813.Practice;
+package com.mjc813.practice;
 
 public class ContainerExample2 {
     public static void main(String [] args) {

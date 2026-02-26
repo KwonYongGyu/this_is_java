@@ -1,18 +1,18 @@
 package com.mjc813.practice;
 
-public class Container2 <K, V> {
-    // 필드
+public class OtherPair <K, V> {
     private K key;
     private V value;
 
-    public void set(K key, V value) {
+    public OtherPair(K key, V value) {
         this.key = key;
         this.value = value;
     }
+
     public K getKey() {
-        return this.key;
+        return key;
     }
     public V getValue() {
-        return this.value;
+        return value;
     }
 }
