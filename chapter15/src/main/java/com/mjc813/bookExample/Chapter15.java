@@ -166,5 +166,34 @@ public class Chapter15 {
                 System.out.println("총 객체 수: " +size);
                 System.out.println();
         }
+
+        public void HashSetExample(){
+        // HashSet 컬렉션 생성
+            Set<String> set = new HashSet<String>();
+
+            // 객체 저장
+            set.add("Java");
+            set.add("JDBC");
+            set.add("JSP");
+            set.add("Java"); // 중복 객체이므로 저장하지 않음
+            set.add("Spring");
+
+            // 저장된 객체 수 출력
+            int size = set.size();
+            System.out.println("총 객체 수: " + size);
+        }
+
+        public void HashSetExample2(){
+        // HashSet 컬렉션 생성
+            Set<Member> set = new HashSet<>();
+
+            // Member 객체 저장
+            set.add(new Member("홍길동", 30));
+            set.add(new Member("홍길동", 30)); // 인스턴스는 다르지만 동등 객체이므로 객체 1개만 저장
+
+            // 저장된 객체 수 출력
+            System.out.println("총 객체 수 : " + set.size());
+        }
+
     }
 

@@ -8,6 +8,7 @@ public class Main {
 //        ch15.ArrayListExample();
 //        ch15.LinkedListExample();
 //        ch15.HashMapExample();
-        ch15.VectorExample();
+//        ch15.VectorExample();
+        ch15.HashSetExample();
     }
 }
