@@ -9,6 +9,17 @@ public class Main {
 //        ch15.LinkedListExample();
 //        ch15.HashMapExample();
 //        ch15.VectorExample();
-        ch15.HashSetExample();
+//        ch15.HashSetExample();
+//        ch15.HashMapExample2();
+//        ch15.HashtableExample();
+//        ch15.TreeSetExample();
+//        ch15.TreeMapExample();
+//        ch15.ComparableExample();
+//        ch15.ComparatorExample();
+//        ch15.StackExample();
+//        ch15.QueueExample();
+//    ch15.SynchronizedMapExample();
+        ch15.ImmutableExample();
     }
+
 }
