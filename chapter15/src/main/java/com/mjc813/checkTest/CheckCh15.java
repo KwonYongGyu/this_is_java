@@ -49,7 +49,7 @@ public class CheckCh15 {
             }
         }
 
-        // 3. 평균 머수 계산(정수형 결과 91을 위해 나누기 연산)
+        // 3. 평균 점수 계산(정수형 결과 91을 위해 나누기 연산)
         int avgScore = totalScore / map.size();
 
         System.out.println("평균 점수 : " + avgScore);
