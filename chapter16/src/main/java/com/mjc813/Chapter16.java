@@ -118,4 +118,20 @@ public class Chapter16 {
         // 메소드 참조
         person3.action(com :: instanceMethod );
     }
+
+    public void MethodReferenceExample2(){
+        Person4 person4 = new Person4();
+        person4.ordering( String :: compareToIgnoreCase);
+    }
+
+    public void ConstructorReferenceExample(){
+        Person5 person = new Person5();
+
+        Member m1 = person.getMember1( Member :: new );
+        System.out.println(m1);
+        System.out.println();
+
+        Member m2 = person.getMember2( Member :: new );
+        System.out.println(m2);
+    }
 }
