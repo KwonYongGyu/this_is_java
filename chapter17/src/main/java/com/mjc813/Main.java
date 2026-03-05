@@ -5,7 +5,7 @@ package com.mjc813;
 public class Main {
     public static void main(String [] args) {
         Chapter17 ch17 = new Chapter17();
-        ch17.StreamExample();
+//        ch17.StreamExample();
         ch17.ParallelStreamExample();
         ch17.StreamPipeLineExample();
 
