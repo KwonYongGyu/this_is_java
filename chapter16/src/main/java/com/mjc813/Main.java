@@ -36,8 +36,8 @@ public class Main {
 //        ch16.ButtonExample();
 //        ch16.LamdaExample3();
 //        ch16.LamdaExample4();
-        ch16.MethodReferenceExample();
-//        ch16.MethodReferenceExample2();
+//        ch16.MethodReferenceExample();
+        ch16.MethodReferenceExample2();
 //        ch16.ConstructorReferenceExample();
 
 
