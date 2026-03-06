@@ -384,4 +384,78 @@ public class Chapter17 {
 
         System.out.println(map);
     }
+
+    public void CollectExample2() {
+        List<Student4> totalList = new ArrayList<>();
+        totalList.add(new Student4("홍길동", "남", 92));
+        totalList.add(new Student4("김수영", "여", 87));
+        totalList.add(new Student4("감자바", "남",95));
+        totalList.add(new Student4("오해영", "여", 93));
+
+        Map<String, List<Student4>> map = totalList.stream()
+                .collect(
+                        Collectors.groupingBy(s -> s.getSex())
+                );
+
+        List<Student4> maleList = map.get("남");
+        maleList.stream().forEach(s -> System.out.println(s.getName()));
+        System.out.println();
+
+        List<Student4> femaleList = map.get("여");
+        femaleList.stream().forEach(s -> System.out.println(s.getName()));
+
+    }
+
+    public void CollectExample3(){
+        List<Student4> totalList = new ArrayList<>();
+        totalList.add(new Student4("홍길동", "남", 92));
+        totalList.add(new Student4("김수영", "여", 87));
+        totalList.add(new Student4("감자바", "남",95));
+        totalList.add(new Student4("오해영", "여", 93));
+
+        Map<String, Double> map = totalList.stream()
+                .collect(
+                        Collectors.groupingBy(
+                                s -> s.getSex(),
+                                Collectors.averagingDouble(s ->s.getScore())
+                        )
+                );
+
+        System.out.println(map);
+    }
+
+    public void ParallelExample () {
+        Random random = new Random();
+
+        List<Integer> scores = new ArrayList<>();
+        for(int i = 0; i<100000000; i++) {  // 1억 개의 Integer 객체 저장
+            scores.add(random.nextInt(101));
+        }
+
+        double avg = 0.0;
+        long startTime = 0;
+        long endTime = 0;
+        long time = 0;
+
+        Stream<Integer> stream = scores.stream();   // 일반 스트림으로 처리
+        startTime = System.nanoTime();
+        avg = stream
+                .mapToInt(i -> i.intValue())
+                .average()
+                .getAsDouble();
+        endTime = System.nanoTime();
+        time = endTime - startTime;
+        System.out.println("avg: " + avg + ", 일반 스트림 처리 시간: " + time + "ns");
+
+        Stream<Integer> parallelStream = scores.parallelStream();
+        startTime = System.nanoTime();
+        avg = parallelStream
+                .mapToInt(i -> i.intValue())
+                .average()
+                .getAsDouble();
+        endTime = System.nanoTime();
+        time = endTime - startTime;
+        System.out.println("avg: " + avg + ", 병렬 스트림 처리 시간: " + time + "ns");
+
+    }
 }

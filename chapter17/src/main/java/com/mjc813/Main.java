@@ -20,11 +20,15 @@ public class Main {
 //        ch17.LoopingExample();
 //        ch17.MatchingExample();
 //        ch17.AggregateExample();
-        ch17.OptionalExample();
-        ch17.ReductionExample();
-        ch17.CollectExample();
+//        ch17.OptionalExample();
+//        ch17.ReductionExample();
+//        ch17.CollectExample();
+//        ch17.CollectExample2();
+//        ch17.CollectExample3();
+//        ch17.ParallelExample();
 
-
+        CheckExample ch17ck = new CheckExample();
+        ch17ck.number5();   // 집에서 다시 해보기
 
     }
 }
