@@ -1,4 +1,4 @@
-package com.mjc813;
+package com.mjc813.checkExample;
 
 public class Member {
     private String name;

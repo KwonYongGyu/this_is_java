@@ -28,8 +28,9 @@ public class Main {
 //        ch17.ParallelExample();
 
         CheckExample ch17ck = new CheckExample();
-//        ch17ck.number5();
-        ch17ck.number6();
-
+//        ch17ck.Number5();
+//        ch17ck.Number6();
+//        ch17ck.Number7();
+        ch17ck.Number8();
     }
 }
