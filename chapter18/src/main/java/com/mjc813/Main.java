@@ -12,12 +12,21 @@ import java.io.OutputStream;
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         SampleOutputStream();
         Human lsh = new Human("이순신", 19);
         lsh.getGameList().add(new NintendoGame("마리오카트", 50000, Grade.All, GameType.Sport));
         lsh.getGameList().add(new NintendoGame("대난투", 40000, Grade.All, GameType.Action));
         lsh.getGameList().add(new NintendoGame("별의커비", 30000, Grade.All, GameType.Arcade));
+
+        Chapter18 ch18 = new Chapter18();
+//        ch18.WriteExample1();
+//        ch18.WriteExample2();
+//        ch18.WriterExample3();
+//        ch18.WriteExample4();
+//        ch18.ReadExample1();
+//        ch18.ReadExample2();
+        ch18.CopyExample();
     }
 
     public static void SampleOutputStream() {
@@ -53,7 +62,7 @@ public class Main {
 
 
 
-        Chapter18 ch18 = new Chapter18();
+
 
     }
 
