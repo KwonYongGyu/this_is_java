@@ -28,7 +28,8 @@ public class Main {
 //        ch17.ParallelExample();
 
         CheckExample ch17ck = new CheckExample();
-        ch17ck.number5();   // 집에서 다시 해보기
+//        ch17ck.number5();
+        ch17ck.number6();
 
     }
 }

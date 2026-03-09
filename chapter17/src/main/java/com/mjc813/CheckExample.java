@@ -10,15 +10,25 @@ public class CheckExample {
                 "Lamda Expressions",
                 "Java8 supports lamda expressions"
         );
-        list.stream()
-                .filter(n -> n.startsWith("java"))
-                .forEach(n -> System.out.println(n));
-        System.out.println();
 
-        // 중복 요소를 제거하고, java가 포함된 요소만 필터링
         list.stream()
-                .distinct()
-                .filter(n -> n.startsWith("java"))
-                .forEach(n -> System.out.println(n));
+                .filter(s -> s.toLowerCase().contains("java"))
+                .forEach(System.out :: println);
+    }
+
+    public void number6() {
+        List<Member> list = Arrays.asList(
+                new Member("홍길동", 30),
+                new Member("신용권", 40),
+                new Member("감자바", 26)
+        );
+
+        double avg = list.stream()
+                        .mapToInt(Member :: getAge) // Member 객체를 나이(int)로 매핑
+                        .average()  // 평균 계산
+                        .orElse(0.0);
+
+
+        System.out.println("평균 나이: " + avg);
     }
 }
