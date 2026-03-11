@@ -19,7 +19,7 @@ public class Main {
 //        lsh.getGameList().add(new NintendoGame("대난투", 40000, Grade.All, GameType.Action));
 //        lsh.getGameList().add(new NintendoGame("별의커비", 30000, Grade.All, GameType.Arcade));
 //
-//        Chapter18 ch18 = new Chapter18();
+        Chapter18 ch18 = new Chapter18();
 ////        ch18.WriteExample1();
 ////        ch18.WriteExample2();
 ////        ch18.WriterExample3();
@@ -29,6 +29,11 @@ public class Main {
 ////        ch18.CopyExample();
 ////        ch18.ReadExample3();
 //        ch18.CharacterConvertStreamExample();
+//        ch18.BufferExample();
+//        ch18.ReadLineExample();
+//        ch18.DataInputOutputStreamExample();
+//        ch18.PrintStreamExample();
+        ch18.ObjectInputOutputStreamExample();
     }
 
 //    public static void SampleOutputStream() {

@@ -1,6 +1,7 @@
 package com.mjc813;
 
 import java.io.*;
+import java.util.Arrays;
 
 public class Chapter18 {
     public void WriteExample1() {
@@ -205,7 +206,7 @@ public class Chapter18 {
                 BufferExample.class.getResource("originalFile1.jpg").getPath();
         String targetFilePath1 = "C/Temp/targetFile1.jpg";
 
-        FiileInputStream fis = new FileInputStream(originalFilePath1);
+        FileInputStream fis = new FileInputStream(originalFilePath1);
         FileOutputStream fos = new FileOutputStream(targetFilePath1);
 
         // 입출력 스트림 + 버퍼 스트림 생성
@@ -218,7 +219,7 @@ public class Chapter18 {
         BufferedOutputStream bos = new BufferedOutputStream(fos2);
 
         // 버퍼를 사용하지 않고 복사
-        long non BufferTime = copy(fis, fos);
+        long nonBufferTime = copy(fis, fos);
         System.out.println("버퍼 미사용:\t" + nonBufferTime + " ns");
 
         // 버퍼를 사용하고 복사
@@ -246,5 +247,101 @@ public class Chapter18 {
         long end = System.nanoTime();
         // 복사 시간 리턴
         return (end-start);
+    }
+
+    public void ReadLineExample() throws Exception {
+        BufferedReader br = new BufferedReader(
+                new FileReader("src/ch18/sec07/exam02/ReadLineExample.java")
+        );
+
+        int  lineNo = 1;
+        while(true) {
+            String str = br.readLine(); // 1행을 읽음
+
+            if(str == null) break; // 더 이상 읽을 내용이 없으면 while 문 종료
+            System.out.println(lineNo + "\t" + str);
+            lineNo++;
+        }
+
+        br.close(); // BufferedReader를 닫으면 연결된 FileReader도 닫힘
+    }
+
+    public void DataInputOutputStreamExample() throws Exception {
+        // DataOutputStream 생성
+        FileOutputStream fos = new FileOutputStream("C:/Temp/primitive.db");
+        DataOutputStream dos = new DataOutputStream(fos);
+
+        // 기본 타입 출력
+        dos.writeUTF("홍길동");
+        dos.writeDouble(95.5);
+        dos.writeInt(1);
+
+        dos.writeUTF("감자바");
+        dos.writeDouble(90.3);
+        dos.writeInt(2);
+
+        dos.flush(); dos.close(); fos.close();
+
+        // DataInputStream 생성
+        FileInputStream fis = new FileInputStream("C:/Temp/primitive.db");
+        DataInputStream dis = new DataInputStream(fis);
+
+        // 기본 타입 입력
+        for(int i = 0; i < 2; i++) {
+            String name = dis.readUTF();
+            double score = dis.readDouble();
+            int order = dis.readInt();
+            System.out.println(name + " : " + score + " : " + order);
+        }
+
+        dis.close(); fis.close();
+    }
+
+    public void PrintStreamExample() throws Exception {
+        FileOutputStream fos = new FileOutputStream("C:/Temp/printstream.txt");
+        PrintStream ps = new PrintStream(fos);
+
+        ps.print("마치 ");
+        ps.println("프린터가 출력하는 것처럼 ");
+        ps.println("데이터를 출력합니다.");
+        ps.printf("| %6d | %-10s | %10s | \n", 1, "홍길동", "도적");
+        ps.printf("| %6d | %-10s | %10s | \n", 2, "감자바", "학생");
+
+        ps.flush();
+        ps.close();
+    }
+
+    public void ObjectInputOutputStreamExample() throws Exception {
+        // FileOutputStream에 ObjectOutputStream 보조 스트림 연결
+        FileOutputStream fos = new FileOutputStream("C:/Temp/object.dat");
+        ObjectOutputStream oos = new ObjectOutputStream(fos);
+
+        // 객체 생성
+        Member m1 = new Member("fall", "단풍이");
+        Product p1 = new Product("노트북", 1500000);
+        int[] arr1 = { 1, 2, 3 };
+
+        // 객체를 역직렬화해서 파일에 저장
+        oos.writeObject(m1);
+        oos.writeObject(p1);
+        oos.writeObject(arr1);
+
+        oos.flush(); oos.close(); fos.close();
+
+        // FileInputStream에 ObjectInputStream 보조 스트림 연결
+        FileInputStream fis = new FileInputStream("C:/Temp/object.dat");
+        ObjectInputStream ois = new ObjectInputStream(fis);
+
+        // 파일을 읽고 역직렬화해서 객체로 복원
+        Member m2 = (Member) ois.readObject();
+        Product p2 = (Product) ois.readObject();
+        int[] arr2 = (int[]) ois.readObject();
+
+        ois.close(); ois.close();
+
+        // 복원된 객체 내용 확인
+        System.out.println(m2);
+        System.out.println(p2);
+        System.out.println(Arrays.toString(arr2));
     }
 }
