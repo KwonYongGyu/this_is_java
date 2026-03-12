@@ -12,7 +12,7 @@ public class ServerApp {
 
 
     public ServerApp() throws IOException {
-        this.serverSocket = new ServerSocket(59999);
+        this.serverSocket = new ServerSocket(59998);
         // 포트번호로 서비소캣을 생성한다.
     }
 
@@ -29,11 +29,12 @@ public class ServerApp {
     }
 
     public static void main(String [] args) {
+        ServerApp sa = null;
         try {
-            com.mjc813.basic.ServerApp sa = new com.mjc813.basic.ServerApp();
-            Socket clientsocket = sa.accept();
+            sa = new ServerApp();
             // 클라이언트가 연결되면 socket (새로운 클라이언트통신 소캣) 으로 통신이 가능하다.
-
+            while(true) {
+             Socket clientsocket = sa.accept();
             // 서버가 클라이언트에게 데이터를 전송한다.
             String str = "Welcome server";
             DataOutputStream dos = new DataOutputStream(clientsocket.getOutputStream());
@@ -50,13 +51,15 @@ public class ServerApp {
 
             // 통신 소캣을 닫음
             clientsocket.close();
-
+            }
             // 서버 소캣을 닫음
-            sa.close();
         } catch (IOException e) {
             System.out.println(e.toString());
+        } finally {
+            try {
+                sa.close();
+            } catch (Exception e) {
+            }
         }
-
-
     }
 }
