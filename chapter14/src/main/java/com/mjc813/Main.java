@@ -28,5 +28,6 @@ public class Main {
 //        ch14.BeepPrintExample2();
 //		ch14.BeepPrintExample3();
         ch14.ThreadNameExample();
+        ch14.SleepExample();
     }
 }

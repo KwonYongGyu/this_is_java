@@ -1,5 +1,8 @@
 package com.mjc813;
 
+import com.mjc813.bookExample.SumThread;
+import com.mjc813.bookExample.WorkThread;
+
 import java.awt.*;
 
 public class Chapter14 {
@@ -93,5 +96,48 @@ public class Chapter14 {
         };
         chatThread.setName("chat-thread");
         chatThread.start();
+    }
+
+    public void SleepExample() {
+        Toolkit toolkit = Toolkit.getDefaultToolkit(); // ToolKit 객체 얻기
+        for (int i = 0; i < 10; i++) {
+            toolkit.beep(); // 비프음 발생
+            try {
+                Thread.sleep(3000); // 3초간 일시 정지
+            } catch (InterruptedException e) {
+
+            }
+        }
+    }
+
+    public void JoinExample() {
+        SumThread sumThread = new SumThread();
+        sumThread.start();
+        try {
+            sumThread.join();
+        } catch (InterruptedException e) {
+
+        }
+        System.out.println("1~100 합: " + sumThread.getSum());
+    }
+
+    public void YieldExample() {
+        WorkThread workThreadA = new WorkThread("workThreadA");
+        WorkThread workThreadB = new WorkThread("workThreadB");
+        workThreadA.start();
+        workThreadB.start();
+
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+        }
+        workThreadA.work = false;
+        try {
+            Thread.sleep(10000);
+
+        } catch ( InterruptedException e) {
+        }
+        workThreadA.work = true;
+        }
     }
 }
