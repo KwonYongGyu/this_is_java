@@ -27,7 +27,17 @@ public class Main {
 //        ch14.BeepPrintExample();
 //        ch14.BeepPrintExample2();
 //		ch14.BeepPrintExample3();
-        ch14.ThreadNameExample();
-        ch14.SleepExample();
+//        ch14.ThreadNameExample();
+//        ch14.SleepExample();
+//        ch14.SynchronizedExample();
+//        ch14.WaitNotifyExample();
+//        ch14.SafeStopExample();
+//        ch14.InterruptExample();
+//        ch14.InterruptExample2();
+//        ch14.DaemonExample();
+//        ch14.ExecutorServiceExample();
+//        ch14.RunnableExecuteExample();
+        ch14.CallableSubmitExample();
+
     }
 }
