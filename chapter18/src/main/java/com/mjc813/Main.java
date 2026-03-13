@@ -33,7 +33,8 @@ public class Main {
 //        ch18.ReadLineExample();
 //        ch18.DataInputOutputStreamExample();
 //        ch18.PrintStreamExample();
-        ch18.ObjectInputOutputStreamExample();
+//        ch18.ObjectInputOutputStreamExample();
+        ch18.FileExample();
     }
 
 //    public static void SampleOutputStream() {
