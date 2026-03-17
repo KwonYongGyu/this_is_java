@@ -1,4 +1,4 @@
-package com.mjc813.onebyonefreechat;
+package com.mjc813.onebyonefreechat2;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -39,10 +39,10 @@ public class ServerCommuicateSocket extends Thread {
 	@Override
 	public void run() {
 		try {
-			while (true) {
+			while (true) {	// 접속이 떨어지면 체크하기 위해 try 안에 while 문
 				String msg = dis.readUTF();
 				System.out.println("\n[CLIENT]: " + msg);
-				System.out.print("나(SERVER): "); // 입력 UI 가이드
+				System.out.print("(SERVER): ");
 			}
 		} catch (IOException e) {
 			System.out.println("클라이언트와 연결이 끊어짐");

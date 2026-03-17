@@ -1,4 +1,4 @@
-package com.mjc813.onebyonefreechat;
+package com.mjc813.onebyonefreechat2;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -44,10 +44,11 @@ public class ServerApp {
 			// ServerCommuicateSocket scs = new ServerCommuicateSocket(....);
 			scs = new ServerCommuicateSocket(socket);
 			scs.start();
+
 			while(true) {
 				String str = scanner.nextLine();
 				scs.send(str);
-				// 서버가 클라이언트통신 소켓 에게 데이터를 전송했다.
+				// 서버가 클라이언트통신 소켓 에게 데이터를 전송
 			}
 		} catch (Exception e) {
 			System.err.println(e.toString());

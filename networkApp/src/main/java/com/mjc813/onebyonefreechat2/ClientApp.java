@@ -1,4 +1,4 @@
-package com.mjc813.onebyonefreechat;
+package com.mjc813.onebyonefreechat2;
 
 import java.io.*;
 import java.net.InetSocketAddress;
@@ -76,6 +76,7 @@ public class ClientApp extends Thread {
 			dos.writeUTF(msg);
 			dos.flush();
 		} catch (Exception ex) {
+			ex.printStackTrace();
 		}
 	}
 
@@ -87,15 +88,19 @@ public class ClientApp extends Thread {
 			ca = new ClientApp();
 			ca.connect();
 
+			ca.start();
+
+			System.out.println("서버에 연결되었습니다. 메시지를 입력하세요.");
 			while(true) {
+				System.out.print("(CLIENT): ");
 				String str = scanner.nextLine();
-				ca.send(str);
+				ca.send(str); // 메세지 전송
 
 //				String msg = ca.read();
 //				System.out.println("SERVER:" + msg);
 			}
 		} catch (Exception ex) {
-			System.err.println(ex.toString());
+			System.err.println("오류 발생: " + ex.toString());
 		} finally {
 			try {
 				ca.close();
