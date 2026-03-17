@@ -1,17 +1,15 @@
 package com.mjc813.onebyonefreechat;
 
-import java.io.BufferedWriter;
-import java.io.DataInputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
+import java.io.*;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.util.Scanner;
 
-public class ClientApp implements Runnable{
+public class ClientApp extends Thread {
 	private Socket socket;
 	private DataInputStream dis;
 	private BufferedWriter bw;
+	private DataOutputStream dos;
 
 	public ClientApp() throws IOException {
 		this.socket = new Socket(); // 클라이언트의 통신용 소켓 생성
@@ -23,7 +21,8 @@ public class ClientApp implements Runnable{
 		// 해당 ip 와 포트로 접속을 시도한다.
 
 		this.dis = new DataInputStream(this.socket.getInputStream());
-		this.bw = new BufferedWriter(new OutputStreamWriter(this.socket.getOutputStream()));
+//		this.bw = new BufferedWriter(new OutputStreamWriter(this.socket.getOutputStream()));
+		this.dos = new DataOutputStream(this.socket.getOutputStream());
 	}
 
 	public void close() throws IOException {
@@ -55,24 +54,27 @@ public class ClientApp implements Runnable{
 
 	@Override
 	public void run() {
-		try{
-			while (true) {
-				String msg = read();
-				if (msg == null) break;
-			}
-		} catch (IOException e) {
-		}
 		// 서버로부터 데이터를 읽는 동작을 해야 한다.
 		// 읽어서 화면에 출력해야 한다.
 		// 왜 스레드에서 실행해야 하나요 ? 읽는 동작이 블로킹모드가 되기 때문이다.
+		try {
+			while(true) {
+				String msg = dis.readUTF();
+				System.out.println("\n[SERVER]: " + msg);
+				System.out.print("CLIENT: ");
+			}
+		} catch (IOException e) {
+			System.out.println("서버와 연결이 종료됨");
+		}
 	}
-
 
 	public void send(String msg) {
 		try {
-			bw.write(msg);
-			bw.newLine();
-			bw.flush();
+//			bw.write(msg);
+//			bw.newLine();
+//			bw.flush();
+			dos.writeUTF(msg);
+			dos.flush();
 		} catch (Exception ex) {
 		}
 	}
@@ -89,8 +91,8 @@ public class ClientApp implements Runnable{
 				String str = scanner.nextLine();
 				ca.send(str);
 
-				String msg = ca.read();
-				System.out.println("SERVER:" + msg);
+//				String msg = ca.read();
+//				System.out.println("SERVER:" + msg);
 			}
 		} catch (Exception ex) {
 			System.err.println(ex.toString());

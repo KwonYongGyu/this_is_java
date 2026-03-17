@@ -31,14 +31,19 @@ public class ServerApp {
 	public static void main(String[] args) {
 		ServerApp sa = null;
 		Scanner scanner = null;
-		ServerCommunicateSocket scs = null;
+		ServerCommuicateSocket scs = null;
+
 		try {
 			scanner = new Scanner(System.in);
 			sa = new ServerApp();
+			System.out.println("서버 대기 중");
+
 			Socket socket = sa.accept();
-			// 클라이언트 연력이 되면 ServerCommunicateSocket 객체를 만드세요.
-			// ServerCommunicateSocket scs = new ServerCommunicateSocket(....);
-			scs = new ServerCommunicateSocket(socket);
+			System.out.println("클라이언트 연결됨");
+			// 클라이언트 연력이 되면 ServerCommuicateSocket 객체를 만드세요.
+			// ServerCommuicateSocket scs = new ServerCommuicateSocket(....);
+			scs = new ServerCommuicateSocket(socket);
+			scs.start();
 			while(true) {
 				String str = scanner.nextLine();
 				scs.send(str);
