@@ -1,0 +1,7 @@
+docker pull mysql:latest
+
+docker run --name mysql-kyg -e MYSQL_ROOT_PASSWORD=qwer1234! -d -p 3306:3306 mysql:latest
+
+docker ps
+
+docker container ls
