@@ -1,0 +1,35 @@
+#1. docker container exec -it oracle19c /bin/sh
+#2. vi setPassword.sh
+#3. ./setPassword.sh 암호
+#4. grep $ORACLE_HOME /etc/oratab | cut -d: -f1
+#5. 해당 값을 SID 로 하고 sys/암호로 접속하면 된다.
+#--유저생성(비밀번호생성)
+#--CREATE USER 스키마이름/유저명 IDENTIFIED BY 암호;
+#--생성 유저 확인
+#--유저가 바꿔줄수 있는거는 소문자로 그외에 원래 있는거나 명령어는 대문자
+#--SELECT 유저명 FROM DBA_USERS;
+#--권한 부여
+#--GRANT CREATE SESSION TO 유저명;
+#--GRANT CONNECT,RESOURCE,DBA TO 유저명;
+#--GRANT CREATE TABLE, CREATE VIEW TO 유저명;
+#-- WE8MSWIN1252, AL32UTF8, UTF8
+#--UPDATE SYS.PROPS$ SET VALUE$='UTF8' WHERE NAME='NLS_CHARACTERSET';
+
+#docker pull doctorkirk/oracle-19c
+#docker run --name oracle19c -p 1521:1521 -e ORACLE_SID=oracle -e ORACLE_PWD=oracle -e ORACLE_CHARACTERSET=AL32UTF8 -v ./ora-data/:/opt/oracle/oradata doctorkirk/oracle-19c
+#sqlplus sys/oracle@oracle as sysdba
+
+version: "3.7"
+
+services:
+  oracle19c:
+    container_name: "oracle19c"
+    image: "doctorkirk/oracle-19c"
+#    environment:
+#      - ORACLE_SID=oracle
+#      - ORACLE_PWD=oracle
+#      - ORACLE_CHARACTERSET=AL32UTF8
+    ports:
+      - "1521:1521"
+    volumes:
+      - "./ora-data:/opt/oracle/oradata"

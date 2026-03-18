@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  mariadb:
+    image: mariadb:latest
+    container_name: mariadb_custom
+    restart: always
+    environment:
+      # 루트 계정 비밀번호 (본인만의 비밀번호로 수정 가능)
+      MARIADB_ROOT_PASSWORD: 'kyg4726'
+      # 초기 생성 데이터베이스
+      MARIADB_DATABASE: 'mydatabase'
+      # 일반 사용자 계정
+      MARIADB_USER: 'myuser'
+      MARIADB_PASSWORD: 'mypassword'
+    ports:
+      - "3307:3306"  # 기존 MySQL(3306)과 충돌을 피하기 위해 호스트 포트를 3307로 설정
+    volumes:
+      - ./mariadb_data:/var/lib/mysql
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:
+    driver: bridge

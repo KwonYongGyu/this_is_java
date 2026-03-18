@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:latest
+    container_name: postgres_custom
+    restart: always
+    environment:
+      # PostgreSQL 슈퍼유저 비밀번호
+      POSTGRES_PASSWORD: 'kyg4726'
+      # 초기 생성 데이터베이스 이름
+      POSTGRES_DB: 'mydatabase'
+      # 사용자 이름 (기본값은 postgres입니다)
+      POSTGRES_USER: 'myuser'
+    ports:
+      - "5432:5432"  # PostgreSQL 기본 포트
+    volumes:
+      # 뒤에 /data를 빼고 한 단계 상위 폴더를 마운트합니다.
+      - ./postgres_data:/var/lib/postgresql
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:
+    driver: bridge
