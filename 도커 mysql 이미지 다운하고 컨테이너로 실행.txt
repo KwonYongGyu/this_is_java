@@ -4,4 +4,17 @@ docker run --name mysql-kyg -e MYSQL_ROOT_PASSWORD=qwer1234! -d -p 3306:3306 mys
 
 docker ps
 
-docker container ls
+docker containers ls
+
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------
+(설치할 거) docker compose volumes    
+yml 파일에 mariadb, mysql, postgresql 등 구글링을 통해 찾아서
+docker-compose.yml에 넣음
+
+.gitignore안에 해당파일 data/를 넣어 git에 data가 올라가지 못하게 해야함.
+
+
+
