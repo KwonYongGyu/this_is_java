@@ -1,0 +1,127 @@
+03/19
+
+INSERT INTO users (userid, username, userage, useremail, userpassword)
+VALUES('A', '이순신', 38, 'lss@josun.com', 'AAAA'),
+('B', '알베르트 아인슈타인', 40, 'Einstein@Albert.com', 'BBBB'),
+('C', '아이작 뉴턴', 45, 'Newton@Isaac.com', 'CCCC'),
+('D', '마리 퀴리', 26, 'Curie@Marie.com', 'DDDD'),
+('E', '토머스 에디슨', 70, 'Edison@Thomas.com', 'EEEE'),
+('F', '에이브러햄 링컨', 18, 'Lincoln@Abraham.com', 'FFFF'),
+('G', '미켈란젤로 ', 62, 'Michelangelo@artist.com', 'GGGG'),
+('H', '플로렌스 나이팅게일', 17, 'Nightingale@Florence.com', 'HHHH'),
+('I', '빌 게이츠', 80, 'Gates@Bill.com', 'IIII'),
+('J', '윌리엄 셰익스피어', 68, 'Shakespeare@William.com', 'JJJJ');
+
+// 빌게이츠 지우고 나폴레옹 추가
+UPDATE users SET
+	userid = 'K'
+	, username = '나폴레옹 보나파르트'
+	, userage = 40
+	, useremail = 'Bonaparte@Napoleon.com'
+	, userpassword = 'KKKK'
+WHERE userid='I'
+
+
+// 셰익스피어 users 테이블에서 삭제
+DELETE FROM users 
+WHERE userid='J'
+
+
+CREATE TABLE boards(
+	bno int
+	, btitle varchar(50)
+	, bcontent varchar(50)
+	, bwriter varchar(40)
+	, bdate date
+	, bfilename varchar(40)
+	, bfiledata blob
+);
+
+// 책에 있는거 안돼서 밑에걸로 수정
+CREATE TABLE boards(
+	bno int AUTO_INCREMENT PRIMARY KEY
+	, btitle varchar(50)
+	, bcontent varchar(50)
+	, bwriter varchar(40)
+	, bdate date
+	, bfilename varchar(40)
+	, bfiledata blob
+);
+
+
+INSERT INTO boards(bno, btitle, bcontent, bwriter, bdate, bfilename, bfiledata)
+VALUES (SEQ_BNO.NEXTVAL, '눈 오는 날', '함박눈이 내려요', 'winter', SYSDATE, 'snow.jpg', binaryData)
+, ('화창한 날', '해가 쨍쨍해요', 'spring', NOW(), 'sunny.jpg', 00000010)
+,('비 오는 날', '비가 내려요', 'rainy', NOW(), 'rain.jpg', 00000011)
+,('여행 가는 날', '일본으로 떠나요', 'traveler', NOW(), 'travel.jpg', 00000100)
+,('단풍 구경', '산이 알록달록해요', 'autumn', NOW(), 'maple.jpg', 00000101)
+,('바다 여행', '파도가 시원합니다', 'ocean', NOW(), 'sea.jpg', 00000110)
+,('캠핑의 밤', '모닥불이 따뜻해요', 'camper', NOW(), 'camping.jpg', 00000111)
+,('벚꽃 축제', '꽃잎이 휘날려요', 'cherry', NOW(), 'flower.jpg', 00001000)
+,('독서의 계절', '마음의 양식을 쌓아요', 'reader', NOW(), 'book.jpg', 00001001)
+,('퇴근길 노을', '하늘이 정말 예뻐요', 'worker', NOW(), 'sunset.jpg', 00001010);
+
+
+UPDATE boards SET
+	bno = 12
+	, btitle = '출근길'
+	, bcontent = '회사로 출근해요'
+	, bwriter = 'happy'
+	, bdate = NOW()
+	, bfilename = 'Onthewaytowork'
+	, bfiledata = 00001011
+WHERE bno = 8
+
+
+DELETE FROM boards
+WHERE bno = 12
+
+// 03-20
+CREATE DATABASE nintendogame;
+
+CREATE TABLE info(
+	title varchar(50)
+	, genre varchar(20)
+	, grade varchar(30)
+	, price int
+	, imgurl varchar(500)
+);
+
+// id 자동으로 추가
+ALTER TABLE info ADD COLUMN id INT AUTO_INCREMENT PRIMARY KEY FIRST;
+
+// 테스트로 C(insert), U(update), D(delete) 쿼리를 각각 테스트하면서 만들어 보자.
+
+INSERT INTO info(title, genre, grade, price, imgurl)
+VALUES ('젤다의 전설 브레스 오브 더 와일드', '오픈 월드 액션 어드벤처', '12세이용가', 74800, 'https://example.com/zelda_botw.jpg')
+,('모여봐요 동물의 숲', '시뮬레이션', '전체이용가', 64800, 'https://example.com/animal_crossing.jpg')
+,('슈퍼 마리오 브라더스 원더', '액션', '전체이용가', 64800, 'https://example.com/mario_wonder.jpg')
+,('마리오 골프 슈퍼 러시', '스포츠', '전체이용가', 64800, 'https://example.com/mario_golf.jpg')
+,('포켓몬스터 브릴리언트 다이아몬드', 'RPG', '전체이용가', 64800, 'https://example.com/pokemon_dp.jpg')
+,('별의 커비 디스커버리', '액션', '전체이용가', 64800, 'https://example.com/kirby_discovery.jpg');
+
+// 데이터가 들어갔는지 확인
+SELECT * FROM info
+
+// 업데이트
+UPDATE info SET 
+	price = 65000
+WHERE id = 1;
+
+// 같은 업데이트를 2개의 항목에 적용
+UPDATE info 
+SET price = 50000 
+WHERE id IN (1, 3);
+
+// 한번에 다른 가격 2개 업데이트
+UPDATE info SET
+	price = 74800
+WHERE id = 1;
+UPDATE info SET
+	price = 64800
+WHERE id = 6;
+	
+
+// DELETE (마리오 골프 슈퍼 러시 삭제)
+DELETE FROM info
+WHERE id = 4;
