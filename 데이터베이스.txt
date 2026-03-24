@@ -125,3 +125,87 @@ WHERE id = 6;
 // DELETE (마리오 골프 슈퍼 러시 삭제)
 DELETE FROM info
 WHERE id = 4;
+
+
+// 03/23
+
+create user 'beginner_user'@ '%' identified by 'beginner1234@';
+grant all privileges on 'beginner'.* to 'beginner_user' @ '%';
+flush privileges;
+
+
+
+CREATE DATABASE reports DEFAULT CHARACTER SET utf8mb4;
+CREATE USER 'report_user'@'%' IDENTIFIED BY 'report1234@';
+GRANT ALL PRIVILEGES ON reports.* TO 'report_user'@'%';
+FLUSH PRIVILEGES;
+
+
+CREATE TABLE user_tbl(
+	id int AUTO_INCREMENT PRIMARY KEY
+	, name varchar(30)
+	, password varchar(50)
+	, age int
+	, email varchar(50)
+);
+
+// 03/24
+
+Java 메서드 이름(insertData): 서로 다른 클래스에 있으므로 중복되어도 상관없음.
+<insert id="insertData" // 중복 가능
+
+HTTP 전송 주소(@PostMapping): 서버 전체에서 유일해야 하므로 중복되면 안 됨.
+@PostMapping("/api/insert-data") // 중복 불가능
+
+resource안에 mapper 디렉토리 생성 
+mapper 디렉토리안에 mybatis.xml 파일을생성한다.
+-----------------------------------------파일 형식-------------------------------------------------------------------------------------
+// namespace, insert id, parameterType, insertInto 내용은 바꿔서 삽입
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mjc813.chapter20.usercrud.IUserMybatis">
+    <insert id="insertData" parameterType="UserDto">
+        INSERT INTO user_tbl (
+            name
+            ,password
+            ,age
+            ,email
+        ) VALUES (
+            #{name}
+            , #{password}
+            , #{age}
+            , #{email}
+        )
+    </insert>
+</mapper>
+
+-------------------------------------------application.yaml파일 내용-------------------------------------------------------------------
+// 포트 이름은 사용자 재량이며 주로 8080을 기본으로 사용하고 사용중이면 8085, 9000 등을 사용한다.
+spring:
+  application:
+    name: chapter20
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/reports?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: report_user
+    password: report1234@
+
+server:
+  port: 8085
+  servlet:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+
+mybatis:
+  mapper-locations: classpath:mapper/**/*.xml
+  type-aliases-package: com.mjc813.chapter20
+  configuration:
+    map-underscore-to-camel-case: true
+
+
+
+
+
