@@ -12,7 +12,7 @@ public class UserDto {
     private Integer id;
     private String name;
     private String password;
-    private String age;
+    private Integer age;
     private String email;
 
 }
