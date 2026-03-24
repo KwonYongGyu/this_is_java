@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class UserRestController {
-    @PostMapping("/api/insert-data")
+    @PostMapping("/api/insert-data2")
     public void insertData(@RequestBody UserDto userDto) {
         System.out.println("insertData" + userDto.toString());
     }

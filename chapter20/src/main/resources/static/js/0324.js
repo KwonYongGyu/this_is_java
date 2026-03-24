@@ -1,66 +1,46 @@
 class UserInfo {
-  #userList = [];
+  // 1. 내부 유저 리스트 관리 (초기값 예시)
+  #userList = [
+    {id: 1, name: "권용규", password: "123", age: 25, email: "kyg@mjc.ac.kr"}
+  ];
 
+  // 2. 목록 화면 출력
   printList() {
     $(".listDataBlock").empty();
-    this.#gameList.forEach((item) => {
-      // 배열을 순환하면서 item 을 class="frame-2" 태그 안의 자식 태그로 추가한다.
+    this.#userList.forEach((item) => {
       $(".listDataBlock").append(this.printRow(item));
     });
   }
 
-//  printGenre(genre) {
-//    switch(genre) {
-//      case "A":
-//        return "액션";
-//      case "S":
-//        return "스포츠";
-//      case "R":
-//        return "RPG";
-//    }
-//    return "-";
-//  }
-
-//  printGrade(grade) {
-//    switch(grade) {
-//      case "ALL":
-//        return "전체이용";
-//      case "18":
-//        return "18세이상";
-//      case "13":
-//        return "13세이상";
-//    }
-//    return "-";
-//  }
-
+  // 3. 목록의 한 줄(Row) 생성 - HTML 구조에 맞게 수정
   printRow(item) {
     let html = `
-<div class="listDataRow">
+<div class="listDataRow" style="cursor:pointer;">
   <div class="listItem">
     <input type="hidden" class="idClass" value="${item.id}"/>
-    <div class="itemData text-wrapper">${this.printGenre(item.genre)}</div>
-  </div>
-  <div class="listItem">
-    <div class="itemData text-wrapper">${this.printGrade(item.grade)}</div>
-  </div>
-  <div class="listItem">
     <div class="itemData text-wrapper">${item.name}</div>
+  </div>
+  <div class="listItem">
+    <div class="itemData text-wrapper">${item.age}세</div>
+  </div>
+  <div class="listItem">
+    <div class="itemData text-wrapper">${item.email}</div>
   </div>
 </div>`;
     return html;
   }
 
+  // 4. 입력창 초기화
   clearInputBox() {
     $("#id").val(0);
-    $("#name").val("홍길동");
-    $("#password").val("*");
+    $("#name").val("");
+    $("#password").val("");
     $("#age").val(0);
-    $("#email").val("@");
+    $("#email").val("");
   }
 
+  // 5. 클릭 시 입력창에 데이터 세팅
   setData2InputBox(user) {
-    // $("#id").val(game.id); 이 값은 화면에 안 보이는 <input id="id" type="hidden" hidden 이 필요하다.
-    // $("#name").val(game.name);
     $("#id").val(user.id);
     $("#name").val(user.name);
     $("#password").val(user.password);
@@ -68,151 +48,115 @@ class UserInfo {
     $("#email").val(user.email);
   }
 
+  // 6. 데이터 검증 (기존 게임 로직에서 유저 로직으로 변경)
   checkInputData(mode) {
-    // 사용자 입력데이터 검증한다.
-    // 입력데이터가 올바르면 true 리턴
-    // 아니면 false 리턴
-    if ( mode === "add" && $("#id").val() != 0 ) {
-      alert("ID 값이 유효하지 않습니다.");
+    if (mode === "add" && $("#id").val() != 0) {
+      alert("신규 추가 시 ID는 0이어야 합니다.");
       return false;
-    } else  if ( mode === "update" || mode === "delete" ) {
-      if ( $("#id").val() == 0 ) {
-        alert("ID 값이 유효하지 않습니다.");
+    }
+    if (mode === "update" || mode === "delete") {
+      if ($("#id").val() == 0) {
+        alert("대상을 먼저 선택해 주세요.");
         return false;
-      } else {
-        return true;
       }
     }
-    if ($("#name").val().length < 2 || $("#name").val().length > 30) {
-      alert("이름은 2자~30자까지 입력 가능 합니다.");
+    if ($("#name").val().length < 2) {
+      alert("이름은 2자 이상 입력하세요.");
       $("#name").focus();
       return false;
     }
-    if (
-      $("#price").val().length < 1 ||
-      $("#price").val() * 1 <= 0 ||
-      $("#price").val() * 1 > 999999
-    ) {
-      alert("가격은 1~999999원 까지 입력 가능 합니다.");
-      $("#price").focus();
-      return false;
-    }
-    if ($("#imgUrl").val().indexOf("http") !== 0) {
-      alert("그림이미지는 http 로 시작해야 합니다.");
-      $("#imgUrl").focus();
+    if ($("#password").val().length < 1) {
+      alert("비밀번호를 입력하세요.");
+      $("#password").focus();
       return false;
     }
     return true;
   }
 
-  addGame() {
-    // 사용자 입력 데이터가 유효한지 검증해야 한다. 유효하지 않으면 경고창 띄우고 리턴;
-    if ( !this.checkInputData("add") ) {
-      return;
-    }
-    let maxId = this.#gameList.reduce((result, item) => {
+  // 7. 유저 추가 버튼 동작
+  addUser() {
+    if (!this.checkInputData("add")) return;
+
+    // 최대 ID값 구하기 (화면용)
+    let maxId = this.#userList.reduce((result, item) => {
       return result < item.id ? item.id : result;
     }, 0) + 1;
-    // 새로운 데이터는 id:고유번호 가 필요하다. 그러므로 배열 전체 원소의 id의 최대값 에 +1 한 값을 고유한번호로 가져야한다.
-    // 입력데이터는 JS 객체로 만든다. let JS객체 = {id:고유번호, name:$("#name").val(), genre:"S", grade:"ALL", price:금액, imgUrl:"http://..."};
+
     let newUser = {
-      id: maxId
-      , name: $("#name").val()
-      , password: $("#password").val()
-      , age: $("#age").val()
-      , email: $("#email").val()
+      id: maxId,
+      name: $("#name").val(),
+      password: $("#password").val(),
+      age: parseInt($("#age").val()), // 숫자로 형변환
+      email: $("#email").val()
     };
-    // gameList 배열에 JS객체 를 추가한다. this.#gameList.push(JS객체);
-    this.#userList.push(newUser);
+
+    // 서버 전송 및 리스트 반영
     this.insertData(newUser);
-    this.clearInputBox();
-    // gameList 배열정보를 게임목록 화면에 출력한다. this.printList();
-    this.printList();
   }
 
+  // 8. 서버 AJAX 통신 (URL: /api/insert-data2)
   insertData(insertData) {
-    // 1. 화면에서는 JSON 데이터를 서버 URL과 METHOD POST로 전송하는 JQUERY ANAX를 구현해야 한다.
-    // 2. 웹서버에서는 서버 URL 와 METHOD POST와 JSON 데이터를 받아들이는 컨트롤러를 구현해야 한다.
-    // 3. 웹서버 컨트롤러는 DataBase Service 에 inset 하는 동작을 실행해야 한다.
-    // 4. Data Service 는 insert 하는 mybatis insert 메소드를 실행해야 한다.
-    // 5. mybatis insert 메소드는 SQL INSERT query 를 데이터베이스연결한 컨넥션풀에서 실행해야 한다.
-    // 6. 실행할 결과를 역순으로 화면까지 리턴해야 한다.
-$.ajax({
-	    url: "/api/insert-data" // 요청 URL
-	    , type: "POST"          // 전송 방식 (GET, POST 등)
-	    , dataType: "json"      // 응답 데이터 타입
-	    , data: JSON.stringify(insertData)
-	    , contentType: "application/json"
-	})
-	.done(function(data, textStatus, jqXHR) {
-	    // 요청 성공 시 실행
-	    console.log("성공:", data);
-//	    $("#result").text(data.message);
-        this.clearInputBox();
-	})
-	.fail(function(jqXHR, textStatus, errorThrown) {
-	    // 요청 실패 시 실행
-	    console.error("실패:", textStatus);
-	})
-	.always(function() {
-	    // 성공/실패 관계없이 항상 실행
-//	    console.log("요청 완료");
-	});
+    const self = this; // 콜백 함수 내에서 클래스 접근용
+
+    $.ajax({
+        url: "/api/insert-data2",
+        type: "POST",
+        dataType: "json", // 서버에서 반환하는 데이터가 있다면 json으로 받음
+        data: JSON.stringify(insertData),
+        contentType: "application/json; charset=utf-8"
+    })
+    .done(function(data) {
+        console.log("성공:", data);
+        alert("데이터가 성공적으로 저장되었습니다.");
+
+        // 화면 리스트 업데이트
+        self.#userList.push(insertData);
+        self.printList();
+        self.clearInputBox();
+    })
+    .fail(function(xhr) {
+        // 서버에서 void를 리턴하면 성공해도 fail로 올 수 있으므로 status 확인
+        if(xhr.status === 200) {
+            alert("저장 성공!");
+            self.#userList.push(insertData);
+            self.printList();
+            self.clearInputBox();
+        } else {
+            console.error("실패:", xhr.status);
+            alert("서버 전송 중 오류가 발생했습니다.");
+        }
+    });
   }
+
+  // 9. 수정/삭제 (과제 대비용 구조 유지)
   updateUser() {
-    // 사용자 입력 데이터가 유효한지 검증해야 한다. 유효하지 않으면 경고창 띄우고 리턴;
-    if ( !this.checkInputData("update") ) {
-      return;
-    }
-    // 입력데이터는 JS 객체로 만든다. let JS객체 = {id:고유번호, name:$("#name").val(), genre:"S", grade:"ALL", price:금액, imgUrl:"http://..."};
-    // gameList 배열에서 JS객체.id 번호랑 같은 원소를 찾는다. let 찾는객체 = this.#gameList.find(() => {});
-    // JS객체를 찾는객체로 바꿔치기 한다.
-    // gameList 배열정보를 게임목록 화면에 출력한다. this.printList();
+    if (!this.checkInputData("update")) return;
+    alert("수정 로직을 구현하세요.");
   }
 
   deleteUser() {
-    // 사용자 입력 데이터가 유효한지 검증해야 한다. 유효하지 않으면 경고창 띄우고 리턴;
-    if ( !this.checkInputData("delete") ) {
-      return;
-    }
-    // gameList 배열에서 기존의 id 번호랑 같은 원소를 찾는다. let 찾는객체 = this.#gameList.find(() => {});
-    // 찾는객체를 gameList 배열에서 삭제한다.
-    // gameList 배열정보를 게임목록 화면에 출력한다. this.printList();
+    if (!this.checkInputData("delete")) return;
+    alert("삭제 로직을 구현하세요.");
   }
 
+  // 10. 목록 클릭 시 데이터 로드
   printOneUser(e) {
-    // 화면의 id 값으로 gameList배열에서 찾는다. let id값 = $("#id").val();, let 찾은원소 = this.#gameList.find(() => {});
     let selectId = $(e.currentTarget).find(".idClass").val() * 1;
-    console.log(`selectId = ${selectId}`);
-    let findUser = this.#gameList.find((item) => {
-      return item.id === selectId;
-    });
-    if ( findUser == undefined ) {
-      return;
+    let findUser = this.#userList.find((item) => item.id === selectId);
+
+    if (findUser) {
+      this.setData2InputBox(findUser);
     }
-    // this.setData2InputBox(찾은원소);
-    this.setData2InputBox(findUser);
   }
 }
 
+// 초기화
 $(() => {
-  // jquery 실행
-  let nint = new NintendoGame();
-  nint.printList();
+  let userInfo = new UserInfo();
+  userInfo.printList();
 
-  $("#btnAdd").click((e) => {
-    nint.addGame();
-  });
-
-  $(document).on("click", "#btnUpt", (e) => {
-    nint.updateGame();
-  });
-
-  $(document).on("click", "#btnDel", (e) => {
-    nint.deleteGame();
-  });
-
-  $(document).on("click", ".listDataRow", (e) => {
-    nint.printOneGame(e);
-  });
+  $("#btnAdd").click(() => userInfo.addUser());
+  $(document).on("click", "#btnUpt", () => userInfo.updateUser());
+  $(document).on("click", "#btnDel", () => userInfo.deleteUser());
+  $(document).on("click", ".listDataRow", (e) => userInfo.printOneUser(e));
 });
