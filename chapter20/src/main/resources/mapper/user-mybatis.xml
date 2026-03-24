@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mjc813.chapter20.usercrud.IUserMybatis">
+    <insert id="insertData" parameterType="UserDto">
+        INSERT INTO user_tbl (
+            name
+            ,password
+            ,age
+            ,email
+        ) VALUES (
+            #{name}
+            , #{password}
+            , #{age}
+            , #{email}
+        )
+    </insert>
+</mapper>

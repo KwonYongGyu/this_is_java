@@ -131,12 +131,12 @@ class UserInfo {
   // 9. 수정/삭제 (과제 대비용 구조 유지)
   updateUser() {
     if (!this.checkInputData("update")) return;
-    alert("수정 로직을 구현하세요.");
+    alert("구현 X");
   }
 
   deleteUser() {
     if (!this.checkInputData("delete")) return;
-    alert("삭제 로직을 구현하세요.");
+    alert("구현 X");
   }
 
   // 10. 목록 클릭 시 데이터 로드

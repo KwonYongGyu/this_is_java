@@ -12,3 +12,5 @@ public class GameRestController {
         System.out.println("insertData" + gameDto.toString());
     }
 }
+
+

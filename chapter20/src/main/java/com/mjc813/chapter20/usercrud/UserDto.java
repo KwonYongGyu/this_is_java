@@ -1,4 +1,4 @@
-package com.mjc813.chapter20.usercurd;
+package com.mjc813.chapter20.usercrud;
 
 import lombok.*;
 
