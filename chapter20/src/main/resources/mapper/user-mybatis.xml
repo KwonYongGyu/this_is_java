@@ -15,4 +15,16 @@
             , #{email}
         )
     </insert>
+
+    <update id="updataData" parameterType="UserDto">
+        UPDATE user_tbl SET
+            name = #{name}
+            , password = #{password}
+            , age = #{age}
+            . email = #{email}
+        WHERE id = #{id}
+    </update>
+    <select id="selectAll" resultType="UserDto">
+        SELECT * FROM User_tbl ORDER BY id ASC
+    </select>
 </mapper>

@@ -159,7 +159,7 @@ HTTP 전송 주소(@PostMapping): 서버 전체에서 유일해야 하므로 중
 
 resource안에 mapper 디렉토리 생성 
 mapper 디렉토리안에 mybatis.xml 파일을생성한다.
------------------------------------------파일 형식-------------------------------------------------------------------------------------
+-----------------------------------------mybatis.xml 파일 형식-------------------------------------------------------------------------------------
 // namespace, insert id, parameterType, insertInto 내용은 바꿔서 삽입
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">

@@ -1,16 +1,35 @@
 package com.mjc813.chapter20.gamecrud;
 
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
+@RequestMapping("/api") // 클래스 수준에서 /api 선언
 public class GameRestController {
+    @Autowired
+    private GameService gameService;
 
-    @PostMapping("/api/insert-data")
-    public void insertData(@RequestBody GameDto gameDto) {
+    @PostMapping("/insert-data")
+    public GameDto insertData(@RequestBody GameDto gameDto) {
         System.out.println("insertData" + gameDto.toString());
+        this.gameService.insertData(gameDto); // DB에 추가
+        return gameDto;
     }
+
+    @PatchMapping("/update-data")
+    public GameDto updateData(@RequestBody GameDto gameDto) {
+        System.out.println("updateData" + gameDto.toString());
+        this.gameService.updateData(gameDto);
+        return gameDto;
+    }
+
+    @GetMapping("/get-list") // 브라우저가 /api/get-list 로 요청하면 DB 목록을 JSON으로 던져줍니다.
+    public List<GameDto> getList() {
+        return this.gameService.selectAll(); // 서비스에도 메서드 추가
+    }
+
 }
 
 

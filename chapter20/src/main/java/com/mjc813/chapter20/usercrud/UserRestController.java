@@ -14,7 +14,7 @@ public class UserRestController {
     @PostMapping("/api/insert-data2")
     public void insertData(@RequestBody UserDto userDto) {
         System.out.println("insertData" + userDto.toString());
-        this.userService.insertData(userDto);
+        this.userService.insertData(userDto); // DB에 추가
     }
 
 }
