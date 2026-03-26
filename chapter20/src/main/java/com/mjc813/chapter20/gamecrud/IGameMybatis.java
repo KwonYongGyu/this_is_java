@@ -8,7 +8,7 @@ import java.util.List;
 public interface IGameMybatis {
     void insertData(GameDto newGame);
     void updateData(GameDto gameData);
-
+    void deleteData(Integer Id);
     // 전체 목록을 가져오는 메서드 추가
     List<GameDto> selectAll();
 }

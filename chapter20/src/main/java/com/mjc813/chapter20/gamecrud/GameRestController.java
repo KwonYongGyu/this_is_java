@@ -30,6 +30,10 @@ public class GameRestController {
         return this.gameService.selectAll(); // 서비스에도 메서드 추가
     }
 
+    @DeleteMapping("/delete-data")
+    public void deleteData(@RequestParam Integer Id) {
+        this.gameService.deleteData(Id);
+    }
 }
 
 

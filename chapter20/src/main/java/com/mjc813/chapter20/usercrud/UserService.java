@@ -18,6 +18,9 @@ public class UserService {
         this.userMybatis.updateData(userData);
     }
 
+    public void deleteData(Integer id) {
+        this.userMybatis.deleteData(id);
+    }
     public List<UserDto> selectAll() {
         return this.userMybatis.selectAll();
     }

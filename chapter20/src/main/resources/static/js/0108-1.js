@@ -238,6 +238,30 @@ class NintendoGame {
     // gameList 배열정보를 게임목록 화면에 출력한다. this.printList();
   }
 
+  deleteData(id) {
+      $.ajax({
+        url: "/api/delete-data",
+        type: "DELETE",
+        dataType: "json",
+        data: JSON.stringify({"id":id}),
+        contentType: "application/json"
+    })
+    .done(function(data, textStatus, jqXHR) {
+        // 요청 성공 시 실행
+        alert("성공:", data);
+  //	    $("#result").text(data.message);
+        clearInputBox();
+    })
+    .fail(function(jqXHR, textStatus, errorThrown) {
+        // 요청 실패 시 실행
+        alert("실패:", textStatus);
+    })
+    .always(function() {
+        // 성공/실패 관계없이 항상 실행
+  //	    console.log("요청 완료");
+    });
+  }
+
   printOneGame(e) {
     // 화면의 id 값으로 gameList배열에서 찾는다. let id값 = $("#id").val();, let 찾은원소 = this.#gameList.find(() => {});
     let selectId = $(e.currentTarget).find(".idClass").val() * 1;

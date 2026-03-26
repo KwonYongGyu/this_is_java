@@ -160,9 +160,34 @@ class UserInfo {
   }
 
   deleteUser() {
-    if (!this.checkInputData("delete")) return;
-    alert("구현 X");
-  }
+      // 1. 대상을 선택했는지 검증 (이미 만들어둔 checkInputData 활용)
+      if (!this.checkInputData("delete")) return;
+
+      const id = $("#id").val() * 1;
+      const name = $("#name").val();
+
+      // 2. 사용자에게 한 번 더 물어보기
+      if (confirm(`${name}님 정보를 정말로 삭제할까요?`)) {
+        this.deleteData(id);
+      }
+    }
+
+    // 서버와 통신하는 실제 삭제 로직
+    deleteData(id) {
+      $.ajax({
+        url: "/api/delete-data2/" + id,
+        type: "DELETE" // 컨트롤러의 @DeleteMapping과 맞춤
+      })
+      .done(() => {
+        alert("성공적으로 삭제되었습니다.");
+        this.loadData();      // 리스트 갱신
+        this.clearInputBox(); // 입력창 비우기
+      })
+      .fail((error) => {
+        console.error("삭제 실패:", error);
+        alert("삭제 중 오류가 발생했습니다.");
+      });
+    }
 
   // 10. 목록 클릭 시 데이터 로드
   printOneUser(e) {

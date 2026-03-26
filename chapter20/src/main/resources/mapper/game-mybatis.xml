@@ -31,4 +31,9 @@
 	<select id="selectAll" resultType="GameDto">
 		SELECT * FROM game_tbl ORDER BY id ASC
 	</select>
+
+	<delete id="deleteData" parameterType="GameDto">
+		DELETE FROM game_tbl
+		WHERE id = #{id}
+	</delete>
 </mapper>

@@ -20,4 +20,8 @@ public class GameService {
     public List<GameDto> selectAll() {
         return this.gameMybatis.selectAll();
     }
+
+    public void deleteData(Integer Id) {
+        this.gameMybatis.deleteData(Id);
+    }
 }

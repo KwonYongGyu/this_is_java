@@ -8,6 +8,7 @@ import java.util.List;
 public interface IUserMybatis {
     void insertData(UserDto newUser);
     void updateData(UserDto userData);
+    void deleteData(Integer id);
 
     // 전체 목록을 가져오는 메소드 추가
     List<UserDto> selectAll();
