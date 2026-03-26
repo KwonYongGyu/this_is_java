@@ -208,4 +208,61 @@ mybatis:
 
 
 
+//03/25
+	
+	Update 에 대한 설명
+	SQL 쿼리 : UPDATE 테이블명 SET 컬럼명 = 수정할값, 컬럼명2 = 수정할값 WHERE 기본키 = 값
+		UPDATE 테이블 SET ... WHERE 기본키 IN (값, 값2, 값3, 값3...) => 기본키값 여러행 수정
+	웹화면 ->(Dto)-> Java RestController ->(Dto)-> Service ->(Dto)-> Mybatis ->(Dto)-> XML 쿼리
+	RestController
+	@PatchMapping("URL주소")
+	public void updateData(XXXDto 변수명) {
+		this.XXXService.updateData(변수명);
+	}
 
+	Service
+	public void updateData(XXXDto 변수명) {
+		this.XXXMybatis.updateData(변수명);
+	}
+	
+	Mapper
+	void updateData(XXXDto 변수명);
+	
+	XML SQL 파일
+	<update id="updateData" parameterType="XXXDto">
+		UPDATE 테이블명 SET
+			컬럼명1 = #{멤버변수명}
+			, 컬럼명2 = ...
+		WHERE id = #{id}
+	</update>
+--------------------------------------yaml------------------------------------
+<mapper> 안에 추가
+
+<update id="updateData" parameterType="GameDto">
+		UPDATE game_tbl
+		SET name = #{name}
+			, genre = #{genre}
+			, grade = #{grade}
+			, price = #{price}
+			, img_url = #{imgUrl}
+		WHERE id = #{id}
+	</update>
+
+	<select id="selectAll" resultType="GameDto">
+		SELECT * FROM game_tbl ORDER BY id ASC
+	</select>
+-----------------------------------------------------------------------------------------------------
+@RequestMapping("/api") // 클래스 수준에서 /api 선언
+	클래스
+
+@PatchMapping("/update-data")
+    public GameDto updateData(@RequestBody GameDto gameDto) {
+        System.out.println("updateData" + gameDto.toString());
+        this.gameService.updateData(gameDto);
+        return gameDto;
+    }
+
+    @GetMapping("/get-list") // 브라우저가 /api/get-list 로 요청하면 DB 목록을 JSON으로 던져줍니다.
+    public List<GameDto> getList() {
+        return this.gameService.selectAll(); // 서비스에도 메서드 추가
+    }
