@@ -26,8 +26,9 @@ public class GameRestController {
     }
 
     @GetMapping("/get-list") // 브라우저가 /api/get-list 로 요청하면 DB 목록을 JSON으로 던져줍니다.
-    public List<GameDto> getList() {
-        return this.gameService.selectAll(); // 서비스에도 메서드 추가
+    public List<GameDto> getList(SearchDto searchDto) {
+        System.out.println("검색 조건: " + searchDto.toString());
+        return this.gameService.selectList(searchDto); // 서비스에도 메서드 추가
     }
 
     @DeleteMapping("/delete-data")

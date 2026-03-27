@@ -10,5 +10,5 @@ public interface IGameMybatis {
     void updateData(GameDto gameData);
     void deleteData(Integer Id);
     // 전체 목록을 가져오는 메서드 추가
-    List<GameDto> selectAll();
+    List<GameDto> selectList(SearchDto searchDto);
 }

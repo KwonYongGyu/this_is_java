@@ -76,7 +76,23 @@
       </section>
       <section id="listSection">
         <fieldset class="listField">
-          <legend>게임 목록</legend>
+          <legend>게임 목록 및 검색</legend>
+          <div id="searchArea" style="margin-bottom: 10px; display: flex; gap: 10px;">
+            <select id="searchGenre" class="selectCombo">
+              <option value="">전체 장르</option>
+              <option value="A">액션</option>
+              <option value="S">스포츠</option>
+              <option value="R">RPG</option>
+            </select>
+            <select id="searchGrade" class="selectCombo">
+              <option value="">전체 등급</option>
+              <option value="ALL">전체이용</option>
+              <option value="18">18세이상</option>
+              <option value="13">13세이상</option>
+            </select>
+            <input type="text" id="searchName" class="inputText" placeholder="게임 이름 검색" />
+            <button class="btn" id="btnSearch">검색</button>
+          </div>
           <div class="listTitleRow">
             <div class="listItem">
               <div class="itemTitle text-wrapper">장르</div>

@@ -28,8 +28,28 @@
 		WHERE id = #{id}
 	</update>
 
-	<select id="selectAll" resultType="GameDto">
-		SELECT * FROM game_tbl ORDER BY id ASC
+	<select id="selectList" parameterType="SearchDto" resultType="GameDto">
+		SELECT
+		id
+		, name
+		, genre
+		, grade
+		, price
+		, img_url
+		FROM game_tbl
+		<where>
+			<if test="searchName != null and searchName != ''">
+				AND name LIKE CONCAT('%', #{searchName}, '%')
+			</if>
+
+			<if test="searchGenre != null and searchGenre != ''">
+				AND genre = #{searchGenre}
+			</if>
+			<if test="searchGrade != null and searchGrade != ''">
+				AND grade = #{searchGrade}
+			</if>
+		</where>
+		ORDER BY id DESC
 	</select>
 
 	<delete id="deleteData" parameterType="GameDto">

@@ -3,17 +3,24 @@ class NintendoGame {
 //    {id:1, name:"마리오 골프", genre:"S", grade:"ALL", price:20000, imgUrl:"https://pimg.mk.co.kr/news/cms/202504/06/news-p.v1.20250404.ad221f845db2489a86c2ff50f32c53fa_P1.png"},
 //    {id:2, name:"젤다의 전설", genre:"R", grade:"ALL", price:30000, imgUrl:"https://store.nintendo.co.kr/media/catalog/product/cache/3be328691086628caca32d01ffcc430a/f/i/file.jpg"},
   ];
-// 2. 서버에서 DB 데이터를 가져오는 함수 추가
+// 1. 데이터를 가져오는 함수 (검색 조건 포함)
   loadData() {
+    const searchData = {
+      searchName: $("#searchName").val(),
+      searchGenre: $("#searchGenre").val(),
+      searchGrade: $("#searchGrade").val()
+    };
+
     $.ajax({
-      url: "/api/get-list", // 우리가 만든 컨트롤러 주소
+      url: "/api/get-list",
       type: "GET",
+      data: searchData, // 검색 조건을 쿼리 스트링으로 전달
       dataType: "json"
     })
     .done((data) => {
       console.log("DB 데이터 로드 성공:", data);
-      this.#gameList = data; // 가져온 데이터를 메모리에 저장
-      this.printList();      // 화면에 출력
+      this.#gameList = data;
+      this.printList();
     })
     .fail((error) => {
       console.error("데이터 로드 실패:", error);
@@ -243,24 +250,19 @@ class NintendoGame {
         url: "/api/delete-data",
         type: "DELETE",
         dataType: "json",
-        data: JSON.stringify({"id":id}),
+        data: JSON.stringify({ "id": id }),
         contentType: "application/json"
-    })
-    .done(function(data, textStatus, jqXHR) {
-        // 요청 성공 시 실행
-        alert("성공:", data);
-  //	    $("#result").text(data.message);
-        clearInputBox();
-    })
-    .fail(function(jqXHR, textStatus, errorThrown) {
-        // 요청 실패 시 실행
-        alert("실패:", textStatus);
-    })
-    .always(function() {
-        // 성공/실패 관계없이 항상 실행
-  //	    console.log("요청 완료");
-    });
-  }
+      })
+      .done((data) => { // 화살표 함수로 변경하여 this 유지
+        alert("성공적으로 삭제되었습니다.");
+        this.clearInputBox();
+        this.loadData(); // 삭제 후 목록 다시 불러오기
+      })
+      .fail((error) => {
+        alert("삭제 실패");
+        console.error(error);
+      });
+    }
 
   printOneGame(e) {
     // 화면의 id 값으로 gameList배열에서 찾는다. let id값 = $("#id").val();, let 찾은원소 = this.#gameList.find(() => {});
@@ -278,24 +280,23 @@ class NintendoGame {
 }
 
 $(() => {
-  // jquery 실행
   let nint = new NintendoGame();
   nint.loadData();
-//  nint.printList();
 
-  $("#btnAdd").click((e) => {
-    nint.addGame();
+  // 검색 버튼 클릭 이벤트 (함수 밖으로 뺌)
+  $("#btnSearch").click(() => {
+    nint.loadData();
   });
 
-  $(document).on("click", "#btnUpt", (e) => {
-    nint.updateGame();
+  $("#btnAdd").click(() => nint.addGame());
+  $(document).on("click", "#btnUpt", () => nint.updateGame());
+  $(document).on("click", "#btnDel", () => {
+    // deleteGame 로직을 보완하여 실제 삭제 호출
+    if (nint.checkInputData("delete")) {
+        if(confirm("정말 삭제하시겠습니까?")) {
+            nint.deleteData($("#id").val() * 1);
+        }
+    }
   });
-
-  $(document).on("click", "#btnDel", (e) => {
-    nint.deleteGame();
-  });
-
-  $(document).on("click", ".listDataRow", (e) => {
-    nint.printOneGame(e);
-  });
+  $(document).on("click", ".listDataRow", (e) => nint.printOneGame(e));
 });
