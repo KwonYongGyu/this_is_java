@@ -27,6 +27,21 @@
 			, img_url = #{imgUrl}
 		WHERE id = #{id}
 	</update>
+	<select id="selectTotalCount" parameterType="SearchDto" resultType="int">
+		SELECT COUNT(*)
+		FROM game_tbl
+		<where>
+			<if test="searchName != null and searchName != ''">
+				AND name LIKE CONCAT('%', #{searchName}, '%')
+			</if>
+			<if test="searchGenre != null and searchGenre != ''">
+				AND genre = #{searchGenre}
+			</if>
+			<if test="searchGrade != null and searchGrade != ''">
+				AND grade = #{searchGrade}
+			</if>
+		</where>
+	</select>
 
 	<select id="selectList" parameterType="SearchDto" resultType="GameDto">
 		SELECT
@@ -50,6 +65,8 @@
 			</if>
 		</where>
 		ORDER BY id DESC
+		<!--페이징 처리 추가 -->
+		LIMIT #{recordSize} OFFSET #{offset}
 	</select>
 
 	<delete id="deleteData" parameterType="GameDto">

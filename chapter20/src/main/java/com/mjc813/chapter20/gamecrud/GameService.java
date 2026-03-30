@@ -24,4 +24,11 @@ public class GameService {
     public void deleteData(Integer Id) {
         this.gameMybatis.deleteData(Id);
     }
+
+    public int selectTotalCount(SearchDto searchDto) {
+        // 컨트롤러에서 받은 검색 조건을 그대로 매퍼에 넘겨 전체 개수를 가져옵니다.
+        return this.gameMybatis.selectTotalCount(searchDto);
+    }
+
+
 }

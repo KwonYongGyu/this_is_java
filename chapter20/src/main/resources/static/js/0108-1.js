@@ -1,38 +1,90 @@
 class NintendoGame {
-  #gameList = [
-//    {id:1, name:"마리오 골프", genre:"S", grade:"ALL", price:20000, imgUrl:"https://pimg.mk.co.kr/news/cms/202504/06/news-p.v1.20250404.ad221f845db2489a86c2ff50f32c53fa_P1.png"},
-//    {id:2, name:"젤다의 전설", genre:"R", grade:"ALL", price:30000, imgUrl:"https://store.nintendo.co.kr/media/catalog/product/cache/3be328691086628caca32d01ffcc430a/f/i/file.jpg"},
-  ];
+  #gameList = [];
+  #currentPage = 1; // 현재 페이지를 저장할 프라이빗 변수 선언
+  #recordSize = 2;
+  // 현재 페이지를 설정하는 세터(Setter) 메서드 추가
+    setCurrentPage(page) {
+      this.#currentPage = page;
+    }
 // 1. 데이터를 가져오는 함수 (검색 조건 포함)
   loadData() {
-    const searchData = {
-      searchName: $("#searchName").val(),
-      searchGenre: $("#searchGenre").val(),
-      searchGrade: $("#searchGrade").val()
-    };
+        const searchData = {
+          searchName: $("#searchName").val()
+          , searchGenre: $("#searchGenre").val()
+          , searchGrade: $("#searchGrade").val()
+          , page: this.#currentPage // 현재 페이지 번호 전달
+          , recordSize: 2 // 한 페이지에 5개씩
+        };
 
-    $.ajax({
-      url: "/api/get-list",
-      type: "GET",
-      data: searchData, // 검색 조건을 쿼리 스트링으로 전달
-      dataType: "json"
-    })
-    .done((data) => {
-      console.log("DB 데이터 로드 성공:", data);
-      this.#gameList = data;
-      this.printList();
-    })
-    .fail((error) => {
-      console.error("데이터 로드 실패:", error);
-    });
-  }
-  printList() {
-    $(".listDataBlock").empty();
-    this.#gameList.forEach((item) => {
-      // 배열을 순환하면서 item 을 class="frame-2" 태그 안의 자식 태그로 추가한다.
-      $(".listDataBlock").append(this.printRow(item));
-    });
-  }
+        $.ajax({
+          url: "/api/get-list",
+          type: "GET",
+          data: searchData, // 검색 조건을 쿼리 스트링으로 전달
+          dataType: "json"
+        })
+        .done((res) => { // res는 이제 { list: [], totalCount: 0 } 형태입니다.
+            console.log("DB 데이터 로드 성공:", res);
+
+            // 1. 핵심 수정: res 자체가 아니라 res.list를 저장해야 합니다.
+            this.#gameList = res.list;
+
+            this.printList();
+
+            // 2. 페이징 버튼을 그리는 함수 호출 (전체 개수 전달)
+            this.printPagination(res.totalCount);
+          })
+          .fail((error) => {
+            console.error("데이터 로드 실패:", error);
+          });
+      }
+      // 2. 숫자 페이징 버튼 생성 함수 (중복 제거 및 최신 버전)
+      printPagination(totalCount) {
+        const totalPage = Math.ceil(totalCount / this.#recordSize);
+        const pageArea = $("#pageNumbers");
+        pageArea.empty();
+
+        for (let i = 1; i <= totalPage; i++) {
+          // 현재 페이지는 빨간색 + 테두리 강조
+          const activeStyle = (i === this.#currentPage)
+                              ? "style='font-weight:bold; color:red; border: 2px solid red;'"
+                              : "";
+          const btn = `<button class="btnPage" data-page="${i}" ${activeStyle}>${i}</button>`;
+          pageArea.append(btn);
+        }
+
+        // 숫자 버튼 클릭 이벤트 (.off()로 중복 등록 방지)
+        $(".btnPage").off("click").on("click", (e) => {
+          this.#currentPage = $(e.currentTarget).data("page");
+          this.loadData();
+        });
+
+        // 이전/다음 버튼 활성/비활성화
+        $("#btnPrev").prop("disabled", this.#currentPage === 1);
+        $("#btnNext").prop("disabled", this.#currentPage >= totalPage || totalPage === 0);
+
+        // 현재 페이지 번호 텍스트 표시 (HTML에 해당 ID가 있을 경우)
+        $("#displayCurrentPage").text(this.#currentPage);
+      }
+
+        // 페이지 변경 함수
+      changePage(direction) {
+          if (direction === 'next') {
+            // 데이터가 5개 미만이면 다음 페이지가 없을 확률이 높지만,
+            // 일단은 페이지 번호를 증가시키고 불러옵니다.
+            this.#currentPage++;
+          } else if (direction === 'prev' && this.#currentPage > 1) {
+            this.#currentPage--;
+          }
+          this.loadData();
+        }
+
+      printList() {
+        $(".listDataBlock").empty();
+        this.#gameList.forEach((item) => {
+          // 배열을 순환하면서 item 을 class="frame-2" 태그 안의 자식 태그로 추가한다.
+          $(".listDataBlock").append(this.printRow(item));
+        });
+      }
 
   printGenre(genre) {
     switch(genre) {
@@ -284,9 +336,15 @@ $(() => {
   nint.loadData();
 
   // 검색 버튼 클릭 이벤트 (함수 밖으로 뺌)
+  // 검색 시 다시 1페이지 부터
   $("#btnSearch").click(() => {
+    nint.setCurrentPage(1);
     nint.loadData();
   });
+
+  // 페이징 버튼 이벤트 등록
+  $("#btnPrev").click(() => nint.changePage('prev'));
+  $("#btnNext").click(() => nint.changePage('next'));
 
   $("#btnAdd").click(() => nint.addGame());
   $(document).on("click", "#btnUpt", () => nint.updateGame());
