@@ -25,4 +25,27 @@ public class PetService {
         petDto.setId(petEntity.getId());
         return petDto;
     }
+
+    public PetDto update(PetDto petDto) {
+        PetEntity petEntity = new PetEntity();
+        petEntity.setId(petDto.getId());
+        petEntity.setName(petDto.getName());
+        petEntity.setBirth(petDto.getBirth());
+        petEntity.setBreed(petDto.getBreed());
+        petEntity.setGender(petDto.getGender());
+        petEntity.setImgFile(petDto.getImgFile());
+        petEntity.setSpecies(petDto.getSpecies());
+
+        this.petRepository.save(petEntity);
+
+        PetDto result = new PetDto();
+        result.setId(petEntity.getId());
+        result.setName(petEntity.getName());
+        result.setBirth(petEntity.getBirth());
+        result.setBreed(petEntity.getBreed());
+        result.setGender(petEntity.getGender());
+        result.setImgFile(petEntity.getImgFile());
+        result.setSpecies(petEntity.getSpecies());
+        return result;
+    }
 }

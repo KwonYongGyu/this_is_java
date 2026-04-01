@@ -10,7 +10,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-@Entity(name = "pet_tbl")
+@Entity(name = "pet_tbl") // 테이블 이름 설정(설정 x시 다른 이름으로 생성됨
 public class PetEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,6 +31,6 @@ public class PetEntity {
     @Column
     private LocalDate birth;
 
-    @Column(length = 500, nullable = true)
+    @Column(name="img_file", length = 500, nullable = true)
     private String imgFile;
 }
