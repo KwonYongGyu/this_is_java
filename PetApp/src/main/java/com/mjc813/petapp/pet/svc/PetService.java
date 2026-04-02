@@ -41,4 +41,11 @@ public class PetService {
         this.petRepository.deleteById(id);
         return result;
     }
+
+    public PetDto findById(int id) {
+        PetEntity petEntity = this.petRepository.findById(id).orElseThrow();
+        PetDto result = new PetDto();
+        result.copyMemberValue(petEntity);
+        return result;
+    }
 }
