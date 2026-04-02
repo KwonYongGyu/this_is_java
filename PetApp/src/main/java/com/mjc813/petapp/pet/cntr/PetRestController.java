@@ -66,4 +66,14 @@ public class PetRestController {
             return ResponseEntity.status(500).body(new PetResponseDto(-999, "ERROR", null));
         }
     }
+
+    @DeleteMapping
+    public ResponseEntity<PetResponseDto> deletePet(@RequestParam Integer id) {
+        try {
+            PetDto result = this.petService.deleteById(id);
+            return ResponseEntity.ok().body(new PetResponseDto(0, "SUCCESS", result));
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(new PetResponseDto(-999, "ERROR", null));
+        }
+    }
 }

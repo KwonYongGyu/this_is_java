@@ -3,6 +3,7 @@ package com.mjc813.petapp.pet.dto;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
 @Getter
@@ -11,7 +12,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @ToString
 @Entity(name = "pet_tbl") // 테이블 이름 설정(설정 x시 다른 이름으로 생성됨
-public class PetEntity {
+public class PetEntity implements IPet {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;

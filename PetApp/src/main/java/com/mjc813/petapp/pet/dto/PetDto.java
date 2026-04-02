@@ -2,6 +2,7 @@ package com.mjc813.petapp.pet.dto;
 
 import lombok.*;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
 @Getter
@@ -9,7 +10,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class PetDto {
+public class PetDto implements IPet {
     private Integer id;
     private String name;
     private String species;
