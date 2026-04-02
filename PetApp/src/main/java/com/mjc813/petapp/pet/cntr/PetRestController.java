@@ -1,10 +1,15 @@
 package com.mjc813.petapp.pet.cntr;
 
+import com.mjc813.petapp.pet.PetRequestDto;
 import com.mjc813.petapp.pet.PetResponseDto;
 import com.mjc813.petapp.pet.dto.PetDto;
 import com.mjc813.petapp.pet.dto.PetEntity;
 import com.mjc813.petapp.pet.svc.PetService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -90,6 +95,22 @@ public class PetRestController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new PetResponseDto(-997, "Not found error", null));
         } catch (NumberFormatException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new PetResponseDto(-994, "Number error", null));
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(new PetResponseDto(-999, "ERROR", null));
+        }
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<PetResponseDto> findByNameContains(
+            @RequestParam String searchName
+            , @PageableDefault(size=5, sort="id", direction = Sort.Direction.DESC) Pageable pageable)
+    // 웹클라이언트에서 GET주소 요청시에 Pageable 정보를 이런식으로 전달할 수 있다. &sort=id,desc&size=4&page=0
+    {
+        try {
+            PetRequestDto prd = new PetRequestDto();
+            prd.setSearchName(searchName);
+            Slice<PetEntity> result = this.petService.findByNameContains(prd, pageable);
+            return ResponseEntity.ok().body(new PetResponseDto(0, "SUCCESS", result));
         } catch (Exception e) {
             return ResponseEntity.status(500).body(new PetResponseDto(-999, "ERROR", null));
         }
