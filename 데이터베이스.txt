@@ -266,3 +266,7 @@ mybatis:
     public List<GameDto> getList() {
         return this.gameService.selectAll(); // 서비스에도 메서드 추가
     }
+
+// 04-03
+RestPullApi에서는 url 의 끝에 /를 붙이면 안된다.
+naver.com/ 같이 쓰면 안됨 네이버에서는 가능하지만 레스트풀에이피아이에서는 안된다.
