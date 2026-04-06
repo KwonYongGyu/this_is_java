@@ -294,3 +294,4 @@ web:
   resources:
     add-mappings: false # 404.html 출력 하지 마라
 를 완성하면 RestController 클래스의 메소드마다 try {} catch를 만들 필요가 없다.
+이로 인해 생기는 단점은 MyException을 만들어 해결 가능하다.
