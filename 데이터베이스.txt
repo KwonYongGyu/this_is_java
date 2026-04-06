@@ -268,5 +268,29 @@ mybatis:
     }
 
 // 04-03
-RestPullApi에서는 url 의 끝에 /를 붙이면 안된다.
-naver.com/ 같이 쓰면 안됨 네이버에서는 가능하지만 레스트풀에이피아이에서는 안된다.
+RestFul API에서는 url 의 끝에 /를 붙이면 안된다.
+naver.com/ 같이 쓰면 안됨 네이버에서는 가능하지만 RestFul API에서는 안된다.
+http://localhost:8084/api/pet/4 이렇게 검색하면 api/pet/ id4번의 코드가 나온다.
+-> {
+  "code": 0,
+  "message": "SUCCESS",
+  "data": {
+    "id": 4,
+    "name": "가지",
+    "species": "개",
+    "breed": "골든 리트리버",
+    "gender": "M",
+    "birth": "2025-05-20",
+    "imgFile": "test/image/d.jpg"
+  }
+}
+
+// 04-06
+포스트맨 대체 -> apidog(오류가 있음)
+PetApp 프로젝트 common 패키지의 GlobalException과 MyException + yaml 파일의 
+mvc:
+  throw-exception-if-no-handler-found: true # @ExceptionHandler 에서 예외처리를 찾아라
+web:
+  resources:
+    add-mappings: false # 404.html 출력 하지 마라
+를 완성하면 RestController 클래스의 메소드마다 try {} catch를 만들 필요가 없다.
