@@ -295,3 +295,11 @@ web:
     add-mappings: false # 404.html 출력 하지 마라
 를 완성하면 RestController 클래스의 메소드마다 try {} catch를 만들 필요가 없다.
 이로 인해 생기는 단점은 MyException을 만들어 해결 가능하다.
+
+// 04-07
+CROS
+백엔드 서버 CROS 해제
+WebConfig.java 파일은 CROS https://localhost:3000 웹서버에서 나의 백엔드 서버 자원을 가져
+하위패키지가 아니라 실행되는것과 동일 선상에 놓는게 좋다.
+
+JPA는 Entity 들이 있는걸로만 CRUD가 이루어진다.
