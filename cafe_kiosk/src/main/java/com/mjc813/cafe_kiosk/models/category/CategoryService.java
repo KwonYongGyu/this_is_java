@@ -1,11 +1,15 @@
 package com.mjc813.cafe_kiosk.models.category;
 
+import org.jspecify.annotations.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
+import org.springframework.data.domain.SliceImpl;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class CategoryService {
     @Autowired
@@ -13,6 +17,10 @@ public class CategoryService {
 
     public CategoryDto insert(CategoryDto categoryDto) {
         CategoryEntity newData = new CategoryEntity();
+        return saveCategoryDto(categoryDto, newData);
+    }
+
+    private @NonNull CategoryDto saveCategoryDto(CategoryDto categoryDto, CategoryEntity newData) {
         newData.setName(categoryDto.getName());
         newData.setId(categoryDto.getId());
 
@@ -25,69 +33,41 @@ public class CategoryService {
     }
 
     public CategoryDto update(CategoryDto categoryDto) {
-        // 기존 데이터를 ID로 조회
-        Optional<CategoryEntity> optionalEntity = this.categoryRepository.findById(categoryDto.getId());
-
-        if (optionalEntity.isPresent()) {
-            CategoryEntity entity = optionalEntity.get();
-            // Entity의 필드 Name(대문자)에 값 세팅
-            entity.setName(categoryDto.getName());
-
-            // 저장 (Update 실행)
-            CategoryEntity resEntity = this.categoryRepository.save(entity);
-
-            // 결과 Dto 생성 및 반환
-            CategoryDto result = new CategoryDto();
-            result.setId(resEntity.getId());
-            result.setName(resEntity.getName());
-            return result;
-        }
-        return null;
+        CategoryEntity findData = this.categoryRepository.findById(categoryDto.getId()).orElseThrow();
+        return saveCategoryDto(categoryDto, findData);
     }
 
     public CategoryDto deleteById(Integer id) {
-        Optional<CategoryEntity> optionalEntity = this.categoryRepository.findById(id);
-
-        if (optionalEntity.isPresent()) {
-            CategoryEntity entity = optionalEntity.get();
-            // 삭제 처리
-            this.categoryRepository.delete(entity);
-
-            // 삭제된 정보를 Dto에 담아 반환
-            CategoryDto result = new CategoryDto();
-            result.setId(entity.getId());
-            result.setName(entity.getName());
-            return result;
-        }
-        return null;
+//		CategoryEntity findData = this.categoryRepository.findById(id).orElseThrow();
+//		this.categoryRepository.deleteById(id);
+//		CategoryDto result = new CategoryDto();
+//		result.setId(findData.getId());
+//		result.setName(findData.getName());
+//		return result;
+        CategoryDto result = this.findById(id);
+        this.categoryRepository.deleteById(id);
+        return result;
     }
 
     public CategoryDto findById(Integer id) {
-        Optional<CategoryEntity> optionalEntity = this.categoryRepository.findById(id);
-
-        if (optionalEntity.isPresent()) {
-            CategoryEntity entity = optionalEntity.get();
-
-            CategoryDto result = new CategoryDto();
-            result.setId(entity.getId());
-            result.setName(entity.getName());
-            return result;
-        }
-        return null;
+        CategoryEntity findData = this.categoryRepository.findById(id).orElseThrow();
+        CategoryDto result = new CategoryDto();
+        result.setId(findData.getId());
+        result.setName(findData.getName());
+        return result;
     }
 
     public Slice<CategoryDto> findByNameContains(String name, Pageable pageable) {
-        // Repository에서 검색 결과 가져오기
-        Slice<CategoryEntity> resEntities = this.categoryRepository.findByNameContains(name, pageable);
-
-        // Slice 내부의 Entity들을 Dto로 하나씩 변환
-        Slice<CategoryDto> result = resEntities.map(entity -> {
-            CategoryDto dto = new CategoryDto();
-            dto.setId(entity.getId());
-            dto.setName(entity.getName());
-            return dto;
-        });
-
+        Slice<CategoryEntity> slice = this.categoryRepository.findByNameContains(name, pageable);
+        List<CategoryEntity> list = slice.getContent();
+        List<CategoryDto> resultList = list.stream()
+                .map(categoryEntity -> {
+                    CategoryDto item = new CategoryDto();
+                    item.setId(categoryEntity.getId());
+                    item.setName(categoryEntity.getName());
+                    return item;
+                }).toList();
+        Slice<CategoryDto> result = new SliceImpl<>(resultList, pageable, slice.hasNext());
         return result;
     }
 }

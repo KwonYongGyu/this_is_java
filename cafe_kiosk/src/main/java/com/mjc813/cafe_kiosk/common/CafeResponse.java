@@ -10,6 +10,6 @@ public enum CafeResponse {
     update_success,
     delete_success,
     select_success,
-    other_failed,
+    other_failed, found_failed,
 
 }
