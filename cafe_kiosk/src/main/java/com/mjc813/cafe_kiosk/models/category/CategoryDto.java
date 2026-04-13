@@ -8,7 +8,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class CategoryDto {
-    private Integer id;
-    private String name;
+public class CategoryDto implements ICategory {
+	private Integer id;
+	private String name;
 }
