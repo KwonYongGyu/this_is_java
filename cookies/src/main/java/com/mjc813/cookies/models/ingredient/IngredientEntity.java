@@ -2,6 +2,7 @@ package com.mjc813.cookies.models.ingredient;
 
 import com.mjc813.cookies.models.category.CategoryEntity;
 import com.mjc813.cookies.models.common.IdName;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Getter
@@ -10,12 +11,32 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Entity(name = "ingredient")
+@NamedEntityGraph(name="IngredientEntity.fetchCategory", attributeNodes = {
+		@NamedAttributeNode(value="category")
+})
 public class IngredientEntity implements IngredientInterface {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+
+	@Column(length = 30, nullable = false, unique = true)
 	private String name;
 
+	@Transient
 	private Long categoryId;
+
+	@JoinColumn(name = "category_id", nullable = false)
+	@ManyToOne(fetch = FetchType.LAZY)
 	private CategoryEntity category;
+
+	@Override
+	public Long getCategoryId() {
+		if ( this.category == null ) {
+			this.category = new CategoryEntity();
+		}
+		return this.category.getId();
+	}
 
 	@Override
 	public void setCategoryId(Long categoryId) {
@@ -23,14 +44,8 @@ public class IngredientEntity implements IngredientInterface {
 		if ( this.category == null ) {
 			this.category = new CategoryEntity();
 		}
-		this.category.setId(this.categoryId);
+		this.category.setId(categoryId);
 		this.categoryId = categoryId;
-	}
-
-	@Override
-	public Long getCategoryId() {
-		this.setCategoryId(this.categoryId);
-		return this.categoryId;
 	}
 
 	@Override
@@ -39,7 +54,9 @@ public class IngredientEntity implements IngredientInterface {
 		if ( category == null ) {
 			return;
 		}
-//		this.getCategory().copyMembers(category, true);
-		this.setCategoryId(category.getId());
+		if ( this.category == null ) {
+			this.category = new CategoryEntity();
+		}
+		this.category.copyMembers(category, true);
 	}
 }

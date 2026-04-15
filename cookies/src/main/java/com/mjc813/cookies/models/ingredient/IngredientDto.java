@@ -12,8 +12,19 @@ import lombok.*;
 public class IngredientDto implements IngredientInterface {
 	private Long id;
 	private String name;
+
 	private Long categoryId;
 	private CategoryDto category;
+
+	@Override
+	public Long getCategoryId() {
+		// Long categoryId 랑 category.getId() 랑 값이 항상 같도록 해야 한다.
+		if ( this.category == null ) {
+			this.category = new CategoryDto();
+		}
+		this.category.setId(this.categoryId);
+		return this.category.getId();
+	}
 
 	@Override
 	public void setCategoryId(Long categoryId) {
@@ -21,15 +32,8 @@ public class IngredientDto implements IngredientInterface {
 		if ( this.category == null ) {
 			this.category = new CategoryDto();
 		}
-		this.category.setId(this.categoryId);
+		this.category.setId(categoryId);
 		this.categoryId = categoryId;
-	}
-
-	@Override
-	public Long getCategoryId() {
-		// Long categoryId 랑 category.getId() 랑 값이 항상 같도록 해야 한다.
-		this.setCategoryId(this.categoryId);
-		return this.categoryId;
 	}
 
 	@Override
@@ -38,7 +42,9 @@ public class IngredientDto implements IngredientInterface {
 		if ( category == null ) {
 			return;
 		}
-//		this.getCategory().copyMembers(category, true);
-		this.setCategoryId(category.getId());
+		if ( this.category == null ) {
+			this.category = new CategoryDto();
+		}
+		this.category.copyMembers(category, true);
 	}
 }

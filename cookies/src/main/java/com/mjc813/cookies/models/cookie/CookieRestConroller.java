@@ -1,4 +1,4 @@
-package com.mjc813.cookies.models.category;
+package com.mjc813.cookies.models.cookie;
 
 import com.mjc813.cookies.models.common.ApiResponse;
 import com.mjc813.cookies.models.common.ResponseCode;
@@ -11,16 +11,16 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/v1/category")
-public class CategoryRestConroller {
+@RequestMapping("/api/v1/cookie")
+public class CookieRestConroller {
 	@Autowired
-	private CategoryService categoryService;
+	private CookieService cookieService;
 
 	@PostMapping
-	public ResponseEntity<ApiResponse<CategoryDto>> insert(@RequestBody CategoryDto insertDto) {
-		CategoryDto result = this.categoryService.insert(insertDto);
+	public ResponseEntity<ApiResponse<CookieDto>> insert(@RequestBody CookieDto insertDto) {
+		CookieDto result = this.cookieService.insert(insertDto);
 		return ResponseEntity.status(201).body(
-//				ApiResponse.<CategoryDto>builder()
+//				ApiResponse.<CookieDto>builder()
 //						.responseCode(ResponseCode.insert_ok)
 //						.message("ok")
 //						.responseData(result)
@@ -30,33 +30,33 @@ public class CategoryRestConroller {
 	}
 
 	@PatchMapping
-	public ResponseEntity<ApiResponse<CategoryDto>> update(@RequestBody CategoryDto insertDto) {
-		CategoryDto result = this.categoryService.update(insertDto);
+	public ResponseEntity<ApiResponse<CookieDto>> update(@RequestBody CookieDto insertDto) {
+		CookieDto result = this.cookieService.update(insertDto);
 		return ResponseEntity.status(200).body(
 				ApiResponse.make(ResponseCode.update_ok, "ok", result)
 		);
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<ApiResponse<CategoryDto>> findById(@PathVariable Long id) {
-		CategoryDto result = this.categoryService.findById(id);
+	public ResponseEntity<ApiResponse<CookieDto>> findById(@PathVariable Long id) {
+		CookieDto result = this.cookieService.findById(id);
 		return ResponseEntity.status(200).body(
 				ApiResponse.make(ResponseCode.select_ok, "ok", result)
 		);
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<ApiResponse<CategoryDto>> deleteById(@PathVariable Long id) {
-		CategoryDto result = this.categoryService.deleteById(id);
+	public ResponseEntity<ApiResponse<CookieDto>> deleteById(@PathVariable Long id) {
+		CookieDto result = this.cookieService.deleteById(id);
 		return ResponseEntity.status(200).body(
 				ApiResponse.make(ResponseCode.delete_ok, "ok", result)
 		);
 	}
 
 	@GetMapping("/searchname")
-	public ResponseEntity<ApiResponse<Slice<CategoryDto>>> searchByName(@RequestParam String name
+	public ResponseEntity<ApiResponse<Slice<CookieDto>>> searchByName(@RequestParam String name
 			, @PageableDefault(size=10, page=0, sort="id", direction= Sort.Direction.DESC) Pageable pageable) {
-		Slice<CategoryDto> result = this.categoryService.findByNameContains(name, pageable);
+		Slice<CookieDto> result = this.cookieService.findByNameContains(name, pageable);
 		return ResponseEntity.status(200).body(
 				ApiResponse.make(ResponseCode.select_ok, "ok", result)
 		);

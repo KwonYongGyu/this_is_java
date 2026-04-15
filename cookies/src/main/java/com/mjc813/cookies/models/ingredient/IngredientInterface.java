@@ -8,4 +8,16 @@ public interface IngredientInterface extends IdName {
 
 	IdName getCategory();
 	void setCategory(IdName category);
+
+	default IngredientInterface copyMembers(IngredientInterface src, boolean forced) {
+		if ( src == null ) {
+			return this;
+		}
+		IdName.super.copyMembers(src, forced);
+		if ( forced || src.getCategoryId() != null ) {
+			this.setCategoryId(src.getCategoryId());
+			this.getCategory().copyMembers(src.getCategory(), forced);
+		}
+		return this;
+	}
 }
