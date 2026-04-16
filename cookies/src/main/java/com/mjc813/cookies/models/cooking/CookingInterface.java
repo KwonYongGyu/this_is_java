@@ -14,4 +14,21 @@ public interface CookingInterface {
 
 	IdName getCookie();
 	void setCookie(IdName cookie);
+
+	default CookingInterface copyMembers(CookingInterface src, boolean forced) {
+		if ( src == null ) {
+			return this;
+		}
+		if ( forced || src.getId() != null ) {
+			this.setId(src.getId());
+		}
+		if ( forced || src.getDescription() != null ) {
+			this.setDescription(src.getDescription());
+		}
+		if ( forced || src.getCookieId() != null ) {
+			this.setCookieId(src.getCookieId());
+			this.getCookie().copyMembers(src.getCookie(), forced);
+		}
+		return this;
+	}
 }

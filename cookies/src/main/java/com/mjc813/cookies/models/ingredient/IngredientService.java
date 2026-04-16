@@ -1,5 +1,6 @@
 package com.mjc813.cookies.models.ingredient;
 
+import com.mjc813.cookies.models.category.CategoryEntity;
 import com.mjc813.cookies.models.category.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -47,6 +48,16 @@ public class IngredientService {
 
 	public Slice<IngredientDto> findAllByNameContaining(String name, Pageable pageable) {
 		Slice<IngredientEntity> slc = this.ingredientRepository.findAllByNameContaining(name, pageable);
+		List<IngredientDto> list = slc.getContent().stream()
+				.map( x -> (IngredientDto) new IngredientDto().copyMembers(x, true))
+				.toList();
+		Slice<IngredientDto> result = new SliceImpl<>(list, slc.getPageable(), slc.hasNext());
+		return result;
+	}
+
+	public Slice<IngredientDto> findAllByCategoryEquals(Long categoryId, Pageable pageable) {
+		CategoryEntity category = categoryRepository.findById(categoryId).orElseThrow();
+		Slice<IngredientEntity> slc = this.ingredientRepository.findAllByCategoryEquals(category, pageable);
 		List<IngredientDto> list = slc.getContent().stream()
 				.map( x -> (IngredientDto) new IngredientDto().copyMembers(x, true))
 				.toList();

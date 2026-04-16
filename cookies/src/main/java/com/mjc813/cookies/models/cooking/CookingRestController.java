@@ -1,4 +1,4 @@
-package com.mjc813.cookies.models.ingredient;
+package com.mjc813.cookies.models.cooking;
 
 import com.mjc813.cookies.models.common.ApiResponse;
 import com.mjc813.cookies.models.common.ResponseCode;
@@ -11,56 +11,56 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/v1/ingred")
-public class IngredientRestController {
+@RequestMapping("/api/v1/cooking")
+public class CookingRestController {
 	@Autowired
-	private IngredientService ingredientService;
+	private CookingService cookingService;
 
 	@PostMapping
-	public ResponseEntity<ApiResponse<IngredientDto>> insert(@RequestBody IngredientDto insertDto) {
-		IngredientDto result = this.ingredientService.insert(insertDto);
+	public ResponseEntity<ApiResponse<CookingDto>> insert(@RequestBody CookingDto insertDto) {
+		CookingDto result = this.cookingService.insert(insertDto);
 		return ResponseEntity.status(201).body(
 				ApiResponse.make(ResponseCode.insert_ok, "ok", result)
 		);
 	}
 
 	@PatchMapping
-	public ResponseEntity<ApiResponse<IngredientDto>> update(@RequestBody IngredientDto updateDto) {
-		IngredientDto result = this.ingredientService.update(updateDto);
+	public ResponseEntity<ApiResponse<CookingDto>> update(@RequestBody CookingDto updateDto) {
+		CookingDto result = this.cookingService.update(updateDto);
 		return ResponseEntity.status(200).body(
 				ApiResponse.make(ResponseCode.update_ok, "ok", result)
 		);
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<ApiResponse<IngredientDto>> deleteById(@PathVariable Long id) {
-		IngredientDto result = this.ingredientService.deleteById(id);
+	public ResponseEntity<ApiResponse<CookingDto>> deleteById(@PathVariable Long id) {
+		CookingDto result = this.cookingService.deleteById(id);
 		return ResponseEntity.status(200).body(
 				ApiResponse.make(ResponseCode.delete_ok, "ok", result)
 		);
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<ApiResponse<IngredientDto>> findById(@PathVariable Long id) {
-		IngredientDto result = this.ingredientService.findById(id);
+	public ResponseEntity<ApiResponse<CookingDto>> findById(@PathVariable Long id) {
+		CookingDto result = this.cookingService.findById(id);
 		return ResponseEntity.status(200).body(
 				ApiResponse.make(ResponseCode.select_ok, "ok", result)
 		);
 	}
 
-	@GetMapping("/searchname")
-	public ResponseEntity<ApiResponse<Slice<IngredientDto>>> findAllByNameContaining(@RequestParam String name
+	@GetMapping("/searchdescription")
+	public ResponseEntity<ApiResponse<Slice<CookingDto>>> findAllByDescriptionContaining(@RequestParam String description
 			, @PageableDefault(size=10, page=0, sort="id", direction= Sort.Direction.DESC) Pageable pageable) {
-		Slice<IngredientDto> result = this.ingredientService.findAllByNameContaining(name, pageable);
+		Slice<CookingDto> result = this.cookingService.findAllByDescriptionContaining(description, pageable);
 		return ResponseEntity.status(200).body(
 				ApiResponse.make(ResponseCode.select_ok, "ok", result)
 		);
 	}
 
-	@GetMapping("/category/{categoryId}")
-	public ResponseEntity<ApiResponse<Slice<IngredientDto>>> findAllByCategoryEquals(@PathVariable Long categoryId
+	@GetMapping("/cookie/{cookieId}")
+	public ResponseEntity<ApiResponse<Slice<CookingDto>>> findAllByCookieEquals(@PathVariable Long cookieId
 			, @PageableDefault(size=10, page=0, sort="id", direction= Sort.Direction.DESC) Pageable pageable) {
-		Slice<IngredientDto> result = this.ingredientService.findAllByCategoryEquals(categoryId, pageable);
+		Slice<CookingDto> result = this.cookingService.findAllByCookieEquals(cookieId, pageable);
 		return ResponseEntity.status(200).body(
 				ApiResponse.make(ResponseCode.select_ok, "ok", result)
 		);

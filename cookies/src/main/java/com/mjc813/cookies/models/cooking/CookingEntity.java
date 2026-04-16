@@ -2,6 +2,7 @@ package com.mjc813.cookies.models.cooking;
 
 import com.mjc813.cookies.models.common.IdName;
 import com.mjc813.cookies.models.cookie.CookieEntity;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Getter
@@ -10,26 +11,44 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Entity(name = "cooking")
+@NamedEntityGraph(name="CookingEntity.fetchCookie", attributeNodes = {
+		@NamedAttributeNode(value="cookie")
+})
 public class CookingEntity implements CookingInterface {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+
+	@Column(columnDefinition = "TEXT")
 	private String description;
 
+	@Transient
 	private Long cookieId;
+
+	@JoinColumn(name = "cookie_id", nullable = false)
+	@ManyToOne(fetch = FetchType.LAZY)
 	private CookieEntity cookie;
 
+	@Override
+	public Long getCookieId() {
+		if ( this.cookie == null ) {
+			this.cookie = new CookieEntity();
+		}
+		if ( this.cookie.getId() != null) {
+			this.cookieId = this.cookie.getId();
+		}
+		return this.cookie.getId();
+	}
+
+	@Override
 	public void setCookieId(Long cookieId) {
 		// Long cookieId 랑 cookie.getId() 랑 값이 항상 같도록 해야 한다.
 		if ( this.cookie == null ) {
 			this.cookie = new CookieEntity();
 		}
-		this.cookie.setId(this.cookieId);
+		this.cookie.setId(cookieId);
 		this.cookieId = cookieId;
-	}
-
-	public Long getCookieId() {
-		// Long cookieId 랑 cookie.getId() 랑 값이 항상 같도록 해야 한다.
-		this.setCookieId(this.cookieId);
-		return this.cookieId;
 	}
 
 	@Override
@@ -38,7 +57,9 @@ public class CookingEntity implements CookingInterface {
 		if ( cookie == null ) {
 			return;
 		}
-//		this.getCookie().copyMembers(cookie, true);
-		this.setCookieId(cookie.getId());
+		if ( this.cookie == null ) {
+			this.cookie = new CookieEntity();
+		}
+		this.cookie.copyMembers(cookie, true);
 	}
 }

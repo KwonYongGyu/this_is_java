@@ -18,7 +18,7 @@ public class IngredientDto implements IngredientInterface {
 
 	@Override
 	public Long getCategoryId() {
-		// Long categoryId 랑 category.getId() 랑 값이 항상 같도록 해야 한다.
+		// Long 외래키값 과 객체.기본키 값을 항상 같도록 해야 한다.
 		if ( this.category == null ) {
 			this.category = new CategoryDto();
 		}
@@ -28,7 +28,7 @@ public class IngredientDto implements IngredientInterface {
 
 	@Override
 	public void setCategoryId(Long categoryId) {
-		// Long categoryId 랑 category.getId() 랑 값이 항상 같도록 해야 한다.
+		// Long 외래키값 과 객체.기본키 값을 항상 같도록 해야 한다.
 		if ( this.category == null ) {
 			this.category = new CategoryDto();
 		}
@@ -38,7 +38,7 @@ public class IngredientDto implements IngredientInterface {
 
 	@Override
 	public void setCategory(IdName category) {
-		// Long categoryId 랑 category.getId() 랑 값이 항상 같도록 해야 한다.
+		// Long 외래키값 과 객체.기본키 값을 항상 같도록 해야 한다.
 		if ( category == null ) {
 			return;
 		}

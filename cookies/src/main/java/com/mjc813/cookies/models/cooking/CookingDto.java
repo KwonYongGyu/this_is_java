@@ -16,19 +16,24 @@ public class CookingDto implements CookingInterface {
 	private Long cookieId;
 	private CookieDto cookie;
 
-	public void setCookieId(Long cookieId) {
+	@Override
+	public Long getCookieId() {
 		// Long cookieId 랑 cookie.getId() 랑 값이 항상 같도록 해야 한다.
 		if ( this.cookie == null ) {
 			this.cookie = new CookieDto();
 		}
 		this.cookie.setId(this.cookieId);
-		this.cookieId = cookieId;
+		return this.cookie.getId();
 	}
 
-	public Long getCookieId() {
+	@Override
+	public void setCookieId(Long cookieId) {
 		// Long cookieId 랑 cookie.getId() 랑 값이 항상 같도록 해야 한다.
-		this.setCookieId(this.cookieId);
-		return this.cookieId;
+		if ( this.cookie == null ) {
+			this.cookie = new CookieDto();
+		}
+		this.cookie.setId(cookieId);
+		this.cookieId = cookieId;
 	}
 
 	@Override
@@ -37,7 +42,9 @@ public class CookingDto implements CookingInterface {
 		if ( cookie == null ) {
 			return;
 		}
-//		this.getCookie().copyMembers(cookie, true);
-		this.setCookieId(cookie.getId());
+		if ( this.cookie == null ) {
+			this.cookie = new CookieDto();
+		}
+		this.cookie.copyMembers(cookie, true);
 	}
 }
