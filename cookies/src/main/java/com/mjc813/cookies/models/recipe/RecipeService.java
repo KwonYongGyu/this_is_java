@@ -24,7 +24,8 @@ public class RecipeService {
 	}
 
 	public RecipeDto findById(Long id) {
-		RecipeEntity findEntity = this.recipeRepository.findById(id).orElseThrow();
+//		RecipeEntity findEntity = this.recipeRepository.findById(id).orElseThrow();
+		RecipeEntity findEntity = this.recipeRepository.findJoinAllById(id).orElseThrow();
 		RecipeDto result = (RecipeDto)new RecipeDto().copyMembers(findEntity, true);
 		return result;
 	}

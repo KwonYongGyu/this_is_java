@@ -16,6 +16,15 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @Builder
 @Entity(name = "recipe")
+@NamedEntityGraph(name = "RecipeEntity.fetchCookieIngredient", attributeNodes = {
+		@NamedAttributeNode(value = "cookie"),
+		@NamedAttributeNode(value = "ingredient", subgraph = "RecipeIngredient.fetchCategory")
+},
+		subgraphs = {
+				@NamedSubgraph(name = "RecipeIngredient.fetchCategory", attributeNodes = {
+						@NamedAttributeNode(value = "category")})
+		}
+)
 public class RecipeEntity implements RecipeInterface {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
