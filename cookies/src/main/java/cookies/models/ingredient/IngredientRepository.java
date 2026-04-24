@@ -1,0 +1,18 @@
+package cookies.models.ingredient;
+
+import com.mjc813.cookies.models.category.CategoryEntity;
+import com.mjc813.cookies.models.ingredient.IngredientEntity;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
+import org.springframework.data.jpa.repository.EntityGraph;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface IngredientRepository extends JpaRepository<com.mjc813.cookies.models.ingredient.IngredientEntity, Long> {
+	@EntityGraph(value = "IngredientEntity.fetchCategory")
+	Slice<com.mjc813.cookies.models.ingredient.IngredientEntity> findAllByNameContaining(String name, Pageable pageable);
+
+	@EntityGraph(value = "IngredientEntity.fetchCategory")
+	Slice<IngredientEntity> findAllByCategoryEquals(CategoryEntity category, Pageable pageable);
+}
