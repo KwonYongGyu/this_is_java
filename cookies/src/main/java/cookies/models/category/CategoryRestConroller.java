@@ -19,8 +19,8 @@ public class CategoryRestConroller {
 	private CategoryService categoryService;
 
 	@PostMapping
-	public ResponseEntity<ApiResponse<com.mjc813.cookies.models.category.CategoryDto>> insert(@RequestBody com.mjc813.cookies.models.category.CategoryDto insertDto) {
-		com.mjc813.cookies.models.category.CategoryDto result = this.categoryService.insert(insertDto);
+	public ResponseEntity<ApiResponse<CategoryDto>> insert(@RequestBody CategoryDto insertDto) {
+		CategoryDto result = this.categoryService.insert(insertDto);
 		return ResponseEntity.status(201).body(
 //				ApiResponse.<CategoryDto>builder()
 //						.responseCode(ResponseCode.insert_ok)
@@ -32,31 +32,31 @@ public class CategoryRestConroller {
 	}
 
 	@PatchMapping
-	public ResponseEntity<ApiResponse<com.mjc813.cookies.models.category.CategoryDto>> update(@RequestBody com.mjc813.cookies.models.category.CategoryDto insertDto) {
-		com.mjc813.cookies.models.category.CategoryDto result = this.categoryService.update(insertDto);
+	public ResponseEntity<ApiResponse<CategoryDto>> update(@RequestBody CategoryDto insertDto) {
+		CategoryDto result = this.categoryService.update(insertDto);
 		return ResponseEntity.status(200).body(
 				ApiResponse.make(ResponseCode.update_ok, "ok", result)
 		);
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<ApiResponse<com.mjc813.cookies.models.category.CategoryDto>> findById(@PathVariable Long id) {
-		com.mjc813.cookies.models.category.CategoryDto result = this.categoryService.findById(id);
+	public ResponseEntity<ApiResponse<CategoryDto>> findById(@PathVariable Long id) {
+		CategoryDto result = this.categoryService.findById(id);
 		return ResponseEntity.status(200).body(
 				ApiResponse.make(ResponseCode.select_ok, "ok", result)
 		);
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<ApiResponse<com.mjc813.cookies.models.category.CategoryDto>> deleteById(@PathVariable Long id) {
-		com.mjc813.cookies.models.category.CategoryDto result = this.categoryService.deleteById(id);
+	public ResponseEntity<ApiResponse<CategoryDto>> deleteById(@PathVariable Long id) {
+		CategoryDto result = this.categoryService.deleteById(id);
 		return ResponseEntity.status(200).body(
 				ApiResponse.make(ResponseCode.delete_ok, "ok", result)
 		);
 	}
 
 	@GetMapping("/searchname")
-	public ResponseEntity<ApiResponse<Slice<com.mjc813.cookies.models.category.CategoryDto>>> searchByName(@RequestParam String name
+	public ResponseEntity<ApiResponse<Slice<CategoryDto>>> searchByName(@RequestParam String name
 			, @PageableDefault(size=10, page=0, sort="id", direction= Sort.Direction.DESC) Pageable pageable) {
 		Slice<CategoryDto> result = this.categoryService.findByNameContains(name, pageable);
 		return ResponseEntity.status(200).body(

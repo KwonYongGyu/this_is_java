@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface AttachRepository extends JpaRepository<AttachEntity, Long> {
+public interface AttachRepository extends JpaRepository<com.mjc813.cookies.models.attach.AttachEntity, Long> {
 	List<AttachEntity> findAllByCookie(CookieEntity cookie);
 }

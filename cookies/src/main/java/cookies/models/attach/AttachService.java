@@ -15,24 +15,24 @@ public class AttachService {
 	private AttachRepository attachRepository;
 
 	public AttachDto insert(AttachDto insertDto) {
-		AttachEntity insertEntity = (AttachEntity)new AttachEntity().copyMembers(insertDto, true);
+		com.mjc813.cookies.models.attach.AttachEntity insertEntity = (com.mjc813.cookies.models.attach.AttachEntity)new com.mjc813.cookies.models.attach.AttachEntity().copyMembers(insertDto, true);
 		insertEntity.setId(null);
-		AttachEntity save = this.attachRepository.save(insertEntity);
+		com.mjc813.cookies.models.attach.AttachEntity save = this.attachRepository.save(insertEntity);
 		AttachDto result = (AttachDto)new AttachDto().copyMembers(save, true);
 		return result;
 	}
 
 	public AttachDto update(AttachDto updateDto) {
-		AttachEntity findEntity = this.attachRepository.findById(updateDto.getId()).orElseThrow();
-		AttachEntity updateEntity = (AttachEntity)new AttachEntity().copyMembers(findEntity, true);
+		com.mjc813.cookies.models.attach.AttachEntity findEntity = this.attachRepository.findById(updateDto.getId()).orElseThrow();
+		com.mjc813.cookies.models.attach.AttachEntity updateEntity = (com.mjc813.cookies.models.attach.AttachEntity)new com.mjc813.cookies.models.attach.AttachEntity().copyMembers(findEntity, true);
 		updateEntity.copyMembers(updateDto, false);
-		AttachEntity save = this.attachRepository.save(updateEntity);
+		com.mjc813.cookies.models.attach.AttachEntity save = this.attachRepository.save(updateEntity);
 		AttachDto result = (AttachDto)new AttachDto().copyMembers(save, true);
 		return result;
 	}
 
 	public AttachDto findById(Long id) {
-		AttachEntity findEntity = this.attachRepository.findById(id).orElseThrow();
+		com.mjc813.cookies.models.attach.AttachEntity findEntity = this.attachRepository.findById(id).orElseThrow();
 		AttachDto result = (AttachDto)new AttachDto().copyMembers(findEntity, true);
 		return result;
 	}
