@@ -17,39 +17,39 @@ public class AttachRestController {
 	private AttachService attachService;
 
 	@PostMapping
-	public ResponseEntity<ApiResponse<AttachDto>> insert(@RequestBody AttachDto insertDto) {
-		AttachDto result = this.attachService.insert(insertDto);
+	public ResponseEntity<ApiResponse<com.mjc813.cookies.models.attach.AttachDto>> insert(@RequestBody com.mjc813.cookies.models.attach.AttachDto insertDto) {
+		com.mjc813.cookies.models.attach.AttachDto result = this.attachService.insert(insertDto);
 		return ResponseEntity.status(201).body(
 				ApiResponse.make(ResponseCode.insert_ok, "ok", result)
 		);
 	}
 
 	@PatchMapping
-	public ResponseEntity<ApiResponse<AttachDto>> update(@RequestBody AttachDto updateDto) {
-		AttachDto result = this.attachService.update(updateDto);
+	public ResponseEntity<ApiResponse<com.mjc813.cookies.models.attach.AttachDto>> update(@RequestBody com.mjc813.cookies.models.attach.AttachDto updateDto) {
+		com.mjc813.cookies.models.attach.AttachDto result = this.attachService.update(updateDto);
 		return ResponseEntity.status(200).body(
 				ApiResponse.make(ResponseCode.update_ok, "ok", result)
 		);
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<ApiResponse<AttachDto>> deleteById(@PathVariable Long id) {
-		AttachDto result = this.attachService.deleteById(id);
+	public ResponseEntity<ApiResponse<com.mjc813.cookies.models.attach.AttachDto>> deleteById(@PathVariable Long id) {
+		com.mjc813.cookies.models.attach.AttachDto result = this.attachService.deleteById(id);
 		return ResponseEntity.status(200).body(
 				ApiResponse.make(ResponseCode.delete_ok, "ok", result)
 		);
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<ApiResponse<AttachDto>> findById(@PathVariable Long id) {
-		AttachDto result = this.attachService.findById(id);
+	public ResponseEntity<ApiResponse<com.mjc813.cookies.models.attach.AttachDto>> findById(@PathVariable Long id) {
+		com.mjc813.cookies.models.attach.AttachDto result = this.attachService.findById(id);
 		return ResponseEntity.status(200).body(
 				ApiResponse.make(ResponseCode.select_ok, "ok", result)
 		);
 	}
 
 	@GetMapping("/cookie/{cookieId}")
-	public ResponseEntity<ApiResponse<List<AttachDto>>> findAllByCookieId(@PathVariable Long cookieId) {
+	public ResponseEntity<ApiResponse<List<com.mjc813.cookies.models.attach.AttachDto>>> findAllByCookieId(@PathVariable Long cookieId) {
 		List<AttachDto> result = this.attachService.findAllByCookieId(cookieId);
 		return ResponseEntity.status(200).body(
 				ApiResponse.make(ResponseCode.select_ok, "ok", result)

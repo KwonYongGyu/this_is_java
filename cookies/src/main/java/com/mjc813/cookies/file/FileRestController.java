@@ -1,4 +1,4 @@
-package cookies.biz.file;
+package com.mjc813.cookies.file;
 
 import com.mjc813.cookies.models.attach.AttachDto;
 import com.mjc813.cookies.models.common.ApiResponse;

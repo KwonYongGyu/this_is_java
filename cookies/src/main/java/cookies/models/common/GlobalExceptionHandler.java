@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class GlobalExceptionHandler {
 
 	@ExceptionHandler(Throwable.class)
-	public ResponseEntity<ApiResponse<String>> handlerThrowable(Throwable ex) {
+	public ResponseEntity<com.mjc813.cookies.models.common.ApiResponse<String>> handlerThrowable(Throwable ex) {
 		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
 			.body(
 				ApiResponse.make(ResponseCode.other_failed, "error", ex.getMessage())
