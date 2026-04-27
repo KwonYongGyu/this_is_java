@@ -320,3 +320,67 @@ JPA는 Entity 들이 있는걸로만 CRUD가 이루어진다.
 3) right join : 오른쪽 테이블 전체와 왼쪽 테이블의 일치 항목을 join 연결해 출력. 일치하지 않은 왼쪽 항목은 Null
 
 4) full join(합집합) : 양쪽 테이블 전체를 합치고 매칭 안되는 것들은 양쪽다 모두 Null
+
+
+//04-27 총정리
+층(Layer)을 나눠서 개발하는 이유 : 유지보수가 편하고 향후에 확장성이 좋기 때문이다. Controller에 다 코딩하는것은 자제해야 한다.
+
+인텔리제이에서 브레이크는 메소드 이름이 아닌 내용에 브레이크를 걸어야 한다.
+Fiddler를 볼땐 Headers와 Raw를 볼줄 알아야 한다. Raw로 보는게 중요하다.
+Raw: Content-Length:31 밑의 빈칸 하나를 기준으로 위는 Header 아래는 Body인게 Html 국제 표준이다. 아래가 JSON
+
+POST http://localhost:8089/api/v1/category HTTP/1.1
+Content-Type: application/json
+User-Agent: PostmanRuntime/7.53.0
+Accept: */*
+Cache-Control: no-cache
+Postman-Token: c28ae915-0b1f-457b-82f6-e75b3977ac4f
+Host: localhost:8089
+Accept-Encoding: gzip, deflate, br
+Connection: keep-alive
+Content-Length: 31
+
+{
+    "name" : "양념장4"
+}
+
+
+
+
+@RestController가 하는 역할
+Restful Api 서버를 만들어주는 컨트롤러 애노테이션이다. (JSON으로만 처리)
+Restful Api는 http/https 로 데이터 통신을 하는  국제 표준 방식            sesiontd나중에 코드보고 뭔지 고치기
+클라이언트가 요청 : URI 주소, Method, 요청데이터(http header(cookie, sesiontd, content-type,...), http body(form 데이터, json 데이터, get방식 데이터, 첨부파일 데이터)) 
+요청에 대해 서버가 응답 : 서버는 클라이언트의 요청을 처리하고 http header, http body(JSON)으로 응답할 수 있다.
+@RequestMapping() : URI
+클라이언트가 메소드1를 요청하려면 아래의 3가지가 충족되어야 한다.
+	URI => http://주소/aaa/bbb/ccc
+	Method => PUT
+	요청데이터 => {"id" : "값1", "name" : "값2"}
+
+클라이언트가 메소드2를 요청하려면 
+	URI => http://주소/aaa/bbb/ccc/ddd?name=값1&age값2
+	Method => GET
+	요청데이터 => 주소로 같이 전송된다.
+
+
+
+@Slf4j => log를 사용 가능
+
+
+실행은 아무 브라우저의 주소창에 http://localhost:8089/api/v1/category/수박/빨강/10kg   이런식으로 쓰면 된다.
+@GetMapping("/{fruit}/{color}/{size}")
+	public String test(@PathVariable String fruit, @PathVariable String color, @PathVariable String size) {
+		log.info("test fruit={}. color={}. size={}",fruit,color,size);
+		return fruit +", " + color + ", " + size;
+	}
+
+@RequestParam : 주소 GET 방식의 데이터를 받는 방법, 주소의 ?변수명 = 값&변수명2 = 값&...
+@PathVariable : 주소 GET 방식으로 데이터를 받는 방법, 주소/변수1값/주소/변수2값/주소/변수3값.....
+@ModelAttribute : POST 방식의 데이터를 받는 방법, 주소는 안됨, html form tag, MPA 화면방식
+	<form id="..." name"..." method="post" action="서버주소">
+		<input type = "text"
+
+
+@RequestBody : POST 와 대부분의 방식으로 데이터를 받는 방법, JSON문자열로 받는다.
+@RequestPart : JSON 데이터와 

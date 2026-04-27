@@ -2,6 +2,7 @@ package com.mjc813.cookies.models.category;
 
 import com.mjc813.cookies.models.common.ApiResponse;
 import com.mjc813.cookies.models.common.ResponseCode;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
@@ -10,11 +11,19 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+
+@Slf4j
 @RestController
 @RequestMapping("/api/v1/category")
 public class CategoryRestConroller {
 	@Autowired
 	private CategoryService categoryService;
+
+	@GetMapping("/{fruit}/{color}/{size}")
+	public String test(@PathVariable String fruit, @PathVariable String color, @PathVariable String size) {
+		log.info("test fruit={}. color={}. size={}",fruit,color,size);
+		return fruit +", " + color + ", " + size;
+	}
 
 	@PostMapping
 	public ResponseEntity<ApiResponse<CategoryDto>> insert(@RequestBody CategoryDto insertDto) {
