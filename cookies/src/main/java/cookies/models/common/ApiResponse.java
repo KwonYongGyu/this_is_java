@@ -10,7 +10,7 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class ApiResponse<T> {
-	private ResponseCode responseCode;
+	private com.mjc813.cookies.models.common.ResponseCode responseCode;
 	private String message;
 	private T responseData;
 

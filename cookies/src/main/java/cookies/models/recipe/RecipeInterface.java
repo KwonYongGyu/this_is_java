@@ -22,7 +22,7 @@ public interface RecipeInterface {
 	IngredientInterface getIngredient();
 	void setIngredient(IngredientInterface ingredient);
 
-	com.mjc813.cookies.models.recipe.RecipeUnit getUnit();
+	RecipeUnit getUnit();
 	void setUnit(RecipeUnit unit);
 
 	BigDecimal getWeight();

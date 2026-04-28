@@ -322,6 +322,9 @@ JPA는 Entity 들이 있는걸로만 CRUD가 이루어진다.
 4) full join(합집합) : 양쪽 테이블 전체를 합치고 매칭 안되는 것들은 양쪽다 모두 Null
 
 
+
+
+
 //04-27 총정리
 층(Layer)을 나눠서 개발하는 이유 : 유지보수가 편하고 향후에 확장성이 좋기 때문이다. Controller에 다 코딩하는것은 자제해야 한다.
 
@@ -345,12 +348,14 @@ Content-Length: 31
 }
 
 
+@Slf4j => log를 사용 가능
+
 
 
 @RestController가 하는 역할
 Restful Api 서버를 만들어주는 컨트롤러 애노테이션이다. (JSON으로만 처리)
 Restful Api는 http/https 로 데이터 통신을 하는  국제 표준 방식            sesiontd나중에 코드보고 뭔지 고치기
-클라이언트가 요청 : URI 주소, Method, 요청데이터(http header(cookie, sesiontd, content-type,...), http body(form 데이터, json 데이터, get방식 데이터, 첨부파일 데이터)) 
+클라이언트가 요청 : URI 주소, Method, 요청데이터(http header(cookie, sessionid, content-type,...), http body(form 데이터, json 데이터, get방식 데이터, 첨부파일 데이터)) 
 요청에 대해 서버가 응답 : 서버는 클라이언트의 요청을 처리하고 http header, http body(JSON)으로 응답할 수 있다.
 @RequestMapping() : URI
 클라이언트가 메소드1를 요청하려면 아래의 3가지가 충족되어야 한다.
@@ -365,9 +370,6 @@ Restful Api는 http/https 로 데이터 통신을 하는  국제 표준 방식  
 
 
 
-@Slf4j => log를 사용 가능
-
-
 실행은 아무 브라우저의 주소창에 http://localhost:8089/api/v1/category/수박/빨강/10kg   이런식으로 쓰면 된다.
 @GetMapping("/{fruit}/{color}/{size}")
 	public String test(@PathVariable String fruit, @PathVariable String color, @PathVariable String size) {
@@ -378,9 +380,30 @@ Restful Api는 http/https 로 데이터 통신을 하는  국제 표준 방식  
 @RequestParam : 주소 GET 방식의 데이터를 받는 방법, 주소의 ?변수명 = 값&변수명2 = 값&...
 @PathVariable : 주소 GET 방식으로 데이터를 받는 방법, 주소/변수1값/주소/변수2값/주소/변수3값.....
 @ModelAttribute : POST 방식의 데이터를 받는 방법, 주소는 안됨, html form tag, MPA 화면방식
-	<form id="..." name"..." method="post" action="서버주소">
-		<input type = "text"
-
+	<form id="..." name="..." method="post" action="서버주소">
+			<input type="text" id="..." name="..." />
+			....
+			<input type="text" id="..." name="..." />
+	</form>
 
 @RequestBody : POST 와 대부분의 방식으로 데이터를 받는 방법, JSON문자열로 받는다.
-@RequestPart : JSON 데이터와 
+@RequestPart : JSON 데이터와 binary 첨부파일을 동시에 받는 방법
+
+
+
+
+
+//04-28
+실무 프로젝트 개발할때 순서
+1. 개념 모델링, 논리 모델링 -> 물리모델링(DB 결정)
+2. 화면설계
+3. Dto, Entity, 공통로직(AA)
+4. Repository (JPA/Mybatis)
+5. Service
+6. Controller (Rest/Web)
+
+id = 1, name = 분말류
+id = 1, name = 밀가루, categoryId = 1
+
+JpaRepository는 기본적으로 다음과 같은 메소드를 지원한다.
+save(저장 용도), findById(1개 조회), deleteById(1개삭제), 예외로 findAll() 모든 데이터 조회 서버 자원 부족이 발생하므로 사용 금지. 

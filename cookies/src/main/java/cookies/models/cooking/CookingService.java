@@ -17,49 +17,49 @@ public class CookingService {
 	@Autowired
 	private CookingRepository cookingRepository;
 
-	public CookingDto insert(CookingDto insertDto) {
-		CookingEntity newEntity = (CookingEntity)new CookingEntity().copyMembers(insertDto, true);
+	public com.mjc813.cookies.models.cooking.CookingDto insert(com.mjc813.cookies.models.cooking.CookingDto insertDto) {
+		com.mjc813.cookies.models.cooking.CookingEntity newEntity = (com.mjc813.cookies.models.cooking.CookingEntity)new com.mjc813.cookies.models.cooking.CookingEntity().copyMembers(insertDto, true);
 		newEntity.setId(null);
-		CookingEntity save = this.cookingRepository.save(newEntity);
-		CookingDto result = (CookingDto)new CookingDto().copyMembers(save, true);
+		com.mjc813.cookies.models.cooking.CookingEntity save = this.cookingRepository.save(newEntity);
+		com.mjc813.cookies.models.cooking.CookingDto result = (com.mjc813.cookies.models.cooking.CookingDto)new com.mjc813.cookies.models.cooking.CookingDto().copyMembers(save, true);
 		return result;
 	}
 
-	public CookingDto update(CookingDto updateDto) {
-		CookingEntity find = this.cookingRepository.findById(updateDto.getId()).orElseThrow();
-		CookingEntity updateEntity = (CookingEntity)new CookingEntity().copyMembers(find, true);
+	public com.mjc813.cookies.models.cooking.CookingDto update(com.mjc813.cookies.models.cooking.CookingDto updateDto) {
+		com.mjc813.cookies.models.cooking.CookingEntity find = this.cookingRepository.findById(updateDto.getId()).orElseThrow();
+		com.mjc813.cookies.models.cooking.CookingEntity updateEntity = (com.mjc813.cookies.models.cooking.CookingEntity)new com.mjc813.cookies.models.cooking.CookingEntity().copyMembers(find, true);
 		updateEntity.copyMembers(updateDto, false);
-		CookingEntity save = this.cookingRepository.save(updateEntity);
-		CookingDto result = (CookingDto)new CookingDto().copyMembers(save, true);
+		com.mjc813.cookies.models.cooking.CookingEntity save = this.cookingRepository.save(updateEntity);
+		com.mjc813.cookies.models.cooking.CookingDto result = (com.mjc813.cookies.models.cooking.CookingDto)new com.mjc813.cookies.models.cooking.CookingDto().copyMembers(save, true);
 		return result;
 	}
 
-	public CookingDto findById(Long id) {
-		CookingEntity find = this.cookingRepository.findById(id).orElseThrow();
-		CookingDto result = (CookingDto)new CookingDto().copyMembers(find, true);
+	public com.mjc813.cookies.models.cooking.CookingDto findById(Long id) {
+		com.mjc813.cookies.models.cooking.CookingEntity find = this.cookingRepository.findById(id).orElseThrow();
+		com.mjc813.cookies.models.cooking.CookingDto result = (com.mjc813.cookies.models.cooking.CookingDto)new com.mjc813.cookies.models.cooking.CookingDto().copyMembers(find, true);
 		return result;
 	}
 
-	public CookingDto deleteById(Long id) {
-		CookingDto find = this.findById(id);
+	public com.mjc813.cookies.models.cooking.CookingDto deleteById(Long id) {
+		com.mjc813.cookies.models.cooking.CookingDto find = this.findById(id);
 		this.cookingRepository.deleteById(id);
 		return find;
 	}
 
-	public Slice<CookingDto> findAllByDescriptionContaining(String description, Pageable pageable) {
-		Slice<CookingEntity> slc = this.cookingRepository.findAllByDescriptionContaining(description, pageable);
-		List<CookingDto> list = slc.getContent().stream()
-				.map( x -> (CookingDto) new CookingDto().copyMembers(x, true))
+	public Slice<com.mjc813.cookies.models.cooking.CookingDto> findAllByDescriptionContaining(String description, Pageable pageable) {
+		Slice<com.mjc813.cookies.models.cooking.CookingEntity> slc = this.cookingRepository.findAllByDescriptionContaining(description, pageable);
+		List<com.mjc813.cookies.models.cooking.CookingDto> list = slc.getContent().stream()
+				.map( x -> (com.mjc813.cookies.models.cooking.CookingDto) new com.mjc813.cookies.models.cooking.CookingDto().copyMembers(x, true))
 				.toList();
-		Slice<CookingDto> result = new SliceImpl<>(list, slc.getPageable(), slc.hasNext());
+		Slice<com.mjc813.cookies.models.cooking.CookingDto> result = new SliceImpl<>(list, slc.getPageable(), slc.hasNext());
 		return result;
 	}
 
-	public Slice<CookingDto> findAllByCookieEquals(Long cookieId, Pageable pageable) {
+	public Slice<com.mjc813.cookies.models.cooking.CookingDto> findAllByCookieEquals(Long cookieId, Pageable pageable) {
 		CookieEntity cookie = CookieEntity.builder().id(cookieId).build();
 		Slice<CookingEntity> slc = this.cookingRepository.findAllByCookieEquals(cookie, pageable);
-		List<CookingDto> list = slc.getContent().stream()
-				.map( x -> (CookingDto) new CookingDto().copyMembers(x, true))
+		List<com.mjc813.cookies.models.cooking.CookingDto> list = slc.getContent().stream()
+				.map( x -> (com.mjc813.cookies.models.cooking.CookingDto) new com.mjc813.cookies.models.cooking.CookingDto().copyMembers(x, true))
 				.toList();
 		Slice<CookingDto> result = new SliceImpl<>(list, slc.getPageable(), slc.hasNext());
 		return result;
