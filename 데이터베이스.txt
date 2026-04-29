@@ -353,13 +353,13 @@ Content-Length: 31
 
 
 @RestController가 하는 역할
-Restful Api 서버를 만들어주는 컨트롤러 애노테이션이다. (JSON으로만 처리)
-Restful Api는 http/https 로 데이터 통신을 하는  국제 표준 방식            sesiontd나중에 코드보고 뭔지 고치기
+Restful Api 서버를 만들어주는 컨트롤러 애노테이션이다.
+Restful Api는 http/https 로 데이터 통신을 하는 국제 표준 방식 (JSON으로만 처리)
 클라이언트가 요청 : URI 주소, Method, 요청데이터(http header(cookie, sessionid, content-type,...), http body(form 데이터, json 데이터, get방식 데이터, 첨부파일 데이터)) 
 요청에 대해 서버가 응답 : 서버는 클라이언트의 요청을 처리하고 http header, http body(JSON)으로 응답할 수 있다.
 @RequestMapping() : URI
-클라이언트가 메소드1를 요청하려면 아래의 3가지가 충족되어야 한다.
-	URI => http://주소/aaa/bbb/ccc
+클라이언트가 메소드1를 요청하려면 아래의 3가지가 충족되어야 한다. 주소가 없으면 위에 있는 공통 주소를 사용한다.
+	URI => http://주소/aaa/bbb/ccc    
 	Method => PUT
 	요청데이터 => {"id" : "값1", "name" : "값2"}
 
@@ -402,8 +402,88 @@ Restful Api는 http/https 로 데이터 통신을 하는  국제 표준 방식  
 5. Service
 6. Controller (Rest/Web)
 
-id = 1, name = 분말류
-id = 1, name = 밀가루, categoryId = 1
+Category : id = 1, name = 분말류 => 마스터키
+Ingredient : id = 1, name = 밀가루, categoryId = 1 외래키
 
 JpaRepository는 기본적으로 다음과 같은 메소드를 지원한다.
 save(저장 용도), findById(1개 조회), deleteById(1개삭제), 예외로 findAll() 모든 데이터 조회 서버 자원 부족이 발생하므로 사용 금지. 
+
+@Autowired : 스프링 컨테이너에 등록된 빈(Bean)을 찾아 자동으로 주입해 주는 역할 
+스프링이 대신 만들어서 컨테이너 안에 보관하고 있는 객체 하나하나를 '빈(Bean)'
+
+
+어떻게 전송되는지 
+@DeleteMapping("/{id}")
+	public ResponseEntity<ApiResponse<CategoryDto>> deleteById(@PathVariable Long id) {
+		CategoryDto result = this.categoryService.deleteById(id);
+		return ResponseEntity.status(200).body(
+				ApiResponse.make(ResponseCode.delete_ok, "ok", result)
+		);
+	}
+
+	URI => http://주소/api/v1/category/{id}    5번 카테고리를 삭제하고 싶다면: http://주소/api/v1/category/5
+	Method => DELETE
+	요청데이터 => URL 주소 별도의 쿼리 스트링(?name=...) 이나 Body 데이터 없이, URL 경로 자체에 데이터(ID)가 포함되어 전송
+
+
+	@PatchMapping
+	public ResponseEntity<ApiResponse<CategoryDto>> update(@RequestBody CategoryDto insertDto) {
+		CategoryDto result = this.categoryService.update(insertDto);
+		return ResponseEntity.status(200).body(
+				ApiResponse.make(ResponseCode.update_ok, "ok", result)
+		);
+	}
+
+	URI => http://주소/api/v1/category 
+	Method => PATCH
+	요청데이터 => {"id" : "값1", "name" : "값2"}
+
+
+포스트맨에 JSON으로 빼놔서 테스트하는것 찾아보기 포스트맨에서 import하면 어디서든 테스트 가능
+
+@ManyToOne(fetch = FetchType.LAZY) => join 한 문장이면 끝날것을 select문장을 여러번 사용해서 느리다.
+하지만  FetchType.EAGER로 바꾸면 insert, update, delete에도 join을 사용하기에 더 느려진다.
+
+
+
+CREATE DATABASE swim_db DEFAULT CHARACTER SET utf8mb4;
+CREATE USER 'swim_user'@'%' IDENTIFIED BY 'qwer1234!';
+GRANT ALL PRIVILEGES ON swim_db.* TO 'swim_user'@'%';
+FLUSH PRIVILEGES
+
+잘못만들었으면
+DROP DATABASE IF EXISTS swim_db;
+DROP USER 'swim_user'@'%';
+
+
+
+
+//04-29
+
+	Spring Boot Web 서버 프로젝트 개발 시작 (SwimPool Project)
+	1. IntelliJ 에서 New Project > Spring Boot > (JDK버전, Maven/Gradle, groupId
+		, artifactId(프로젝트이름), 버전, dependencies 추가(SpringBoot DevTools, Lombok
+		, Spring Configuration Process, Spring Web, Spring Data JPA, MySQL Driver))
+	2. Database DDL 언어를 만들어야 한다. create dababase ..., create user ..., create table ...
+		다만 JPA 는 create table 은 없더라도 자동으로 테이블을 생성할 수 있다.
+	2-1. dbeaver 를 사용하여 root 로 접속하고 SQL 편집기에서 create database, create user 명령어를 실행해야 한다.
+	3. application.yml 에 Database 접속정보, charset, 환경설정 정보를 기입한다.
+	4. XXXApplication.java 파일을 Debug 로 실행해본다.
+	5-1. 공통으로 리턴하는 JSON 객체 형식을 선언해야 한다. CResponseDto.java 클래스의 멤버변수(enum 에러코드,enum 간략메세지,에러 상세메시지 / enum 정상코드,정상간략메세지,정상리턴객체)
+	5-2. @GlobalExceptionHandler 클래스를 공통 패키지에 만든다. 이유는 모든 에러를 SpringBoot Web WhiteLabel page 대신에 JSON 으로 리턴하기 위해서이다.
+	6. 모델링을 한 결과를 바탕으로 XXXDto, XXXEntity 를 만들어야 한다. 변환하는 인터페이스를 같이 만드는게 좋다.
+	6-1. 데이터보안또는 검증을 위해서 XXXRequestDto, XXXResponseDto 2가지 들을 더 추가하는 경우도 있다.
+	7. XXXEntity 를 이용하여 XXXRepository 인터페이스를 만들어야 한다. extends JpaRepository<XXXEntity, Long/Integer> 상속해야 한다.
+		@Repository 애노테이션을 사용하는게 좋다.
+	8. XXXService 클래스에 XXXDto insert(XXXDto), findById(Long/Integer id), update, deleteById(Long/Integer id)
+		, Slice<XXXDto>|Page<XXXDto> findBy컬럼Containing(검색조회조건, Pageable) 메소드를 만들어야 한다.
+		@Service 애노테이션이 필수로 있어야 한다.
+	9. XXXRestController 클래스에서 ResponseEntity<CommonResponseDto<XXXDto>> insert(@RequestBody XXXDto), findById, update, deleteById
+		, ResponseEntity<CommonResponseDto<Slice|Page<XXXDto>>> findBy컬럼Containing(검색조회조건, Pageable) 메소드를 만들어야 한다.
+		@RequestMapping("/공통URL주소") 클래스 명 위에 선언한다.
+		각 메소드마다 @TtttMapping Method 의 매핑 애노테이션이 필수도 존재해야 한다.
+		요청데이터도 @RequestBody, @RequestParam, @PathVariable, @RequestPart 이 중에서 어떤 형태인지 애노테이션을 선언해야 한다.
+	10. 로그를 Service 또는 Controller 에서 출력하도록 사용할 수 있다. 이럴경우에는 클래스명 윗단에 @Slf4j 라는 애노테이션을 추가해야 한다.
+		로그를 출력하려면 메소드 내부에서 log.trace(String), log.info(String), .debug, .warn, .error 5가지 레벨로 출력 할 수 있다.
+		로그는 고객이 보는게 아니라 내부 개발자들이 에러를 고치기 위해서 필수로 봐야하는 정보이다.
+		로그 설정은 로그레벨(trace,info,debug,warn,error)설정, 로그출력표현형태, 로그파일명, 로그로테이션, 로그맥시멈파일사이즈 등등의 설정을 SpringBoot 에서 해야 한다. 
