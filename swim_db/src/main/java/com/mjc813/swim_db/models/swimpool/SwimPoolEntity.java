@@ -15,21 +15,20 @@ public class SwimPoolEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(length = 20, nullable = false)
     private String name;
 
-    @Column(nullable = false, unique = true)
+    @Column(length = 30, nullable = true)
     private String tel;
 
-    @Column(nullable = false)
+    @Column(length = 200, nullable = true)
     private String addr1;
 
-    @Column(nullable = false)
+    @Column(length = 200, nullable = true)
     private String addr2;
 
-    @Column(nullable = false)
+    @Column(length = 200, nullable = true)
     private String lanes;
 
-    @Column(nullable = false)
+    @Column(length = 50, nullable = true)
     private String size;
-}
