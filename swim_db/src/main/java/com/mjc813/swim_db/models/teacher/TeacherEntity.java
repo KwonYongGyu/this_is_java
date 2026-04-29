@@ -25,6 +25,6 @@ public class TeacherEntity {
     @Column(nullable = false)
     private Long birthYear;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private Long swimPoolId;
 }

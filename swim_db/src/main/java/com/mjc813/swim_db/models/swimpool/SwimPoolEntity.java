@@ -24,7 +24,7 @@ public class SwimPoolEntity {
     @Column(nullable = false)
     private String addr1;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String addr2;
 
     @Column(nullable = false)
