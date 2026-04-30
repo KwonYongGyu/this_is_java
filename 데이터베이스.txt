@@ -487,3 +487,49 @@ DROP USER 'swim_user'@'%';
 		로그를 출력하려면 메소드 내부에서 log.trace(String), log.info(String), .debug, .warn, .error 5가지 레벨로 출력 할 수 있다.
 		로그는 고객이 보는게 아니라 내부 개발자들이 에러를 고치기 위해서 필수로 봐야하는 정보이다.
 		로그 설정은 로그레벨(trace,info,debug,warn,error)설정, 로그출력표현형태, 로그파일명, 로그로테이션, 로그맥시멈파일사이즈 등등의 설정을 SpringBoot 에서 해야 한다. 
+
+
+
+//04-30
+JPA Repository 메소드 생성 이름 규칙은 구글로 검색해서 찾아보고 진행
+
+// Jpa 로 조회하는 메소드를 만들려면 절대로 findAll 를 함부로 사용하면 안된다. findAll을 사용가능한 경우는 데이터가 엄청 적은 상황일때만 가능하고 왠만하면 사용하지 않는게 좋다.
+	// JpaRepository 를 상속한 XXXRepository 인터페이스에서 추상메소드를 만들면 JPA 가 select 쿼리 를 실행해 줍니다.
+	11. 리턴형(XXXEntity) 1개, Optional<XXXEntity> findById(조회조건 결과는 1행);
+		리턴형(List<XXXEntity>) n개, List<XXXEntity> findBy멤버변수조건(조건값들);
+		google 에서 "jpa repository 메소드 생성 이름 규칙" 검색 해보십시오.
+		리턴형(Page<XXXEntity>/Slice<XXXEntity>) n개, findBy멤버변수조건(조건값들, Pageable);
+		Pageable 객체에 size(몇행조회), page(0부터시작하는 페이지수), sort(컬럼,asc/desc)
+		여러행을 조회하는 Jpa 메소드 만드는 방법
+	12. 참조테이블을 조회할때 마스터테이블의 정보(컬럼들)도 같이 조회해야 하는 경우에는 select JOIN 쿼리를 해야 한다.
+		JPA 에게 join select 를 실행하라고 선언하는 방법이 몇가지 있는데 제일 쉽고 간단한것은
+		Slice<XXXEntity> findByNameContains(String name, Pageable pageable); 이런 추상메소드의
+		윗줄에 @EntityGraph(attributePaths={"외래키객체맴버변수명", "외래키멤버변수명.멤버변수명}) 애노테이션을 선언하면 JOIN 을 실행해줍니다.
+		org.springframework.data.domain.Slice => 데이터행수만큼 조회하고 추가로 더 조회하려면 pageable.page = 다음페이지, 화면에서는 더보기 버튼으로 처리한다.
+		org.springframework.data.domain.Page => 화면에서는 페이지 이동 버튼이 있다. pageable.page = 이동페이지
+		
+	public Page<SwimpoolDto> findAllByNameContaining(String name, Pageable pageable) {
+		Page<SwimpoolEntity> selectData = this.swimpoolRepository.findAllByNameContaining(name, pageable);
+		List<SwimpoolDto> list = selectData.stream().map(
+				node -> (SwimpoolDto) new SwimpoolDto().copy(node, true)
+		).toList();
+		Page<SwimpoolDto> result = new PageImpl<>(list, selectData.getPageable(), selectData.getTotalElements());
+		// Page 는 interface 이므로 new 못한다. PageImpl 이라는 스프링부트에서 제공하는 클래스로 new 한다.
+		// new PageImpl<>(비기본생성자 매개변수는 selectData 리턴값으로 전달해준다);
+		return result;
+	}
+
+@애노테이션은 jakarta persistence(자카르타퍼시스턴스)를 골라야한다.
+@Column(name = "이름", length = 길이, nullable = 널값이 허용되는지, unique = 중복가능한지)
+@Column(name = "이름", length = 길이, nullable = 널값이 허용되는지, unique = 중복가능한지)|
+이렇게 name이 중복이면 스프링부트에서 오류가 발생하기 때문에 중복되는 값에 @Transient를 사용해 컬럼이름으로 컬럼을 만들지 않게 한다. => 데이터를 이 멤버 변수에 연결하지 마라.
+그리고 @Join 컬럼을 사용해야 한다.
+@JoinColumn(name = "swimpool_id", nullable = false)	// @Column 을 사용하지말고 @JoinColumn 을 사용해야 한다.
+	// @OneToOne, @OneToMany, @ManyToOne 3가지 중에서 하나를 선택하세요.
+//@OneToMany는 사용하지 않는게 좋다. 마스터테이블에서 사용하는것으로 마스터테이블을 참조하는 테이블이 몇개 인지 알 수 없기 때문이다.
+	// 1대1 테이블관계, 1대N 테이블관계, N대1 테이블관계
+	// 참조테이블에 여러행이 마스터테이블의 1행과 관계과 형성 된 경우가 @ManyToOne 이고 가장 흔한 형태이다.
+	@ManyToOne(fetch = FetchType.LAZY)
+	private SwimpoolEntity swimpool;
+	
+

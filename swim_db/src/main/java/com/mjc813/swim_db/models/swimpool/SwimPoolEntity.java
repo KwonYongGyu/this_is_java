@@ -32,3 +32,5 @@ public class SwimPoolEntity {
 
     @Column(length = 50, nullable = true)
     private String size;
+}
+
