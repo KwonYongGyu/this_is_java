@@ -1,6 +1,6 @@
 spring:
   application:
-    name: swim_db
+    name: swimpool
 #  datasource:
 #    driver-class-name: com.mysql.cj.jdbc.Driver
 #    url: jdbc:mysql://localhost:3306/swim_db?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
@@ -23,12 +23,17 @@ spring:
       add-mappings: false # 404.html 출력 하지 마라
 
 server:
-#  port: 8090
+#  port: 8092
   servlet:
     encoding:
       charset: UTF-8
       enabled: true
       force: true
 
-cookie:
-  save-folder: D:/cookie_upload
+logging:
+  level:
+    root: INFO                # 전체 기본 로깅 레벨 (기본값)
+    org.springframework.web: DEBUG  # 스프링 웹 관련 로그 상세화
+    com.mjc813.swimpool: DEBUG # 특정 패키지(내 프로젝트) 로그 상세화
+
+
