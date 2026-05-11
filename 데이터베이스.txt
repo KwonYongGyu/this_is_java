@@ -569,3 +569,127 @@ ifconfig
 
 
 
+// 05-08
+
+sudo java -server -jar -Dspring.profiles.active=prod -DDB_IP=10.0.0.57 -DDB_USER=swim_user -DDB_PASSWORD=qwer1234! swimpool-0.0.1-SNAPSHOT.jar &
+
+
+//05-11
+AWS 인스턴스는 보안그룹이 같아야한다.
+localhost는 자기자신을 가리키는거고 주소는 127.0.0.1이 국제 표준이다.
+- Ubuntu 26.04 에서 JDK/JRE 21 설치
+		sudo apt update
+		sudo apt upgrade
+		sudo apt install openjdk-21-jre-headless -y
+		java --version
+
+puttygen으로 키페어를 pem으로 변환
+ubuntu@ip-10-0-0-72:~/.ssh$ 에서 vi id_rsa로 파일 만들기
+복사 붙여넣기 = shift+insert
+명령창 = shift+;
+wq 저장하고 나가기
+
+ssh에서 chmod 400 id_rsa로 400으로 바꾼뒤 dbserver ip를 입력해 dbserver로 넘어간다. => 
+ubuntu@ip-10-0-0-57:~$
+sudo apt update를 하면 dbserver는 public ip가 없기때문에 0프로에서 올라가지 않는다.
+탄력적 IP(Elastic IP)를 사용
+
+
+
+2번째 EC2 에 설치하려면 Elastic IP 를 잠깐 사용해서 인터넷을 사용해야 한다.
+설치가 끝나면 Elastic IP 를 삭제해도 된다.
+# Add Docker's official GPG key:
+sudo apt update
+sudo apt install ca-certificates curl
+sudo install -m 0755 -d /etc/apt/keyrings
+sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+sudo chmod a+r /etc/apt/keyrings/docker.asc
+
+# Add the repository to Apt sources:
+sudo tee /etc/apt/sources.list.d/docker.sources <<EOF
+Types: deb
+URIs: https://download.docker.com/linux/ubuntu
+Suites: $(. /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}")
+Components: stable
+Architectures: $(dpkg --print-architecture)
+Signed-By: /etc/apt/keyrings/docker.asc
+EOF
+
+sudo apt update
+
+sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
+sudo systemctl status docker
+
+sudo systemctl start docker
+
+
+	- Ubuntu 26.04 에서 mysql client 설치 하고 db, user 생성
+cd ~
+mkdir docker
+cd docker
+mkdir mysql8
+cd mysql8
+vi docker-compose.yml
+/home/ubuntu/docker/mysql8/docker-compose.yml 파일을 만들고 내PC의 docker/mysql8/docker-compose.yml 파일 내용을 복사&붙여넣기 한다.
+sudo docker compose up -d
+
+sudo apt install mysql-client-core
+
+
+mysql -h 127.0.0.1 -u root -p
+mysql>
+CREATE DATABASE swim_db DEFAULT CHARACTER SET utf8mb4;
+CREATE USER 'swim_user'@'%' IDENTIFIED BY 'qwer1234!';
+GRANT ALL PRIVILEGES ON swim_db.* TO 'swim_user'@'%';
+FLUSH PRIVILEGES;
+
+CREATE TABLE `swimpool` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `addr1` varchar(200) DEFAULT NULL,
+  `addr2` varchar(200) DEFAULT NULL,
+  `lanes` varchar(200) DEFAULT NULL,
+  `name` varchar(20) NOT NULL,
+  `size` varchar(50) DEFAULT NULL,
+  `tel` varchar(30) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+-- swim_db.teacher definition
+
+CREATE TABLE `teacher` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `birth_year` varchar(4) DEFAULT NULL,
+  `main` varchar(30) NOT NULL,
+  `name` varchar(20) NOT NULL,
+  `swimpool_id` bigint DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK4vd0rqh6bv6cfu48diw6uch3k` (`swimpool_id`),
+  CONSTRAINT `FK4vd0rqh6bv6cfu48diw6uch3k` FOREIGN KEY (`swimpool_id`) REFERENCES `swimpool` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+
+exit
+exit
+backend server에서 실행
+cd ~
+sudo java -server -jar -Dspring.profiles.active=prod -DDB_IP=10.0.0.57 -DDB_USER=swim_user -DDB_PASSWORD=qwer1234! swimpool-0.0.1-SNAPSHOT.jar &
+
+
+
+- 10.0.0.0/28  : 10.0.0.0 ~ 10.0.0.15
+	- VPC > Internet Gateways 메뉴에서 새로운 게이트웨이를 만든다.
+	- 새로 만든 게이트웨이에 VPC 를 할당한다.
+	- VPC > Subnets 메뉴에서 사용할 subnet 를 선택하고 route table 정보를 확인하고
+		이 route 테이블을 클릭하면 VPC > Route tables > rtb-0ac46ee94380f7d45 메뉴로 이동
+	- Route tables 선택한 메뉴에서 Routes > edit routes 버튼을 클릭한다.
+	- Add Route 를 클릭한다.
+	- Destination : 0.0.0.0/0, Target : Internet Gateway 선택하고 igw-xxxxxxxxxxx 선택하고 Save 한다.
+	- EC2 에 접속할 수 있게 된다.
+
+	- 같은 네트워크의 다른 호스트에 접속하려면
+	- BackendServer 의 SecurityGroup 에 default 를 추가한다.
+	- EC > Instances > BackendServer 클릭하고 상위 Action 버튼 > Security > Change Security Group 메뉴 선택한다.
+	- default 를 선택하고 Add Security Group 버튼을 클릭한다. Save 버튼을 클릭한다.
