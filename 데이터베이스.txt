@@ -693,3 +693,47 @@ sudo java -server -jar -Dspring.profiles.active=prod -DDB_IP=10.0.0.57 -DDB_USER
 	- BackendServer 의 SecurityGroup 에 default 를 추가한다.
 	- EC > Instances > BackendServer 클릭하고 상위 Action 버튼 > Security > Change Security Group 메뉴 선택한다.
 	- default 를 선택하고 Add Security Group 버튼을 클릭한다. Save 버튼을 클릭한다.
+
+
+// 05-12 도커로 빌드하는 방법
+프론트앤드 자바스크립트를 docker로 실행해보았다.
+docker image pull nginx:alpine
+으로 다운로드
+
+	- nginx:alpine 버전으로 docker 이미지 안에 해당 폴더에 여러분의 html 파일을 넣어서 실행해보자
+	- nginx 이미지 풀다운 : docker image pull nginx:alpine
+	- docker run -d -p 80:80 --name nginx-container nginx:alpine => nginx:alpine 이미지를 nginx-container 이름으로 컨테이너 실행 
+	- docker exec -it nginx-container /bin/ash => nginx-container 안에서 쉘을 실행
+	- cd /usr/share/nginx/html => 디렉토리 변경
+	- mkdir game => 폴더 생성
+	- cd game => 현재 디렉토리 위치가 /usr/share/nginx/html/game 변경된다.
+	- vi test.html => 약간의 본문을 타입하고 vi 에디터의 저장 끝내기까지 한다.
+	- 여러분의 인터넷브라우저에서 http://localhost 를 하면 nginx welcome page 가 보인다.
+	- http://localhost/game/test.html 를 하면 여러분이 만든 test.html 이 보인다.
+
+
+	- 나만의 도커 이미지를 만들자
+	- 디렉토리를 생성해서 그 안에서 작업하는게 좋다.
+	- Dockerfile 파일을 생성한다.
+	- Dockerfile 안에는 dockerfile 안에서 사용하는 명령어를 이용하여 도커 이미지를 만들수 있다.
+		FROM 기존의이미지:앱이름:version
+		COPY, EXPOSE, WORKDIR, ENV, .. 등의 명령어를 사용한다.
+	- docker build -t 앱이름:버전(생략하면 latest) . => 새로운 도커 이미지를 생성한다.  
+=> docker build -t gameapp:1.0.0 .
+
+	- docker tag 이미지이름 자기의계정이름/앱이름:버전 => 이미지에 버전 태그를 붙인다.
+=> docker tag gameapp:1.0.0 rnjsdydrb/gameapp:1.0.0
+
+	- docker push 자기의계정이름/앱이름:버전 => 자기의계정에 이미지를 업로드한다.
+=> docker push rnjsdydrb/gameapp:1.0.0
+
+	- 다른 사람들은 docker run -d -p 80:80 --name gameweb-con sincerus7/gameweb:1.0.0 이렇게 사용할 수 있다.
+
+
+# 1. 기존 컨테이너가 있다면 삭제
+docker rm -f game-test
+
+# 2. 도커 허브에 올린 이미지로 실행
+docker run -d -p 8081:80 --name game-test rnjsdydrb/gameapp:1.0.0
+
+웹 브라우저에 http://localhost:8081/game.html 로 확인
