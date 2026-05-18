@@ -9,7 +9,7 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 @ToString
-@Entity(name= "com/mjc813/swimpool")
+@Entity(name="swimpool")
 public class SwimpoolEntity implements ISwimpool {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
