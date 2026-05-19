@@ -737,3 +737,74 @@ docker rm -f game-test
 docker run -d -p 8081:80 --name game-test rnjsdydrb/gameapp:1.0.0
 
 웹 브라우저에 http://localhost:8081/game.html 로 확인
+
+
+// 05-19
+
+	- docker remote repository (public) 에 업로드할때
+	- docker login => 만약에 로그인이 안되어 있으면 로그인을 명령프롬프트로 한다.
+
+	- docker tag 도커이미지명 자신의계정명/도커이미지명:버전 => docker tag backend-server:0.0.8 rnjsdydrb/backend-server:0.0.8
+
+	- docker push 자신의계정명/도커이미지명:버전 		  => docker push rnjsdydrb/backend-server:0.0.8
+	- docker-compose.prod.yml 파일의 image 태그를 docker 계정으로 변경한다.
+		image: "backend-server:0.0.14"
+		=> 변경 image: "sincerus7/backend-server:0.0.14"
+		env_file:
+          - .env.prod => .env 로 변경
+	- 새로운폴더에 docker-compose.prod.yml 파일을 docker-compose.yml 파일로 복사한다.
+		.env.prod 파일을 .env 파일로 복사한다.
+		init.sql 파일을 새로운폴더에 복사한다.
+	- docker compose up -d, docker compose down
+
+
+:: 1. 충돌을 일으키고 있는 기존 MySQL 컨테이너를 강제로 정지 및 삭제합니다.
+docker rm -f mysql8_container
+
+:: 2. 혹시 기존 백엔드 컨테이너도 켜져 있다면 함께 정리해 줍니다.
+docker rm -f backend-container
+
+:: 3. 이제 방해 요소가 사라졌으니 새 폴더에서 다시 가동합니다!
+docker compose up -d
+
+-----------------------------------------[AWS에 업로드]--------------------------------
+# Add Docker's official GPG key:
+sudo apt update
+sudo apt install ca-certificates curl
+sudo install -m 0755 -d /etc/apt/keyrings
+sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+sudo chmod a+r /etc/apt/keyrings/docker.asc
+
+# Add the repository to Apt sources:
+sudo tee /etc/apt/sources.list.d/docker.sources <<EOF
+Types: deb
+URIs: https://download.docker.com/linux/ubuntu
+Suites: $(. /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}")
+Components: stable
+Architectures: $(dpkg --print-architecture)
+Signed-By: /etc/apt/keyrings/docker.asc
+EOF
+
+sudo apt update
+
+sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
+sudo systemctl status docker
+
+sudo systemctl start docker
+
+
+mkdir swimpool-docker 파일 생성
+cd swimpool-docker 로 이동
+vi init.sql
+vi .env
+vi docker-compose.yml
+ubuntu에서 ls -al로 파일 만들어졌는지 확인
+cat 파일이름 => cat .env 입력하면 .env안의 내용들이 나옴
+
+sudo docker compose up -d 하고
+
+docker image ls
+docker container ls
+
+파일 삭제 : rm .env => .env파일 삭제

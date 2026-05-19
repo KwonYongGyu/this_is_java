@@ -1,18 +1,15 @@
 spring:
   datasource:
-    # 운영 환경용 log4jdbc 설정 적용
-    driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
-    url: jdbc:log4jdbc:mysql://${DB_IP}:3306/swim_db?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${DB_IP}:3306/swim_db?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
     username: ${DB_USER}
     password: ${DB_PASSWORD}
-
   jpa:
     hibernate:
-      ddl-auto: none
-
+      ddl-auto: none # Entity 의 멤버변수가 변하면 자동으로 데이터베이스의 테이블도 갱신해준다.
   flyway:
-    enabled: true
-    baseline-on-migrate: false # 기존 DB가 비어있을 때 마이그레이션을 정상 가동합니다.
+    enabled: true # 기본값 true
+    baseline-on-migrate: false # 기존 DB에 테이블이 있으면 시작 안함
 
 server:
-  port: ${PORT} # 도커 컴포즈 (.env)에서 지정해 줄 포트 번호를 따라갑니다.
+  port: ${PORT}

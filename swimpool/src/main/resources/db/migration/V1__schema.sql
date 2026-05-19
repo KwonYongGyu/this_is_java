@@ -1,8 +1,9 @@
 -- schema.sql 파일은 스프링 실행시 create table sql 문장을 실행한다.
+-- 스프링부트4 => V1__schema.sql
 
 CREATE TABLE IF NOT EXISTS swimpool (
-                                        id bigint NOT NULL AUTO_INCREMENT,
-                                        addr1 varchar(200) DEFAULT NULL,
+    id bigint NOT NULL AUTO_INCREMENT,
+    addr1 varchar(200) DEFAULT NULL,
     addr2 varchar(200) DEFAULT NULL,
     lanes varchar(200) DEFAULT NULL,
     name varchar(20) NOT NULL,
@@ -13,8 +14,8 @@ CREATE TABLE IF NOT EXISTS swimpool (
 ;
 
 CREATE TABLE IF NOT EXISTS teacher (
-                                       id bigint NOT NULL AUTO_INCREMENT,
-                                       birth_year varchar(4) DEFAULT NULL,
+    id bigint NOT NULL AUTO_INCREMENT,
+    birth_year varchar(4) DEFAULT NULL,
     main varchar(30) NOT NULL,
     name varchar(20) NOT NULL,
     swimpool_id bigint DEFAULT NULL,
