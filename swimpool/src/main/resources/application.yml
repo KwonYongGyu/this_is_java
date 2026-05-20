@@ -1,4 +1,8 @@
 spring:
+  # ⬇️ 순환 참조를 허용하고 서열을 정리해주는 옵션 추가
+  main:
+    allow-circular-references: true
+
   application:
     name: swimpool
   #  datasource:
@@ -6,9 +10,15 @@ spring:
   #    url: jdbc:mysql://localhost:3306/swim_db?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
   #    username: swim_user
   #    password: qwer1234!
+
+  # Flyway 자동 실행 방지 (DB 충돌 에러 차단)
+  flyway:
+    name: swimpool
   jpa:
+    # JPA(Hibernate)가 준비된 후 schema.sql/data.sql이 실행되도록 순서를 미룬다.
+    defer-datasource-initialization: true
     hibernate:
-      #      ddl-auto: update # Entity 의 멤버변수가 변하면 자동으로 데이터베이스의 테이블도 갱신해준다.
+      ddl-auto: update # Entity 의 멤버변수가 변하면 자동으로 데이터베이스의 테이블도 갱신해준다.
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     show-sql: false

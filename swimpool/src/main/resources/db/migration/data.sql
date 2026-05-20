@@ -1,4 +1,6 @@
--- data.sql 파일은 스프링 실행시 sql 문장을 실행한다.
+-- data.sql 파일은 스프링 실행시 sql 문장을 실행한다., 스프링부트3 버전
+-- 스프링부트4 버전에서는 data.sql 파일로 실행할 sql 문장들을 기입한다.
+
 INSERT INTO `swimpool`(id, addr1, addr2, lanes, name, size, tel) VALUES (1,'서울시 은평구 은평로1','32-22','50M * 4, 100 * 2','은평구립수영장','350m2','02-1111-2222');
 INSERT INTO `swimpool`(id, addr1, addr2, lanes, name, size, tel) VALUES (3,'서울시 은평구 은평로2','32-22','50M * 4, 100 * 2','은평구립수영장2','350m2','02-2222-2222');
 INSERT INTO `swimpool`(id, addr1, addr2, lanes, name, size, tel) VALUES (4,'서울시 은평구 은평로3','32-22','50M * 4, 100 * 2','은평구립수영장3','350m2','02-1111-2222');

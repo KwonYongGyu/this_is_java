@@ -1,5 +1,5 @@
--- schema.sql 파일은 스프링 실행시 create table sql 문장을 실행한다.
--- 스프링부트4 => V1__schema.sql
+-- schema.sql 파일은 스프링 실행시 create table sql 문장을 실행한다. 스프링부트3버전
+-- 스프링부트4 => schema.sql, 1번째 실행할 sql 문장들이 있는 파일
 
 CREATE TABLE IF NOT EXISTS swimpool (
     id bigint NOT NULL AUTO_INCREMENT,

@@ -4,9 +4,12 @@ spring:
     url: jdbc:mysql://localhost:3306/swim_db?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
     username: swim_user
     password: qwer1234!
+  sql:
+    init:
+      mode: always # 앱이 켜질 대마다 schema.sql, data.sql을 실행
   jpa:
     hibernate:
-      ddl-auto: update # Entity 의 멤버변수가 변하면 자동으로 데이터베이스의 테이블도 갱신해준다.
+      ddl-auto: none
 
 server:
   port: 8092

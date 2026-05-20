@@ -4,12 +4,17 @@ spring:
     url: jdbc:mysql://${DB_IP}:3306/swim_db?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
     username: ${DB_USER}
     password: ${DB_PASSWORD}
+  sql:
+    init:
+      mode: never # 운영 서버에서는 테이블이 자동 삭제/생성되면 안되므로 보통 never로 설정
+                  # 베포 테스트 단계라 초기 데이터가 매번 들어가야 한다면 always로 변경한다.
   jpa:
     hibernate:
-      ddl-auto: none # Entity 의 멤버변수가 변하면 자동으로 데이터베이스의 테이블도 갱신해준다.
-  flyway:
-    enabled: true # 기본값 true
-    baseline-on-migrate: false # 기존 DB에 테이블이 있으면 시작 안함
+      ddl-auto: none
+  # 기존 flyway 밑에 있던 설정들을 주석처리
+#  flyway:
+#    enabled: true # 기본값 true
+#    baseline-on-migrate: false # 기존 DB에 테이블이 있으면 시작 안함
 
 server:
   port: ${PORT}
