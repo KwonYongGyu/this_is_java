@@ -15,6 +15,9 @@ public interface IMember {
 	String getEmail();
 	void setEmail(String email);
 
+	String getRole();
+	void setRole(String role);
+
 	Boolean getIsValidEmail();
 	void setIsValidEmail(Boolean isValidEmail);
 
