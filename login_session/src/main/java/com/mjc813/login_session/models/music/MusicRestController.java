@@ -1,19 +1,14 @@
-package com.mjc813.login_cookie.models.music;
+package com.mjc813.login_session.models.music;
 
-import com.mjc813.login_cookie.common.ComResponseDto;
-import com.mjc813.login_cookie.common.ResponseCode;
-import com.mjc813.login_cookie.models.member.IMember;
-import com.mjc813.login_cookie.models.member.MemberDto;
-import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServletRequest;
+import com.mjc813.login_session.common.ComResponseDto;
+import com.mjc813.login_session.common.ResponseCode;
+import com.mjc813.login_session.models.member.IMember;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/music")
@@ -83,7 +78,7 @@ public class MusicRestController {
 	@GetMapping("/all")
 	public ResponseEntity<ComResponseDto<List<MusicDto>>> findAll(
 //			HttpServletRequest request
-			@CookieValue(name="MJC_LOGIN", required = true) String signId
+			@SessionAttribute(name = "MJC_LOGIN", required = false) String signId
 	) {
 //		Cookie[] cookies = request.getCookies();
 		try {

@@ -1,9 +1,8 @@
-package com.mjc813.login_cookie.models.music;
+package com.mjc813.login_session.models.music;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service

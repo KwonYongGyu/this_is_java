@@ -1,11 +1,10 @@
-package com.mjc813.login_cookie.biz;
+package com.mjc813.login_session.biz;
 
-import com.mjc813.login_cookie.models.member.MemberDto;
+import com.mjc813.login_session.models.member.MemberDto;
 import com.samskivert.mustache.Mustache;
 import com.samskivert.mustache.Template;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
-import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
