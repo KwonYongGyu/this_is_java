@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -57,5 +56,16 @@ public class MemberService {
 		return all.stream()
 			.map( x -> (MemberDto)new MemberDto().clone(x, true))
 			.toList();
+	}
+
+	public MemberDto findBySignId(String signId) {
+		Optional<MemberEntity> bySignId = this.memberJpaRepository.findBySignId(signId);
+		if ( bySignId.isPresent() ) {
+			MemberEntity member = bySignId.get();
+			MemberDto result = (MemberDto)new MemberDto().clone(member, true);
+			return result;
+		} else {
+			return null;
+		}
 	}
 }
