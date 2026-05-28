@@ -10,8 +10,6 @@ import com.mjc813.login_session.models.member.IMember;
 import com.mjc813.login_session.models.member.MemberDto;
 import com.mjc813.login_session.models.member.MemberService;
 import jakarta.mail.MessagingException;
-import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -101,7 +99,7 @@ public class SessionSignRestController {
 
 	@PostMapping("/signin")
 	public ResponseEntity<ComResponseDto<Boolean>> signin(@RequestBody SignInDto signInDto
-			, HttpServletResponse response
+//			, HttpServletResponse response
 			, HttpSession httpSession
 	) throws LoginException {
 		Boolean isSign = this.authService.signMember(signInDto);
@@ -118,5 +116,13 @@ public class SessionSignRestController {
 					ComResponseDto.make(ResponseCode.AUTHENTICATION_ERROR, isSign)
 			);
 		}
+	}
+
+	@GetMapping("/signout")
+	public ResponseEntity<ComResponseDto<Boolean>> signout(HttpSession httpSession) {
+		httpSession.invalidate();
+		return ResponseEntity.status(200).body(
+				ComResponseDto.make(ResponseCode.SUCCESS, true)
+		);
 	}
 }

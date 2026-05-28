@@ -80,9 +80,7 @@ public class MusicRestController {
 //			HttpServletRequest request
 			@SessionAttribute(name = "MJC_LOGIN", required = false) String signId
 	) {
-//		Cookie[] cookies = request.getCookies();
 		try {
-//			Optional<Cookie> cookie = Arrays.stream(cookies).filter(x -> x.getName().equals("MJC_LOGIN")).findFirst();
 			if (signId != null) {
 				// 로그인 되어 있음
 				List<MusicDto> result = this.musicService.findAll();

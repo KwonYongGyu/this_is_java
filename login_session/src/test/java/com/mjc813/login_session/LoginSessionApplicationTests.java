@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class LoginCookieApplicationTests {
+class LoginSessionApplicationTests {
 
 	@Test
 	void contextLoads() {

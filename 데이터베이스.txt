@@ -913,3 +913,15 @@ Set-Cookie: MJC_LOGIN=kyg020726; Expires=Wed, 27 May 2026 10:41:00 GMT; Max-Age=
 
 Fiddler에서 login_session의 Cookies/Login 내용
 Set-Cookie: JSESSIONID=F914BBE11227D0A8ECA0E0CA347D8B42; Path=/; HttpOnly
+
+
+// 05-28
+- 웹서버의 세션정보는 웹서버 가동중에 메모리에 저장되어 있으므로 웹서버를 종료하거나 재시작하면 정보는 사라진다.
+- java 웹서버의 세션 만들기
+	httpSession.setAttribute("키", 값);
+	httpSession.setMaxInactiveInterval(초); // 유효시간초
+- 클라이언트를 서로 구별할 수 있게 되는 역할도 하는 세션 ID를 서버가 클라이언트에게 발급한다.
+- JESSIONID : Java 언어로 만든 웹서버들
+- PHPSESSION : PHP 언어로 만든 웹서버들
+- ASPSESSION : 옛날 ASP 언어로 만든 웹서버들
+- 구글에 웹서버 개발하는 언어에 따른 SESSIONID는 이름과 종류를 검색하면 나온다.
