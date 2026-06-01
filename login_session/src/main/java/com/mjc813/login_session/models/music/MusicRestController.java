@@ -1,6 +1,7 @@
 package com.mjc813.login_session.models.music;
 
 import com.mjc813.login_session.common.ComResponseDto;
+import com.mjc813.login_session.common.Mjc813Exception;
 import com.mjc813.login_session.common.ResponseCode;
 import com.mjc813.login_session.models.member.IMember;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import com.mjc813.login_session.common.LoginException;
 import java.util.List;
 
 @RestController
@@ -17,58 +19,60 @@ public class MusicRestController {
 	private MusicService musicService;
 
 	@PostMapping("")
-	public ResponseEntity<ComResponseDto<MusicDto>> insert(Model model, @RequestBody MusicDto insertDto) {
-//		IMember signedMember = (IMember)model.getAttribute("signedMember");
-		// Model 클래스에 "signedMember" 키에 해당하는 MemberDto 가 존재하는지 찾는다.
-		if ( !this.IsUserOrAdmin(model) ) {
+	public ResponseEntity<ComResponseDto<MusicDto>> insert(Model model, @RequestBody MusicDto insertDto) throws LoginException {
+		IMember signedMember = this.IsUserOrAdmin(model);
+		if ( signedMember == null ) {
 			// 존재하지 않으면 인가 에러를 출력한다.
 			return ResponseEntity.status(500).body(
 				ComResponseDto.make(ResponseCode.AUTHORIZATION_ERROR, null)
 			);
 		}
-		MusicDto result = this.musicService.insert(insertDto);
+		MusicDto result = this.musicService.insert(signedMember, insertDto);
 		return ResponseEntity.status(201).body(
 			ComResponseDto.make(ResponseCode.SUCCESS, result)
 		);
 	}
 
-	// role 이 USER 인지 체크
-	private Boolean IsUser(Model model) {
-		IMember signedMember = (IMember)model.getAttribute("signedMember");
-		if ( signedMember == null) {
-			return false;
+	@PatchMapping("")
+	public ResponseEntity<ComResponseDto<MusicDto>> update(@RequestBody MusicDto insertDto) throws LoginException {
+		IMember signedMember = this.IsUserOrAdmin(model);
+		if ( signedMember == null ) {
+			return ResponseEntity.status(500).body(
+					ComResponseDto.make(ResponseCode.AUTHORIZATION_ERROR, null)
+			);
 		}
-		if ( !signedMember.getRole().equals("USER") ) {
-			return false;
-		}
-		return true;
 	}
 
-	private Boolean IsUserOrAdmin(Model model) {
+	// role 이 USER 인지 체크해서 아니면 null 을 리턴
+	private IMember IsUser(Model model) {
 		IMember signedMember = (IMember)model.getAttribute("signedMember");
-		if ( signedMember == null) {
-			return false;
+		if ( signedMember != null && !signedMember.getRole().equals("USER") ) {
+			return null;
 		}
-		if ( signedMember.getRole().equals("GUEST") ) {
-			return false;
+		return signedMember;
+	}
+
+	// role 이 USER 또는 ADMIN 인지 체크해서 아니면 null 을 리턴
+	private IMember IsUserOrAdmin(Model model) {
+		IMember signedMember = (IMember)model.getAttribute("signedMember");
+		if ( signedMember != null && signedMember.getRole().equals("GUEST") ) {
+			return null;
 		}
-		return true;
+		return signedMember;
 
 	}
 
-	private Boolean IsAdmin(Model model) {
+	// role 이 ADMIN 인지 체크해서 아니면 null 을 리턴
+	private IMember IsAdmin(Model model) {
 		IMember signedMember = (IMember)model.getAttribute("signedMember");
-		if ( signedMember == null) {
-			return false;
+		if ( signedMember != null && !signedMember.getRole().equals("ADMIN") ) {
+			return null;
 		}
-		if ( !signedMember.getRole().equals("ADMIN") ) {
-			return false;
-		}
-		return true;
+		return signedMember;
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<ComResponseDto<MusicDto>> findById(@PathVariable Long id) {
+	public ResponseEntity<ComResponseDto<MusicDto>> findById(@PathVariable Long id) throws Mjc813Exception {
 		MusicDto result = this.musicService.findById(id);
 		return ResponseEntity.status(200).body(
 				ComResponseDto.make(ResponseCode.SUCCESS, result)

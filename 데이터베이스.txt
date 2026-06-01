@@ -925,3 +925,6 @@ Set-Cookie: JSESSIONID=F914BBE11227D0A8ECA0E0CA347D8B42; Path=/; HttpOnly
 - PHPSESSION : PHP 언어로 만든 웹서버들
 - ASPSESSION : 옛날 ASP 언어로 만든 웹서버들
 - 구글에 웹서버 개발하는 언어에 따른 SESSIONID는 이름과 종류를 검색하면 나온다.
+
+쿠키는 클라이언트가 가지고 있으며 서버가 쿠키를 보고 클라이언트가 누구인지 파악.
+세션은 서버가 보관하며 쿠키와 다르게 난수처럼 문자가 뒤섞여 보이기 때문에 정보를 알 수가 없다.

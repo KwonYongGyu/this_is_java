@@ -20,8 +20,11 @@ public class SessionControllerAdvice {
 		if ( signId != null ) {
 			// signId 가 존재한다면 member 테이블을 조회 한다.
 			MemberDto signedMember = this.memberService.findBySignId(signId);
-			model.addAttribute("signedMember", signedMember);
-			// 조회한 사용자 데이터를 model 에 추가한다. 추가할때 키 를 "signedMember" 를 줬다. 값은 MemberDto 이다.
+			if (signedMember != null && signedMember.getIsValidEmail() == true ) {
+				// 사인인 한 유저가 isValidMail 이어야지 사인을 제대로 수행하도록 했다.
+				// 조회한 사용자 데이터를 model 에 추가한다. 추가할때 키 를 "signedMember" 를 줬다. 값은 MemberDto 이다.
+				model.addAttribute("signedMember", signedMember);
+			}
 		}
 	}
 }
