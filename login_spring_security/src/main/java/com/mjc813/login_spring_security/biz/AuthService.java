@@ -13,8 +13,8 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class AuthService {
-	@Autowired
-	private PasswordEncoder pwdEncoder;
+//	@Autowired
+//	private PasswordEncoder pwdEncoder;
 	@Autowired
 	private MemberJpaRepository memberJpaRepository;
 
@@ -30,18 +30,18 @@ public class AuthService {
 		}
 	}
 
-	public Boolean signMember(SignInDto signInDto) throws LoginException {
-		MemberEntity find = this.memberJpaRepository.findBySignId(signInDto.getSignId()).orElseThrow();
-		if ( !find.getIsValidEmail() ) {
-			throw new LoginException("not valid email");
-		}
-		if ( find.getRole().equals(Role.GUEST.toString()) ) {
-			throw new LoginException("doesn't need login");
-		}
-//		if ( signInDto.getPassword().equals(find.getPassword()) ) {
-		if ( pwdEncoder.matches(signInDto.getPassword(), find.getPassword())) {
-			return true;
-		}
-		return false;
-	}
+//	public Boolean signMember(SignInDto signInDto) throws LoginException {
+//		MemberEntity find = this.memberJpaRepository.findBySignId(signInDto.getSignId()).orElseThrow();
+//		if ( !find.getIsValidEmail() ) {
+//			throw new LoginException("not valid email");
+//		}
+//		if ( find.getRole().equals(Role.GUEST.toString()) ) {
+//			throw new LoginException("doesn't need login");
+//		}
+////		if ( signInDto.getPassword().equals(find.getPassword()) ) {
+//		if ( pwdEncoder.matches(signInDto.getPassword(), find.getPassword())) {
+//			return true;
+//		}
+//		return false;
+//	}
 }

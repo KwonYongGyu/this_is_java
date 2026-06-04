@@ -105,28 +105,20 @@ public class SpringSecuritySignRestController {
 
 	@PostMapping("/signin")
 	public ResponseEntity<ComResponseDto<Boolean>> signin(@RequestBody SignInDto signInDto
-//			, HttpServletResponse response
 			, HttpSession httpSession
-	) throws LoginException {
-		Boolean isSign = this.authService.signMember(signInDto);
-		if ( isSign ) {
-			Authentication authentication = authenticationManager.authenticate(
-					new UsernamePasswordAuthenticationToken(signInDto.getSignId(), signInDto.getPassword())
-			);
-			SecurityContextHolder.getContext().setAuthentication(authentication);
+	) {
+		Authentication authentication = authenticationManager.authenticate(
+				new UsernamePasswordAuthenticationToken(signInDto.getSignId(), signInDto.getPassword())
+		);
+		SecurityContextHolder.getContext().setAuthentication(authentication);
 
-			// 정상적으로 로그인(사인인) 되면 세션을 만들고 세션ID 를 쿠키로 응답합니다.
-			// 클라이언트는 세션ID 해당 쿠키를 가지고 다음에 계속 요청한다.
-			httpSession.setAttribute("MJC_LOGIN", signInDto.getSignId());
-			httpSession.setMaxInactiveInterval(3600);
-			return ResponseEntity.status(200).body(
-					ComResponseDto.make(ResponseCode.SUCCESS, isSign)
-			);
-		} else {
-			return ResponseEntity.status(500).body(
-					ComResponseDto.make(ResponseCode.AUTHENTICATION_ERROR, isSign)
-			);
-		}
+		// 정상적으로 로그인(사인인) 되면 세션을 만들고 세션ID 를 쿠키로 응답합니다.
+		// 클라이언트는 세션ID 해당 쿠키를 가지고 다음에 계속 요청한다.
+		httpSession.setAttribute("MJC_LOGIN", signInDto.getSignId());
+		httpSession.setMaxInactiveInterval(3600);
+		return ResponseEntity.status(200).body(
+				ComResponseDto.make(ResponseCode.SUCCESS, true)
+		);
 	}
 
 	@GetMapping("/signout")
