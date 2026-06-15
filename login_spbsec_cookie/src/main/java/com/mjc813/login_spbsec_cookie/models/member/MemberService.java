@@ -3,6 +3,10 @@ package com.mjc813.login_spbsec_cookie.models.member;
 import com.mjc813.login_spbsec_cookie.common.Util;
 import com.mjc813.login_spbsec_cookie.models.role.Role;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -10,7 +14,9 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class MemberService {
+public class MemberService implements UserDetailsService {
+	@Autowired
+	private PasswordEncoder pwdEncoder;
 	@Autowired
 	private MemberJpaRepository memberJpaRepository;
 
@@ -18,6 +24,7 @@ public class MemberService {
 		MemberEntity memberEntity = (MemberEntity)new MemberEntity().clone(memberDto, true);
 		memberEntity.setId(null);
 		memberEntity.setCreateDt(LocalDateTime.now());
+		memberEntity.setPassword(pwdEncoder.encode(memberDto.getPassword()));
 		if ( bAdminMode ) {
 			memberEntity.setIsValidEmail(true);
 			memberEntity.setRole(Role.USER.toString());
@@ -67,5 +74,10 @@ public class MemberService {
 		} else {
 			return null;
 		}
+	}
+
+	@Override
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		return this.findBySignId(username);
 	}
 }
