@@ -52,7 +52,7 @@ public class CookieSignRestController {
 			Cookie signCookie = new Cookie("MJC_LOGIN", signInDto.getSignId());
 			signCookie.setPath("/");
 			signCookie.setHttpOnly(true);
-			signCookie.setMaxAge(3600);
+			signCookie.setMaxAge(3600); // 쿠키의 유효시간 3600 = 1시간
 			response.addCookie(signCookie);
 			return ResponseEntity.status(200).body(
 					ComResponseDto.make(ResponseCode.SUCCESS, isSign)
@@ -66,10 +66,10 @@ public class CookieSignRestController {
 
 	@GetMapping("/signout")
 	public ResponseEntity<ComResponseDto<Boolean>> signout(HttpServletResponse response) {
-		Cookie ck = new Cookie("MJC_LOGIN", "");
+		Cookie ck = new Cookie("MJC_LOGIN", ""); // sign out하면 value값은 없어진다.
 		ck.setPath("/");
 		ck.setHttpOnly(true);
-		ck.setMaxAge(0);
+		ck.setMaxAge(0); // 쿠키의 남아있는 시간을 0으로 설정
 		response.addCookie(ck);
 		return ResponseEntity.status(200).body(
 				ComResponseDto.make(ResponseCode.SUCCESS, true)
