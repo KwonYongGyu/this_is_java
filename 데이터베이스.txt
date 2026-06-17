@@ -1062,3 +1062,80 @@ JWT(Json Web Token)은 프로그래머가 결정할 수 있다.
 Fiddler로 사인인한 시점부터 쿠키가 발생하는것을 확인할 수 있다. reponse로 쿠키가 발생하고 그 뒤부턴 request header에 Cookies를 확인하면 cookie가 발생하는것을 볼 수 있다.
 
 // 06-17
+sbsecurity 프로젝트 시작
+- spring-boot-starter-security 라이브러리를 추가 해야한다. security password 를 로그에 출력해준다.  =>implementation 'org.springframework.boot:spring-boot-starter-security' => 주석 처리 후 다시 localhost.8082로 접속하면 보안이 빠진 화면을 볼 수 있다.
+프로젝트를 만들고 application.yaml 작성, help.md에 데이터베이스 생성 명령문을 실행 
+작성 후 디버그로 실행하면 implementation 'org.springframework.boot:spring-boot-starter-security' 때문에 웹 브라우저에서 로그인 화면이 나오는것을 확인 가능하다. 
+- 로그인 창이 보이면 user / 로그에 출력 된 암호로 인증/인가를 통과 될 수 있다.
+
+- 우리는 항상 user 라는 아이디를 사용하지 않는다. 그러므로 회원가입하고 회원으로 로그인해서 스프링Security 인증/인가를 적용해야 한다.
+
+	- 스프링Security 보안 설정을 해야 한다.
+	- @Configuration 클래스(이름은 마음대로)의 @Bean 메소드(이름은 마음대로)에서 Password 알고리즘을 결정해야 한다. 결정한 후 	에는 수정하면 안된다.
+	=> @Bean
+    	public PasswordEncoder passwordEncoder() {
+        	return new BCryptPasswordEncoder(); // 한번 결정 후 변경 금지
+    	}
+	- 스프링Security 의 UserDetails 인터페이스 를 구현해야 한다. 회원 테이블 Dto, Entity 에 적용을 시킨다.
+		String getUsername(), String getPassword(), Collection<? extends GrantedAuthority> getAuthorities(); 
+		3개 메소드를 구현해야 한다.
+
+	- 스프링Security 의 UserDetailsService 인터페이스 를 구현해야 한다. 회원을 조회하는 기능 클래스에 적용 시킨다.
+		UserDetails loadUserByUsername(String username); 1개 메소드를 구현해야 한다.
+	- @Component 클래스(자유이름) OncePerRequestFilter 상속하고 @Override void doFilterInternal(
+			HttpServletRequest request, HttpServletResponse response
+			, FilterChain filterChain) throws ServletException, IOException {
+		// @ControllerAdvice 클래스의 @ModelAttribute 메소드에서 클라이언트의 요청마다 미리 처리하는 로직
+		// 쿠키라 세셔에서 signId의 값으로 회원조회를 하여 Model에 로그인한 회원정보를 추가했었다. 
+		스프링 Security에서는 Servlet에서 FilterChain 정보를 이용하여
+		다른 필터 메소드를 사이에서 미리 처리하거나 나중에 처리하거나 할 수 있는것이 필터 메소드 개념이다.
+		필터를 사용할때는 항상 다른 메소드도 필터 메소드에서 정상 처리할 수 있도록 매개변수의 filterChain.doFilter(...)를 
+		항상 실행하고 종료해야 한다.
+
+		// 로그인아이디, 암호를 가지고 인증/인가 처리를 한다.
+		UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
+				signedMember, null, signedMember.getAuthorities()
+				principal(인증한유저정보), credential(유저가인증하기위한정보), authority (ROLE 들)
+			);
+			SecurityContextHolder.getContext().setAuthentication(authentication);
+			// model.addAttribute("signedMember", 로그인한유저정보);
+		} 메소드를 구현해야 한다.
+		SecurityContext
+
+		getUsername() - 유저이름을 getPassword()는 평문(암호화된것이 아닌) 패스워드를 getAttriute는 Role을 가져온다.
+		SpringbootSecurity가 내가 만든걸 실행해준다.
+
+	- @Bean 메소드(이름은 마음대로)에는 DaoAuthenticationProvider (DB 에서 회원으로 로그인아이디/암호를 제공하는 메소드)
+	- @Bean 메소드(이름은 마음대로)에는 AuthenticationManager 인증관리자 설정을 한다.
+	- @Bean 메소드(자유이름)에는 @Component 클래스(자유이름)를 객체로 만들어서 return 한다.
+		필터를 등록해준다.
+	- @Bean 메소드(자유이름)에는 CorsConfigurationSource 를 리턴해야 한다.
+		cors 설정, 다른 사이트 주소에서 어떤것을 허용하고 불허하느냐 설정
+		method 허용, 어떤 헤더를 허용, 어떤 Origin 허용
+	- @Configuration, @EnableWebSecurity 클래스(이름은 마음대로)는 스프링 Security 보안 설정 클래스을 한다.
+	  public class 이름 {
+	    @Bean ...
+		@Bean
+		public SecurityFilterChain securityFilterChain(HttpSecurity httpConfig) {
+			매개변수 httpConfig
+						.csrf(...설정)
+						.cors(...설정)
+						.headers(...설정)
+						.authorizeHttpRequests(람다식 -> 람다식..requestMatchers("url패턴").permitAll() url패턴은 인증인가 						체크 안함, 모두 허용 
+							.requestMatchers("url패턴").authenticated() url패턴은 인증인가 체크 합니다.
+							 filter 를 실행합니다.
+							.anyRequest().authenticated() url패턴에 없는 다른 모든 url 주소는 인증/인가 체크를 해야 한다.
+						.authenticationProvider(DaoAuthenticationProvider 리턴하는 Bean 메소드)
+						.addFilterBefore(여러분의필터클래스객체, UsernamePasswordAuthenticationFilter.class)
+		}
+	  }
+	
+	- 인증/인가 Filter 에서 설정한 유저정보를 가지고 
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		IMember signedMember = (IMember)authentication.getPrincipal();
+	- @Configuration, @EnableWebSecurity 클래스에 @EnableMethodSecurity 애노테이션을 사용하면
+		여러분들이 만드는 @Controller, @RestController 클래스의 각 @GetMapping("url") 메소드들 마다
+		원하는 인가를 사용할 수 있는 @PreAuthorize("hasAnyAuthority('ADMIN')") 애노테이션이 ROLE 인가를 처리할 수 있다.
+		@PreAuthorize("hasAuthority('USER')")
+		@PreAuthorize("hasAnyAuthority('USER', 'ADMIN')")	=> 있는 그대로 USER, ADMIN
+		@PreAuthorize("hasAnyRole('USER', 'ADMIN')") => ROLE_ 라는 단어를 접두어로 붙여서 처리 ROLE_USER, ROLE_ADMIN
