@@ -71,17 +71,17 @@ public class Mjc813WebSecurityConfig {
 					header.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin))
 				.authorizeHttpRequests(authorizeRequests ->
 						authorizeRequests
-								.requestMatchers("/").permitAll()
+								.requestMatchers("/").permitAll() // permitAll은 패턴을 인증,인가 체크를 하지 않고 통과시킨다.
 								.requestMatchers("/signin").permitAll()
 								.requestMatchers("/signup").permitAll()
 								.requestMatchers("/api/v1/auth/**").permitAll()
 								.requestMatchers("/js/**").permitAll()
 								.requestMatchers("/css/**").permitAll()
 								.requestMatchers("/images/**").permitAll()
-								.anyRequest().authenticated()
+								.anyRequest().authenticated() // anyRequest는 url 패턴에 없는 다른 url 주소는 인증/인가
 				)
 				.authenticationProvider(authenticationProvider())
-				.addFilterBefore(mjc813AuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
+				.addFilterBefore(mjc813AuthenticationFilter(), UsernamePasswordAuthenticationFilter.class) // 내가 만든 필터
 		;
 		// 맨 마지막에 Filter Chain 를 다음 단계에서 실행할 수 있도록 리턴해줘야 한다.
 		return http.build();
