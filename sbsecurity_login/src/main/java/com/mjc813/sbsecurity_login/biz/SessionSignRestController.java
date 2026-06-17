@@ -27,14 +27,6 @@ public class SessionSignRestController {
 	public ResponseEntity<ComResponseDto<IMember>> signUp(@RequestBody SignUpDto signUpDto) {
 		MemberDto memberDto = (MemberDto)new MemberDto().clone(signUpDto, true);
 		MemberDto inserted = this.memberService.insert(memberDto, false);
-//		try {
-//			this.mailService.sendHtmlEmail(inserted);
-//		} catch (MessagingException e) {
-//			log.error(e.getMessage());
-//			return ResponseEntity.status(500).body(
-//					ComResponseDto.make(ResponseCode.SERVER_ERROR, inserted)
-//			);
-//		}
 		return ResponseEntity.status(201).body(
 				ComResponseDto.make(ResponseCode.SUCCESS, signUpDto)
 		);

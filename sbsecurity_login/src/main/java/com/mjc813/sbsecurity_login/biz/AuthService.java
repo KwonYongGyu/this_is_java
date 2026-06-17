@@ -2,7 +2,6 @@ package com.mjc813.sbsecurity_login.biz;
 
 import com.mjc813.sbsecurity_login.common.LoginException;
 import com.mjc813.sbsecurity_login.models.auth.SignInDto;
-import com.mjc813.sbsecurity_login.models.auth.ValidEmailDto;
 import com.mjc813.sbsecurity_login.models.member.MemberEntity;
 import com.mjc813.sbsecurity_login.models.member.MemberJpaRepository;
 import com.mjc813.sbsecurity_login.models.role.Role;
@@ -14,17 +13,17 @@ public class AuthService {
 	@Autowired
 	private MemberJpaRepository memberJpaRepository;
 
-	public Boolean checkValidEmail(ValidEmailDto validEmailDto) {
-		MemberEntity find = this.memberJpaRepository.findBySignId(validEmailDto.getSignId()).orElseThrow();
-		if ( validEmailDto.getValidText().equals(find.getValidText()) ) {
-			find.setIsValidEmail(true);
-			find.setRole(Role.USER.toString());
-			this.memberJpaRepository.save(find);
-			return true;
-		} else {
-			return false;
-		}
-	}
+//	public Boolean checkValidEmail(ValidEmailDto validEmailDto) {
+//		MemberEntity find = this.memberJpaRepository.findBySignId(validEmailDto.getSignId()).orElseThrow();
+//		if ( validEmailDto.getValidText().equals(find.getValidText()) ) {
+//			find.setIsValidEmail(true);
+//			find.setRole(Role.USER.toString());
+//			this.memberJpaRepository.save(find);
+//			return true;
+//		} else {
+//			return false;
+//		}
+//	}
 
 	public Boolean signMember(SignInDto signInDto) throws LoginException {
 		MemberEntity find = this.memberJpaRepository.findBySignId(signInDto.getSignId()).orElseThrow();
