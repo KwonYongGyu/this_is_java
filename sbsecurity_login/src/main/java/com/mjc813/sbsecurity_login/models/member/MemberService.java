@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -16,6 +17,8 @@ import java.util.Optional;
 public class MemberService implements UserDetailsService {
 	@Autowired
 	private MemberJpaRepository memberJpaRepository;
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
 	public MemberDto insert(MemberDto memberDto, boolean bAdminMode) {
 		MemberEntity memberEntity = (MemberEntity)new MemberEntity().clone(memberDto, true);
@@ -29,6 +32,7 @@ public class MemberService implements UserDetailsService {
 			memberEntity.setRole(Role.GUEST.toString());
 			memberEntity.setValidText(Util.getRandomAllString(12));
 		}
+		memberEntity.setPassword(this.passwordEncoder.encode(memberEntity.getPassword()));
 		MemberEntity saved = this.memberJpaRepository.save(memberEntity);
 		MemberDto result = (MemberDto)new MemberDto().clone(saved, true);
 		return result;
