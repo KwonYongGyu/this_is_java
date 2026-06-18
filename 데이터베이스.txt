@@ -1086,7 +1086,7 @@ sbsecurity 프로젝트 시작
 			HttpServletRequest request, HttpServletResponse response
 			, FilterChain filterChain) throws ServletException, IOException {
 		// @ControllerAdvice 클래스의 @ModelAttribute 메소드에서 클라이언트의 요청마다 미리 처리하는 로직
-		// 쿠키라 세셔에서 signId의 값으로 회원조회를 하여 Model에 로그인한 회원정보를 추가했었다. 
+		// 쿠키랑 세션에서 signId의 값으로 회원조회를 하여 Model에 로그인한 회원정보를 추가했었다. 
 		스프링 Security에서는 Servlet에서 FilterChain 정보를 이용하여
 		다른 필터 메소드를 사이에서 미리 처리하거나 나중에 처리하거나 할 수 있는것이 필터 메소드 개념이다.
 		필터를 사용할때는 항상 다른 메소드도 필터 메소드에서 정상 처리할 수 있도록 매개변수의 filterChain.doFilter(...)를 
@@ -1147,12 +1147,12 @@ sbsecurity 프로젝트 시작
 		사인인 하는 곳에 아래의 2줄이 필요하다.
 		Authentication auth = this.authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(signInDto.getSignId(), signInDto.getPassword()));
 		SecurityContextHolder.getContext().setAuthentication(auth);
-		사인인 성공하면 쿠키든, 세션이든, JWT 이든 클라이언트에게 사인인한 유저의 요청이라는것을 서버에 알려주는 동작이 필요			하다.
+		사인인 성공하면 쿠키든, 세션이든, JWT 이든 클라이언트에게 사인인한 유저의 요청이라는것을 서버에 알려주는 동작이 필요하다.
 		- 세션인경우에는 
 		httpsession.setAttribute("키", 사인인성공한유저의 특별한 정보);
 		httpsession.setMaxInactiveInterval(초단위);
 		- 쿠키인경우
-		Cookie 이름 = new Cookie("키", "사인인 성공한 유저의 특별한 정보");
+		Cookie 이름 = new Cookie("키", "사인인성공한유저의특별한정보");
 		이름.setHttpOnly(true);
 		..
 		response.addCookie(이름);
@@ -1167,3 +1167,13 @@ sbsecurity 프로젝트 시작
 		hasAnyAuthority
 		.. 등등
 		스프링 시큐리티가 인가처리를 해준다.
+	- 사인인한 유저 정보가 필요한 곳에서 아래의 2줄로 사인인한 유저 정보를 가져올수 있다.
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		IMember signedMember = (IMember)auth.getPrincipal();
+	- @PreAuthorize("hasAnyAuthority('ADMIN') or @musicService.isCreateId(#updateDto.id, authentication.name)")
+	  public ResponseEntity<ComResponseDto<MusicDto>> update(@RequestBody MusicDto updateDto) 
+	  // ADMIN 회원 이거나 updateDto.id 의 데이터를 만든 id (createId) 와 signId 가 같은 회원만 update 된다.
+	  // @musicService.isCreateId 메소드를 public 으로 매개변수 
+	  public boolean isCreateId(Long musidId, String signId) {
+		musicId 값으로 찾은 music 데이터의 createId 와 signId 가 같으면 true 를 리턴, 다르면 false 를 리턴
+	  }

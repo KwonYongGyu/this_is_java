@@ -1,10 +1,10 @@
 {
   "info": {
-    "_postman_id": "756d3e0f-f985-4e46-a225-699a64eeb3e9",
+    "_postman_id": "0a7eca7d-3d52-4aa2-bb4e-ba51d70b433f",
     "name": "Sb_Security",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "_exporter_id": "16448427",
-    "_collection_link": "https://go.postman.co/collection/16448427-756d3e0f-f985-4e46-a225-699a64eeb3e9?source=collection_link"
+    "_exporter_id": "53642321",
+    "_collection_link": "https://go.postman.co/collection/53642321-0a7eca7d-3d52-4aa2-bb4e-ba51d70b433f?source=collection_link"
   },
   "item": [
     {
@@ -237,6 +237,46 @@
             "signout"
           ]
         }
+      },
+      "response": []
+    },
+    {
+      "name": "member_insert",
+      "request": {
+        "method": "POST",
+        "header": []
+      },
+      "response": []
+    },
+    {
+      "name": "member_update",
+      "request": {
+        "method": "PATCH",
+        "header": []
+      },
+      "response": []
+    },
+    {
+      "name": "member_deleteById",
+      "request": {
+        "method": "DELETE",
+        "header": []
+      },
+      "response": []
+    },
+    {
+      "name": "member_findAll",
+      "request": {
+        "method": "GET",
+        "header": []
+      },
+      "response": []
+    },
+    {
+      "name": "member_findById",
+      "request": {
+        "method": "GET",
+        "header": []
       },
       "response": []
     }
