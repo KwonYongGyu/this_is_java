@@ -1139,3 +1139,31 @@ sbsecurity 프로젝트 시작
 		@PreAuthorize("hasAuthority('USER')")
 		@PreAuthorize("hasAnyAuthority('USER', 'ADMIN')")	=> 있는 그대로 USER, ADMIN
 		@PreAuthorize("hasAnyRole('USER', 'ADMIN')") => ROLE_ 라는 단어를 접두어로 붙여서 처리 ROLE_USER, ROLE_ADMIN
+
+// 06-18
+
+	- PasswordEncoder 를 이용하여 encoder 시킨 암호 문자를 저장한다.
+	- Spring Security 는 2줄만으로 로그인 성공/실패 를 판단한다.
+		사인인 하는 곳에 아래의 2줄이 필요하다.
+		Authentication auth = this.authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(signInDto.getSignId(), signInDto.getPassword()));
+		SecurityContextHolder.getContext().setAuthentication(auth);
+		사인인 성공하면 쿠키든, 세션이든, JWT 이든 클라이언트에게 사인인한 유저의 요청이라는것을 서버에 알려주는 동작이 필요			하다.
+		- 세션인경우에는 
+		httpsession.setAttribute("키", 사인인성공한유저의 특별한 정보);
+		httpsession.setMaxInactiveInterval(초단위);
+		- 쿠키인경우
+		Cookie 이름 = new Cookie("키", "사인인 성공한 유저의 특별한 정보");
+		이름.setHttpOnly(true);
+		..
+		response.addCookie(이름);
+		- JWT인경우
+		Token을 보안알고리즘에 따라 생성하고 클라이언트에게 쿠키,세션,헤더특별속성으로 전달할 수 있다.
+	- 스프링 Security 인가처리는
+		@EnableMethodSecurity 를 @EnableWebSecurity 아래에 선언한다.
+		인가가 필요한 컨트롤러의 메소드 윗단에 @PreAuthorize("")
+		hasRole('USER'), 
+		hasAnyRole
+		hasAuthority
+		hasAnyAuthority
+		.. 등등
+		스프링 시큐리티가 인가처리를 해준다.
