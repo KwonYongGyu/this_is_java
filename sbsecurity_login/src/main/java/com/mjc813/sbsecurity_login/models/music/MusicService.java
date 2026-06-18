@@ -5,6 +5,8 @@ import com.mjc813.sbsecurity_login.common.Mjc813Exception;
 import com.mjc813.sbsecurity_login.common.ResponseCode;
 import com.mjc813.sbsecurity_login.models.member.IMember;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
@@ -17,27 +19,28 @@ public class MusicService {
 	@Autowired
 	private MusicJpaRepository musicJpaRepository;
 
-	public MusicDto insert(IMember signedMember, MusicDto insertDto) throws LoginException {
-		if ( signedMember == null ) {
+	public MusicDto insert(MusicDto insertDto) throws LoginException {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		Object obj = authentication.getPrincipal();
+		if ( obj instanceof IMember signedMember ) {
+			MusicEntity musicEntity = (MusicEntity)new MusicEntity().copyMembers(insertDto, true);
+			musicEntity.setId(null);
+			musicEntity.setCreateId(signedMember.getSignId());
+			musicEntity.setCreateDt(LocalDateTime.now());
+			MusicEntity saved = this.musicJpaRepository.save(musicEntity);
+			MusicDto musicDto = (MusicDto)new MusicDto().copyMembers(saved, true);
+			return musicDto;
+		} else {
 			throw new LoginException("is not valid member");
 		}
-		MusicEntity musicEntity = (MusicEntity)new MusicEntity().copyMembers(insertDto, true);
-		musicEntity.setId(null);
-		musicEntity.setCreateId(signedMember.getSignId());
-		musicEntity.setCreateDt(LocalDateTime.now());
-		MusicEntity saved = this.musicJpaRepository.save(musicEntity);
-		MusicDto musicDto = (MusicDto)new MusicDto().copyMembers(saved, true);
-		return musicDto;
 	}
 
-	public MusicDto update(Model model, MusicDto updateDto) throws Mjc813Exception {
+	public MusicDto update(MusicDto updateDto) throws Mjc813Exception {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		IMember signedMember = (IMember)authentication.getPrincipal();
 //		MusicEntity findEntity = this.musicJpaRepository.findByIdAndDeleteIdIsNull(updateDto.getId()).orElseThrow();
 //		MusicDto findDto = (MusicDto)new MusicDto().copyMembers(findEntity, true);
 		MusicDto findDto = this.findById(updateDto.getId());    // id 로 자료를 찾는다.
-		IMember signedMember = this.isCreateIdOwnerOrAdmin(model, findDto); // 로그인 클라이언트의 인가 맞는 지 체크
-		if ( signedMember == null) {
-			throw new Mjc813Exception(ResponseCode.AUTHORIZATION_ERROR, "authorize is not allow for update");
-		}
 		findDto.setUpdateId(signedMember.getSignId());
 		findDto.setUpdateDt(LocalDateTime.now());
 		findDto.copyMembers(updateDto, false);
@@ -47,36 +50,42 @@ public class MusicService {
 		return returnDto;
 	}
 
-	public MusicDto deleteById(Model model, Long id) throws Mjc813Exception {
-		MusicDto findDto = this.findById(id);    // id 로 자료를 찾는다.
-		IMember signedMember = this.isCreateIdOwnerOrAdmin(model, findDto); // 로그인 클라이언트의 인가 맞는 지 체크
-		if ( signedMember == null) {
-			throw new Mjc813Exception(ResponseCode.AUTHORIZATION_ERROR, "authorize is not allow for delete");
+	public boolean isCreateId(Long musidId, String signId) throws Mjc813Exception {
+		MusicDto findMusic = this.findById(musidId);    // id 로 자료를 찾는다.
+		if ( findMusic != null && findMusic.getCreateId().equals(signId) ) {
+			return true;
 		}
+		return false;
+	}
+
+	public MusicDto deleteById(Long id) throws Mjc813Exception {
+		MusicDto findDto = this.findById(id);    // id 로 자료를 찾는다.
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		IMember signedMember = (IMember)authentication.getPrincipal();
 		findDto.setDeleteId(signedMember.getSignId());
 		findDto.setDeleteDt(LocalDateTime.now());
 		MusicEntity deleteEntity = (MusicEntity)new MusicEntity().copyMembers(findDto, true);
 		MusicEntity savedEntity = this.musicJpaRepository.save(deleteEntity);
 		MusicDto returnDto = (MusicDto)new MusicDto().copyMembers(savedEntity, true);
 		return returnDto;
-	}
-
-	// createId 가 자기자신이고, role 이 ADMIN 인지 체크해서 아니면 null 을 리턴
-	private IMember isCreateIdOwnerOrAdmin(Model model, MusicDto findDto) {
-		IMember signedMember = (IMember)model.getAttribute("signedMember");
-		if ( signedMember != null ) {
-			// 로그인을 한 클라이언트의 요청인 경우
-			if ( signedMember.getRole().equals("USER") ) {
-				// 로그인을 한 클라이언트의 role 이 "USER" 인 경우
-				if ( signedMember.getSignId().equals(findDto.getCreateId()) ) {
-					// 로그인을 한 클라이언트의 signId 가 찾은 MusicDto 의 createId 랑 같은 경우
-					return signedMember;
-				}
-			} else if ( signedMember.getRole().equals("ADMIN") ) {
-				return signedMember;
-			}
-		}
-		return null;
+//	}
+//
+//	// createId 가 자기자신이고, role 이 ADMIN 인지 체크해서 아니면 null 을 리턴
+//	private IMember isCreateIdOwnerOrAdmin(Model model, MusicDto findDto) {
+//		IMember signedMember = (IMember)model.getAttribute("signedMember");
+//		if ( signedMember != null ) {
+//			// 로그인을 한 클라이언트의 요청인 경우
+//			if ( signedMember.getRole().equals("USER") ) {
+//				// 로그인을 한 클라이언트의 role 이 "USER" 인 경우
+//				if ( signedMember.getSignId().equals(findDto.getCreateId()) ) {
+//					// 로그인을 한 클라이언트의 signId 가 찾은 MusicDto 의 createId 랑 같은 경우
+//					return signedMember;
+//				}
+//			} else if ( signedMember.getRole().equals("ADMIN") ) {
+//				return signedMember;
+//			}
+//		}
+//		return null;
 	}
 
 	public MusicDto findById(Long id) throws Mjc813Exception {
@@ -95,13 +104,9 @@ public class MusicService {
 //		return find;
 	}
 
-	public List<MusicDto> findAll(Model model) throws Mjc813Exception {
+	public List<MusicDto> findAll() throws Mjc813Exception {
 		// findAll 은 모든 자료를 조회해서 리턴하므로 자료의 갯수가 전부 20~30개 정도를 넘으면 별로 안좋은 기능이다.
 		// 그 보다 많은 데이터를 조회하려면 Paging 이나 Slicing 으로 조회하세요
-		IMember signedMember = this.isAdmin(model);
-		if ( signedMember == null ) {
-			throw new Mjc813Exception(ResponseCode.AUTHORIZATION_ERROR, "authorize is now allow for findall");
-		}
 //		List<MusicEntity> musicEntities = this.musicJpaRepository.findAll();
 		List<MusicEntity> musicEntities = this.musicJpaRepository.findAllByDeleteIdIsNull();
 		List<MusicDto> result = this.transfer(musicEntities);
@@ -109,22 +114,22 @@ public class MusicService {
 	}
 
 	// role 이 USER 또는 ADMIN 인지 체크해서 아니면 null 을 리턴
-	private IMember isUserOrAdmin(Model model) {
-		IMember signedMember = (IMember)model.getAttribute("signedMember");
-		if ( signedMember != null && signedMember.getRole().equals("GUEST") ) {
-			return null;
-		}
-		return signedMember;
-	}
+//	private IMember isUserOrAdmin(Model model) {
+//		IMember signedMember = (IMember)model.getAttribute("signedMember");
+//		if ( signedMember != null && signedMember.getRole().equals("GUEST") ) {
+//			return null;
+//		}
+//		return signedMember;
+//	}
 
 	// role 이 ADMIN 인지 체크해서 아니면 null 을 리턴
-	private IMember isAdmin(Model model) {
-		IMember signedMember = (IMember)model.getAttribute("signedMember");
-		if ( signedMember != null && !signedMember.getRole().equals("ADMIN") ) {
-			return null;
-		}
-		return signedMember;
-	}
+//	private IMember isAdmin(Model model) {
+//		IMember signedMember = (IMember)model.getAttribute("signedMember");
+//		if ( signedMember != null && !signedMember.getRole().equals("ADMIN") ) {
+//			return null;
+//		}
+//		return signedMember;
+//	}
 
 	private List<MusicDto> transfer(List<MusicEntity> entityList) {
 		List<MusicDto> result = entityList.stream().map( item -> (MusicDto)new MusicDto().copyMembers(item, true)).toList();
