@@ -1177,3 +1177,19 @@ sbsecurity 프로젝트 시작
 	  public boolean isCreateId(Long musidId, String signId) {
 		musicId 값으로 찾은 music 데이터의 createId 와 signId 가 같으면 true 를 리턴, 다르면 false 를 리턴
 	  }
+
+
+
+// 06-19
+	- sbsecurity_login 프로제트에서 jwtsecurity_login 프로젝트를 복사해서 이름변경 작업
+		application.yml, src 폴더 java 소스파일 패키지이름변경
+	- JWT 는 여러 서버에서 인증과 인가를 처리할 수 있다. (FrontEnd, BackEnd 나눠져있는 웹서버 구조에서는 필수적인 인증,인가 처리이다.)
+	- 쿠키, 세션은 하나의 서버에서 인증, 인가를 처리한다.
+	- JWT 라이브러리가 필요하다. io.jsonwebtoken.*
+	- 정상적인 사인인을 하면 token 만들어서 응답을 해준다. jwt.io 홈페이지를 활용하면 토큰을 볼 수 있다.
+	- accessToken 은 유효기간이 짧은 토큰을 만든다. 인가 할때 accessToken 으로 인가 처리 를 한다.
+	- refreshToken 은 유효기간을 보통 1주일~1달까지 만든다. 인가할때 accessToken 이 유효기간이 끝나면 401 에러 응답으로 보낸다.
+		클라이언트가 401 응답 받으면 바로 refreshToken 을 가지고 서버에게 accessToken 다시 달라고 요청한다.
+		서버는 accessToken 과 refreshToken 둘다 새로 만들어서 같이 응답할 수 도 있고, accessToken 만 새로 만들어서 응답할 수 도 있다.
+	- AuthTokenDto 에 accessToken 과 refreshToken 만들어서 응답하면 클라이언트가 보관할 수 있다.
+		클라이언트는 javascript 의 localStorage 에 저장하면 안전하다.

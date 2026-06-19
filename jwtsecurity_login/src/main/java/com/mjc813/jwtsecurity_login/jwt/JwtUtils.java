@@ -42,12 +42,15 @@ public class JwtUtils {
 		return str;
 	}
 
-    public String generateToken(String value ,Long milliseconds) {
-        String str = Jwts.builder()
-                .subject(member.getSignId())
-                .issuedAt(new Date())
-                .expiration(new Date(System.currentTimeMillis() + this.expireAccessToken))
-                .compact();
-        return str;
-    }
+	public String generateToken(IMember member, Long milliSeconds) {
+		String str = Jwts.builder()
+				.subject(member.getSignId())
+				.claim("role", member.getRole())
+				.claim("email", member.getEmail())
+				.issuedAt(new Date())
+				.expiration(new Date(System.currentTimeMillis() + milliSeconds))
+				.signWith(this.secretKey)
+				.compact();
+		return str;
+	}
 }
