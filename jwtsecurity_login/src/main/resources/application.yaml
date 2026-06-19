@@ -30,3 +30,8 @@ server:
       charset: UTF-8
       enabled: true
       force: true
+
+myapp:
+  jwt:
+    secret: thisismyjwtsecretkey!123456abcdef
+    expireAccessToken: 1800000 # 30 * 60 * 1000 30분짜리 토큰
