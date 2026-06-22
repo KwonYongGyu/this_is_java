@@ -1,20 +1,16 @@
 package com.mjc813.jwtsecurity_login.jwt;
 
-
 import com.mjc813.jwtsecurity_login.models.member.IMember;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
 import java.util.Date;
 
-@Slf4j
 @Component
 public class JwtUtils {
 //	@Value("${myapp.jwt.secret:thisismyjwtsecretkey!123456abcdef}")
@@ -50,8 +46,8 @@ public class JwtUtils {
 	public String generateToken(IMember member, Long milliSeconds) {
 		String str = Jwts.builder()
 				.subject(member.getSignId())
-				.claim("role", member.getRole())
-				.claim("email", member.getEmail())
+				.claim("role", member.getRole())    // subject 외에 부가정보는 claim 에 추가할수 있다.
+				.claim("email", member.getEmail())  // jwt 에 부가정보 중 개인정보를 넣으면 위험하다.
 				.issuedAt(new Date())
 				.expiration(new Date(System.currentTimeMillis() + milliSeconds))
 				.signWith(this.secretKey)
@@ -59,7 +55,7 @@ public class JwtUtils {
 		return str;
 	}
 
-	public Claims parseToken(String token) throws JwtExpireException {
+	public Claims parseToken(String token) {
 		try {
 			Claims cl = Jwts.parser()
 					.verifyWith(this.secretKey)
@@ -67,14 +63,10 @@ public class JwtUtils {
 					.parseSignedClaims(token)
 					.getPayload();
 			return cl;
-		} catch ( ExpiredJwtException e ) {
-			log.error(e.getMessage());
-			throw new JwtExpireException(e.getMessage());
-		} catch ( IllegalArgumentException e ) {
-			log.error(e.getMessage());
-			throw new JwtIllegalException(e.getMessage());
-		} catch ( JwtException e ) {
-			log.error(e.getMessage());
+
+		} catch (ExpiredJwtException | IllegalArgumentException e ) {
+			throw e;
+		} catch (JwtException e ) {
 			throw e;
 		}
 	}

@@ -4,6 +4,7 @@ import com.mjc813.jwtsecurity_login.common.ComResponseDto;
 import com.mjc813.jwtsecurity_login.common.LoginException;
 import com.mjc813.jwtsecurity_login.common.Mjc813Exception;
 import com.mjc813.jwtsecurity_login.common.ResponseCode;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,21 +21,13 @@ public class MusicRestController {
 
 	@PostMapping("")
 	@PreAuthorize("hasAnyAuthority('USER', 'ADMIN')")
-	public ResponseEntity<ComResponseDto<MusicDto>> insert(@RequestBody MusicDto insertDto) throws LoginException {
+	public ResponseEntity<ComResponseDto<MusicDto>> insert(@Valid @RequestBody MusicRequestDto insertParam) throws LoginException {
+		MusicDto insertDto = (MusicDto)new MusicDto().copyMembers(insertParam, true);
 		MusicDto result = this.musicService.insert(insertDto);
 		return ResponseEntity.status(201).body(
 			ComResponseDto.make(ResponseCode.SUCCESS, result)
 		);
 	}
-
-	// role 이 USER 또는 ADMIN 인지 체크해서 아니면 null 을 리턴
-//	private IMember isUserOrAdmin(Model model) {
-//		IMember signedMember = (IMember)model.getAttribute("signedMember");
-//		if ( signedMember != null && signedMember.getRole().equals("GUEST") ) {
-//			return null;
-//		}
-//		return signedMember;
-//	}
 
 	@PatchMapping("")
 	@PreAuthorize("hasAnyAuthority('ADMIN') or @musicService.isCreateId(#updateDto.id, authentication.name)")

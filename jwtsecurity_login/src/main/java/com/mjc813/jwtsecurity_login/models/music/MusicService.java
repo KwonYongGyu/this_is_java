@@ -67,24 +67,6 @@ public class MusicService {
 		MusicEntity savedEntity = this.musicJpaRepository.save(deleteEntity);
 		MusicDto returnDto = (MusicDto)new MusicDto().copyMembers(savedEntity, true);
 		return returnDto;
-//	}
-//
-//	// createId 가 자기자신이고, role 이 ADMIN 인지 체크해서 아니면 null 을 리턴
-//	private IMember isCreateIdOwnerOrAdmin(Model model, MusicDto findDto) {
-//		IMember signedMember = (IMember)model.getAttribute("signedMember");
-//		if ( signedMember != null ) {
-//			// 로그인을 한 클라이언트의 요청인 경우
-//			if ( signedMember.getRole().equals("USER") ) {
-//				// 로그인을 한 클라이언트의 role 이 "USER" 인 경우
-//				if ( signedMember.getSignId().equals(findDto.getCreateId()) ) {
-//					// 로그인을 한 클라이언트의 signId 가 찾은 MusicDto 의 createId 랑 같은 경우
-//					return signedMember;
-//				}
-//			} else if ( signedMember.getRole().equals("ADMIN") ) {
-//				return signedMember;
-//			}
-//		}
-//		return null;
 	}
 
 	public MusicDto findById(Long id) throws Mjc813Exception {
@@ -111,24 +93,6 @@ public class MusicService {
 		List<MusicDto> result = this.transfer(musicEntities);
 		return result;
 	}
-
-	// role 이 USER 또는 ADMIN 인지 체크해서 아니면 null 을 리턴
-//	private IMember isUserOrAdmin(Model model) {
-//		IMember signedMember = (IMember)model.getAttribute("signedMember");
-//		if ( signedMember != null && signedMember.getRole().equals("GUEST") ) {
-//			return null;
-//		}
-//		return signedMember;
-//	}
-
-	// role 이 ADMIN 인지 체크해서 아니면 null 을 리턴
-//	private IMember isAdmin(Model model) {
-//		IMember signedMember = (IMember)model.getAttribute("signedMember");
-//		if ( signedMember != null && !signedMember.getRole().equals("ADMIN") ) {
-//			return null;
-//		}
-//		return signedMember;
-//	}
 
 	private List<MusicDto> transfer(List<MusicEntity> entityList) {
 		List<MusicDto> result = entityList.stream().map( item -> (MusicDto)new MusicDto().copyMembers(item, true)).toList();
