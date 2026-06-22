@@ -2,14 +2,19 @@ package com.mjc813.jwtsecurity_login.jwt;
 
 
 import com.mjc813.jwtsecurity_login.models.member.IMember;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
 import java.util.Date;
 
+@Slf4j
 @Component
 public class JwtUtils {
 //	@Value("${myapp.jwt.secret:thisismyjwtsecretkey!123456abcdef}")
@@ -52,5 +57,58 @@ public class JwtUtils {
 				.signWith(this.secretKey)
 				.compact();
 		return str;
+	}
+
+	public Claims parseToken(String token) throws JwtExpireException {
+		try {
+			Claims cl = Jwts.parser()
+					.verifyWith(this.secretKey)
+					.build()
+					.parseSignedClaims(token)
+					.getPayload();
+			return cl;
+		} catch ( ExpiredJwtException e ) {
+			log.error(e.getMessage());
+			throw new JwtExpireException(e.getMessage());
+		} catch ( IllegalArgumentException e ) {
+			log.error(e.getMessage());
+			throw new JwtIllegalException(e.getMessage());
+		} catch ( JwtException e ) {
+			log.error(e.getMessage());
+			throw e;
+		}
+	}
+
+	public String getRole(String token) throws JwtExpireException {
+		Claims cl = this.parseToken(token);
+		return cl.get("role", String.class);
+	}
+
+	public String getEmail(String token) throws JwtExpireException {
+//		Claims cl = this.parseToken(token);
+//		return cl.get("email", String.class);
+		return this.getValueFromClaims(token, "email");
+	}
+
+	public String getValueFromClaims(String token, String key) throws JwtExpireException {
+		Claims cl = this.parseToken(token);
+		return cl.get(key, String.class);
+	}
+
+	public String getSignId(String token) throws JwtExpireException {
+		Claims cl = this.parseToken(token);
+		return cl.getSubject();
+	}
+
+	public Boolean validateToken(String token) throws JwtExpireException {
+		this.parseToken(token);
+		return true;
+	}
+
+	public String resolveJwtTokenFromBearerToken(String bearerToken) {
+		if ( bearerToken != null && bearerToken.startsWith("Bearer ")) {
+			return bearerToken.substring(7);
+		}
+		return null;
 	}
 }
