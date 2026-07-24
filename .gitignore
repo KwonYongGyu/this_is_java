@@ -68,3 +68,6 @@ bin/
 
 ### nodejs ###
 node_modules/
+
+# MySQL 데이터 볼륨 폴더 제외
+**/mysql-data/

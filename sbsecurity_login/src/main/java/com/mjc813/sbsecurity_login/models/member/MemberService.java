@@ -1,8 +1,11 @@
 package com.mjc813.sbsecurity_login.models.member;
 
+import com.mjc813.sbsecurity_login.common.Mjc813Exception;
 import com.mjc813.sbsecurity_login.common.Util;
 import com.mjc813.sbsecurity_login.models.role.Role;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -44,13 +47,18 @@ public class MemberService implements UserDetailsService {
 		return result;
 	}
 
-	public MemberDto update(MemberDto updateDto) {
-		MemberEntity find = this.memberJpaRepository.findById(updateDto.getId()).orElseThrow();
-		MemberEntity memberEntity = (MemberEntity)new MemberEntity().clone(find, true);
-		memberEntity.clone(updateDto, false);
-		MemberEntity saved = this.memberJpaRepository.save(memberEntity);
-		MemberDto result = (MemberDto)new MemberDto().clone(saved, true);
-		return result;
+	public MemberDto update(MemberDto updateDto) throws Mjc813Exception {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		IMember signedMember = (IMember) authentication.getPrincipal();
+		MemberDto findDto = this.findById(updateDto.getId()); // id로 자료를 찾는다
+		findDto.setUpdateId(signedMember.getSignId());
+		findDto.setUpdateDt(LocalDateTime.now());
+//		MemberEntity find = this.memberJpaRepository.findById(updateDto.getId()).orElseThrow();
+//		MemberEntity memberEntity = (MemberEntity)new MemberEntity().clone(find, true);
+//		memberEntity.clone(updateDto, false);
+//		MemberEntity saved = this.memberJpaRepository.save(memberEntity);
+//		MemberDto result = (MemberDto)new MemberDto().clone(saved, true);
+//		return result;
 	}
 
 	public List<MemberDto> findAll() {
@@ -79,5 +87,17 @@ public class MemberService implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		return this.findBySignId(username);
+	}
+
+	public List<MemberDto> findAll() throws Mjc813Exception {
+		List<MemberEntity> memberEntities = this.memberJpaRepository.findAllByDeleteIdIsNull();
+		List<MemberDto> result = this.transfer(memberEntities);
+		return result;
+	}
+
+
+	private List<MemberDto> transfer(List<MemberEntity> entityList) {
+		List<MemberDto> result = entityList.stream().map( item -> (MemberDto)new MemberDto().copyMembers(item, true)).toList();
+		return result;
 	}
 }
