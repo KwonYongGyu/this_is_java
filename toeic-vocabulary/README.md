@@ -36,7 +36,7 @@ IntelliJ에서 `ToeicVocabularyApplication` 메인 클래스 실행 → http://l
 
 ## 진행 로그
 - [x] 1~2일차: 환경 세팅, MariaDB Docker 연결, Spring Boot 기동 확인
-- [ ] 3~4일차: Entity/Repository
+- [Δ] 3~4일차: Entity/Repository  entity까지 완료
 - [ ] 5~7일차: Service + Controller (REST API)
 - [ ] 8~10일차: 화면(Thymeleaf) / 검증 로직
 - [ ] 11~12일차: 암기 토글, 검색, 페이징
