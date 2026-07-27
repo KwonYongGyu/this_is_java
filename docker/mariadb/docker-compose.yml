@@ -20,3 +20,6 @@ services:
 
 volumes:
   toeic_mariadb_data:
+  - toeic_mariadb_data:/var/lib/mysql
+  - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+
