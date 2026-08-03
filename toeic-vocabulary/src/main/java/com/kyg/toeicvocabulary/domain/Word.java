@@ -40,4 +40,11 @@ public class Word {
     public void toggleMemorized() {
         this.memorized = !this.memorized;
     }
+
+    public void updateWord(String vocabulary, String meaning, String exampleSentence) {
+        this.vocabulary = vocabulary;
+        this.meaning = meaning;
+        this.exampleSentence = exampleSentence;
+    }
+
 }
