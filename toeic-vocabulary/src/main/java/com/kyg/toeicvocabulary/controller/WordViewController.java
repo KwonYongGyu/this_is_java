@@ -13,7 +13,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.kyg.toeicvocabulary.domain.Word;
 import org.springframework.web.bind.annotation.PathVariable;
-
+import org.springframework.data.domain.Page;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/words")
@@ -24,8 +25,17 @@ public class WordViewController {
 
     // 목록 화면
     @GetMapping
-    public String list(Model model) {
-        model.addAttribute("words", wordService.findAll());
+    public String list(@RequestParam(defaultValue = "") String keyword,
+                       @RequestParam(defaultValue = "0") int page,
+                       Model model) {
+        int pageSize = 5; // 한 페이지당 5개씩 (원하면 조정 가능)
+        Page<Word> wordPage = wordService.search(keyword, page, pageSize);
+
+        model.addAttribute("wordPage", wordPage);
+        model.addAttribute("words", wordPage.getContent());
+        model.addAttribute("keyword", keyword);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", wordPage.getTotalPages());
         return "words/list";
     }
 
@@ -85,5 +95,15 @@ public class WordViewController {
         wordService.delete(id);
         return "redirect:/words";
     }
+
+    // 토글 처리
+    @PostMapping("/{id}/toggle")
+    public String toggle(@PathVariable Long id,
+                         @RequestParam(defaultValue = "") String keyword,
+                         @RequestParam(defaultValue = "0") int page) {
+        wordService.toggleMemorized(id);
+        return "redirect:/words?keyword=" + keyword + "&page=" + page;
+    }
+
 
 }

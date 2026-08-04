@@ -7,12 +7,18 @@
 <div class="container">
     <h1>단어 목록</h1>
 
-    <div class="top-actions">
+    <div class="card" style="margin-bottom:20px; display:flex; justify-content:space-between; align-items:center;">
+        <form th:action="@{/words}" method="get" style="display:flex; gap:8px;">
+            <input type="text" name="keyword" th:value="${keyword}" placeholder="단어 또는 뜻으로 검색"
+                   style="padding:9px 12px; border:1px solid #d7dbe0; border-radius:8px; width:240px;">
+            <button type="submit" class="btn btn-secondary">검색</button>
+            <a href="/words" class="btn btn-secondary" th:if="${!#strings.isEmpty(keyword)}">초기화</a>
+        </form>
         <a href="/words/new" class="btn btn-primary">+ 새 단어 등록</a>
     </div>
 
     <div th:if="${#lists.isEmpty(words)}" class="empty-state card">
-        아직 등록된 단어가 없습니다. 새 단어를 등록해보세요!
+        검색 결과가 없거나 등록된 단어가 없습니다.
     </div>
 
     <table th:unless="${#lists.isEmpty(words)}">
@@ -34,8 +40,14 @@
             <td th:text="${word.meaning}"></td>
             <td th:text="${word.exampleSentence}"></td>
             <td>
-                <span th:if="${word.memorized}" class="badge done">암기완료</span>
-                <span th:unless="${word.memorized}" class="badge pending">미암기</span>
+                <form th:action="@{/words/{id}/toggle(id=${word.id})}" method="post" style="display:inline;">
+                    <input type="hidden" name="keyword" th:value="${keyword}">
+                    <input type="hidden" name="page" th:value="${currentPage}">
+                    <button type="submit" class="badge done" style="border:none;cursor:pointer;"
+                            th:if="${word.memorized}">암기완료</button>
+                    <button type="submit" class="badge pending" style="border:none;cursor:pointer;"
+                            th:unless="${word.memorized}">미암기</button>
+                </form>
             </td>
             <td th:text="${#temporals.format(word.createdAt, 'yyyy-MM-dd HH:mm')}"></td>
             <td style="text-align:right; white-space:nowrap;">
@@ -48,6 +60,16 @@
         </tr>
         </tbody>
     </table>
+
+    <!-- 페이징 -->
+    <div th:if="${totalPages > 1}" style="margin-top:20px; text-align:center;">
+        <a th:each="i : ${#numbers.sequence(0, totalPages - 1)}"
+           th:href="@{/words(keyword=${keyword}, page=${i})}"
+           th:text="${i + 1}"
+           th:classappend="${i == currentPage} ? 'btn-primary' : 'btn-secondary'"
+           class="btn btn-sm"
+           style="margin:0 3px;"></a>
+    </div>
 </div>
 </body>
 </html>

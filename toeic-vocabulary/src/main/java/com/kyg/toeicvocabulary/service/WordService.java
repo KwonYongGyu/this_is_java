@@ -8,6 +8,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.kyg.toeicvocabulary.dto.WordRequest;
 import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 @Service
 @RequiredArgsConstructor
@@ -60,5 +64,21 @@ public class WordService {
                 .exampleSentence(request.getExampleSentence())
                 .build();
         return wordRepository.save(word);
+    }
+
+    public Page<Word> search(String keyword, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
+
+        if (keyword == null || keyword.isBlank()) {
+            return wordRepository.findAll(pageable);
+        }
+        return wordRepository.findByVocabularyContainingIgnoreCaseOrMeaningContainingIgnoreCase(
+                keyword, keyword, pageable);
+    }
+
+    @Transactional
+    public void toggleMemorized(Long id) {
+        Word word = findById(id); // 없으면 예외 발생
+        word.toggleMemorized(); // 3일차에 이미 만든 메서드, 더티 체킹으로 자동 반영
     }
 }
