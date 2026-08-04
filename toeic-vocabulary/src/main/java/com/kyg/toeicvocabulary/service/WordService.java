@@ -6,7 +6,7 @@ import com.kyg.toeicvocabulary.repository.WordRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
+import com.kyg.toeicvocabulary.dto.WordRequest;
 import java.util.List;
 
 @Service
@@ -51,5 +51,14 @@ public class WordService {
     public void delete(Long id) {
         Word word = findById(id); // 없으면 여기서 예외 발생
         wordRepository.delete(word);
+    }
+    @Transactional
+    public Word save(WordRequest request) {
+        Word word = Word.builder()
+                .vocabulary(request.getVocabulary())
+                .meaning(request.getMeaning())
+                .exampleSentence(request.getExampleSentence())
+                .build();
+        return wordRepository.save(word);
     }
 }

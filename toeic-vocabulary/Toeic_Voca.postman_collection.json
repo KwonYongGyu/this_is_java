@@ -1,0 +1,153 @@
+{
+  "info": {
+    "_postman_id": "7a64af5a-cc46-464e-91d5-b77a70a88a13",
+    "name": "Toeic_Voca",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "53642321",
+    "_collection_link": "https://go.postman.co/collection/53642321-7a64af5a-cc46-464e-91d5-b77a70a88a13?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "insert",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{ \"vocabulary\": \"resilient\", \"meaning\": \"회복력 있는\", \"exampleSentence\": \"She is resilient in the face of failure.\" \r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/words",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "words"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "findall",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/words",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "words"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "findbyid",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/words/8",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "words",
+            "8"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "update",
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{ \r\n    \"vocabulary\": \"resilient\", \"meaning\": \"회복력이 강한 (수정됨)\"\r\n    , \"exampleSentence\": \"Updated sentence.\" \r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/words/8",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "words",
+            "8"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "delete",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/words/8",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "words",
+            "8"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "errorcheck",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/words/999",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "words",
+            "999"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
