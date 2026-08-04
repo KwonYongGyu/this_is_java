@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head(title)">
+    <meta charset="UTF-8">
+    <title th:text="${title}">TOEIC 단어장</title>
+    <style>
+        body { font-family: sans-serif; margin: 40px; }
+        table { border-collapse: collapse; width: 100%; margin-top: 10px; }
+        th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        nav a { margin-right: 12px; }
+        .error { color: red; font-size: 0.9em; }
+        button { cursor: pointer; }
+    </style>
+</head>
+<body>
+<div th:fragment="header">
+    <nav>
+        <a href="/words">단어 목록</a>
+        <a href="/words/new">새 단어 등록</a>
+        <a th:if="${session.loginUser} != null" href="/logout">로그아웃</a>
+        <a th:if="${session.loginUser} == null" href="/login">로그인</a>
+    </nav>
+    <hr>
+</div>
+</body>
+</html>

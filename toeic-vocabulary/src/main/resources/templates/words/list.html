@@ -1,27 +1,15 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>TOEIC 단어장</title>
-    <style>
-        table { border-collapse: collapse; width: 100%; }
-        th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
-        th { background-color: #f2f2f2; }
-    </style>
-</head>
+<head th:replace="~{fragments/layout :: head('단어 목록')}"></head>
 <body>
+<div th:replace="~{fragments/layout :: header}"></div>
+
 <h1>TOEIC 단어장</h1>
-<a href="/words/new">+ 새 단어 등록</a>
 
 <table>
     <thead>
     <tr>
-        <th>ID</th>
-        <th>단어</th>
-        <th>뜻</th>
-        <th>예문</th>
-        <th>암기 여부</th>
-        <th>등록일</th>
+        <th>ID</th><th>단어</th><th>뜻</th><th>예문</th><th>암기 여부</th><th>등록일</th><th>관리</th>
     </tr>
     </thead>
     <tbody>
@@ -32,6 +20,13 @@
         <td th:text="${word.exampleSentence}"></td>
         <td th:text="${word.memorized} ? '암기완료' : '미암기'"></td>
         <td th:text="${word.createdAt}"></td>
+        <td>
+            <a th:href="@{/words/{id}/edit(id=${word.id})}">수정</a>
+            <form th:action="@{/words/{id}/delete(id=${word.id})}" method="post" style="display:inline;"
+                  onsubmit="return confirm('정말 삭제하시겠습니까?');">
+                <button type="submit">삭제</button>
+            </form>
+        </td>
     </tr>
     </tbody>
 </table>

@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-  <meta charset="UTF-8">
-  <title>단어 등록</title>
-</head>
+<head th:replace="~{fragments/layout :: head('단어 등록')}"></head>
 <body>
+<div th:replace="~{fragments/layout :: header}"></div>
+
 <h1>새 단어 등록</h1>
 
 <form th:action="@{/words}" th:object="${wordRequest}" method="post">

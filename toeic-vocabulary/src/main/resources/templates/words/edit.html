@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('단어 수정')}"></head>
+<body>
+<div th:replace="~{fragments/layout :: header}"></div>
+
+<h1>단어 수정</h1>
+
+<form th:action="@{/words/{id}/edit(id=${wordId})}" th:object="${wordRequest}" method="post">
+  <div>
+    <label>단어</label>
+    <input type="text" th:field="*{vocabulary}">
+    <span class="error" th:if="${#fields.hasErrors('vocabulary')}" th:errors="*{vocabulary}"></span>
+  </div>
+  <div>
+    <label>뜻</label>
+    <input type="text" th:field="*{meaning}">
+    <span class="error" th:if="${#fields.hasErrors('meaning')}" th:errors="*{meaning}"></span>
+  </div>
+  <div>
+    <label>예문</label>
+    <input type="text" th:field="*{exampleSentence}">
+    <span class="error" th:if="${#fields.hasErrors('exampleSentence')}" th:errors="*{exampleSentence}"></span>
+  </div>
+  <button type="submit">수정 완료</button>
+</form>
+<a href="/words">목록으로</a>
+</body>
+</html>
