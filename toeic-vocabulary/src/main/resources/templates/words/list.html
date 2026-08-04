@@ -4,31 +4,50 @@
 <body>
 <div th:replace="~{fragments/layout :: header}"></div>
 
-<h1>TOEIC 단어장</h1>
+<div class="container">
+    <h1>단어 목록</h1>
 
-<table>
-    <thead>
-    <tr>
-        <th>ID</th><th>단어</th><th>뜻</th><th>예문</th><th>암기 여부</th><th>등록일</th><th>관리</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="word : ${words}">
-        <td th:text="${word.id}"></td>
-        <td th:text="${word.vocabulary}"></td>
-        <td th:text="${word.meaning}"></td>
-        <td th:text="${word.exampleSentence}"></td>
-        <td th:text="${word.memorized} ? '암기완료' : '미암기'"></td>
-        <td th:text="${word.createdAt}"></td>
-        <td>
-            <a th:href="@{/words/{id}/edit(id=${word.id})}">수정</a>
-            <form th:action="@{/words/{id}/delete(id=${word.id})}" method="post" style="display:inline;"
-                  onsubmit="return confirm('정말 삭제하시겠습니까?');">
-                <button type="submit">삭제</button>
-            </form>
-        </td>
-    </tr>
-    </tbody>
-</table>
+    <div class="top-actions">
+        <a href="/words/new" class="btn btn-primary">+ 새 단어 등록</a>
+    </div>
+
+    <div th:if="${#lists.isEmpty(words)}" class="empty-state card">
+        아직 등록된 단어가 없습니다. 새 단어를 등록해보세요!
+    </div>
+
+    <table th:unless="${#lists.isEmpty(words)}">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>단어</th>
+            <th>뜻</th>
+            <th>예문</th>
+            <th>암기 여부</th>
+            <th>등록일</th>
+            <th style="text-align:right;">관리</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="word : ${words}">
+            <td th:text="${word.id}"></td>
+            <td th:text="${word.vocabulary}" style="font-weight:600;"></td>
+            <td th:text="${word.meaning}"></td>
+            <td th:text="${word.exampleSentence}"></td>
+            <td>
+                <span th:if="${word.memorized}" class="badge done">암기완료</span>
+                <span th:unless="${word.memorized}" class="badge pending">미암기</span>
+            </td>
+            <td th:text="${#temporals.format(word.createdAt, 'yyyy-MM-dd HH:mm')}"></td>
+            <td style="text-align:right; white-space:nowrap;">
+                <a th:href="@{/words/{id}/edit(id=${word.id})}" class="btn btn-secondary btn-sm">수정</a>
+                <form th:action="@{/words/{id}/delete(id=${word.id})}" method="post" style="display:inline;"
+                      onsubmit="return confirm('정말 삭제하시겠습니까?');">
+                    <button type="submit" class="btn btn-danger btn-sm">삭제</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 </body>
 </html>

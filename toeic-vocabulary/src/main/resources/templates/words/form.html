@@ -4,27 +4,32 @@
 <body>
 <div th:replace="~{fragments/layout :: header}"></div>
 
-<h1>새 단어 등록</h1>
+<div class="container" style="max-width:520px;">
+  <h1>새 단어 등록</h1>
 
-<form th:action="@{/words}" th:object="${wordRequest}" method="post">
-  <div>
-    <label>단어</label>
-    <input type="text" th:field="*{vocabulary}">
-    <span th:if="${#fields.hasErrors('vocabulary')}" th:errors="*{vocabulary}" style="color:red;"></span>
+  <div class="card">
+    <form th:action="@{/words}" th:object="${wordRequest}" method="post">
+      <div class="form-group">
+        <label>단어</label>
+        <input type="text" th:field="*{vocabulary}" placeholder="예: resilient">
+        <span class="error" th:if="${#fields.hasErrors('vocabulary')}" th:errors="*{vocabulary}"></span>
+      </div>
+      <div class="form-group">
+        <label>뜻</label>
+        <input type="text" th:field="*{meaning}" placeholder="예: 회복력 있는">
+        <span class="error" th:if="${#fields.hasErrors('meaning')}" th:errors="*{meaning}"></span>
+      </div>
+      <div class="form-group">
+        <label>예문</label>
+        <input type="text" th:field="*{exampleSentence}" placeholder="예문을 입력하세요">
+        <span class="error" th:if="${#fields.hasErrors('exampleSentence')}" th:errors="*{exampleSentence}"></span>
+      </div>
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary">등록</button>
+        <a href="/words" class="btn btn-secondary">취소</a>
+      </div>
+    </form>
   </div>
-  <div>
-    <label>뜻</label>
-    <input type="text" th:field="*{meaning}">
-    <span th:if="${#fields.hasErrors('meaning')}" th:errors="*{meaning}" style="color:red;"></span>
-  </div>
-  <div>
-    <label>예문</label>
-    <input type="text" th:field="*{exampleSentence}">
-    <span th:if="${#fields.hasErrors('exampleSentence')}" th:errors="*{exampleSentence}" style="color:red;"></span>
-  </div>
-  <button type="submit">등록</button>
-</form>
-
-<a href="/words">목록으로</a>
+</div>
 </body>
 </html>

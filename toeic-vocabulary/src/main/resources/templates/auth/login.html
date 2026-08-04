@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>로그인 - TOEIC 단어장</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+        font-family: 'Segoe UI', 'Apple SD Gothic Neo', Arial, sans-serif;
+        background: linear-gradient(135deg, #2f6fed, #6ea8ff);
+        height: 100vh;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .login-card {
+        background: #fff;
+        padding: 40px 36px;
+        border-radius: 14px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        width: 100%;
+        max-width: 360px;
+    }
+    .login-card h1 {
+        text-align: center;
+        font-size: 1.3rem;
+        margin-bottom: 24px;
+        color: #1c2733;
+    }
+    .form-group { margin-bottom: 16px; }
+    .form-group label {
+        display: block;
+        margin-bottom: 6px;
+        font-weight: 600;
+        font-size: 0.88rem;
+        color: #333;
+    }
+    .form-group input {
+        width: 100%;
+        padding: 10px 12px;
+        border: 1px solid #d7dbe0;
+        border-radius: 8px;
+        font-size: 0.95rem;
+    }
+    .form-group input:focus {
+        outline: none;
+        border-color: #2f6fed;
+        box-shadow: 0 0 0 3px rgba(47,111,237,0.15);
+    }
+    button {
+        width: 100%;
+        padding: 11px;
+        background-color: #2f6fed;
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        font-size: 0.95rem;
+        font-weight: 600;
+        cursor: pointer;
+        margin-top: 6px;
+    }
+    button:hover { opacity: 0.9; }
+    .alert {
+        padding: 10px 14px;
+        border-radius: 8px;
+        background-color: #fdeceb;
+        color: #d64545;
+        margin-bottom: 16px;
+        font-size: 0.85rem;
+    }
+  </style>
+</head>
+<body>
+<div class="login-card">
+  <h1>📚 TOEIC 단어장 로그인</h1>
+  <p th:if="${error}" th:text="${error}" class="alert"></p>
+  <form th:action="@{/login}" method="post">
+    <div class="form-group">
+      <label>아이디</label>
+      <input type="text" name="username" placeholder="아이디 입력">
+    </div>
+    <div class="form-group">
+      <label>비밀번호</label>
+      <input type="password" name="password" placeholder="비밀번호 입력">
+    </div>
+    <button type="submit">로그인</button>
+  </form>
+</div>
+</body>
+</html>
