@@ -14,7 +14,7 @@
         "header": [],
         "body": {
           "mode": "raw",
-          "raw": "{ \"vocabulary\": \"resilient\", \"meaning\": \"회복력 있는\", \"exampleSentence\": \"She is resilient in the face of failure.\" \r\n}",
+          "raw": "{\r\n  \"vocabulary\": \"implement\",\r\n  \"meaning\": \"시행하다, 실행하다\",\r\n  \"exampleSentence\": \"The company decided to implement a new security policy.\"\r\n}",
           "options": {
             "raw": {
               "language": "json"

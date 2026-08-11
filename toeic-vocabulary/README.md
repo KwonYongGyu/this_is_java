@@ -1,44 +1,80 @@
-MySQL 8.0의 caching_sha2_password 인증 방식 이슈 → mysql_native_password로 전환
-DBeaver MySQL 드라이버 설정 이슈 (Maven 좌표 com.mysql:mysql-connector-j 사용, Driver Class 수동 지정 필요)
-Hibernate 7.x에서 MySQL8Dialect 클래스 제거됨 → dialect 설정 제거하고 자동 인식 사용
-application.yaml 파일 위치 오류 (templates 폴더 안 → resources 바로 아래로 이동 필요)
+# 📚 TOEIC 단어장 (TOEIC Vocabulary CRUD)
 
-# TOEIC 단어장 웹앱
+14일 로드맵으로 진행한 Java/Spring Boot 기반 CRUD 웹 애플리케이션입니다.
 
-비전공자 1인 개발 CRUD 프로젝트 (14일 완성 목표)
-
-## 스택
+## 🛠 기술 스택
 - Java 21
 - Spring Boot 4.1
-- Gradle
+- Spring Data JPA / Hibernate
 - MariaDB 11.4 (Docker Compose)
 - Thymeleaf
-- Lombok
+- Gradle
+- JUnit 5, MockMvc (통합 테스트)
 
-## DB 스키마
+## ✨ 주요 기능
+- 단어 CRUD (등록/조회/수정/삭제)
+- 쿠키 기반 로그인/로그아웃 (BCrypt 암호화, HttpOnly/SameSite 쿠키)
+- 인터셉터 기반 접근 제어 (미인증 시 로그인 페이지로 리다이렉트)
+- 단어/뜻 검색 + 페이징 처리
+- 암기 여부 토글 기능
+- REST API (`/api/words`) 및 화면(Thymeleaf, `/words`) 이원 제공
+- 통합 테스트 (인증 흐름 포함 전체 시나리오 검증)
+
+## 🚀 실행 방법
+
+### 1. MariaDB 실행 (Docker)
+\`\`\`bash
+cd docker/mariadb
+docker-compose up -d
+\`\`\`
+
+### 2. DB 스키마 생성
+DBeaver 등으로 아래 SQL 실행:
 \`\`\`sql
 CREATE TABLE word_tbl (
-id INT PRIMARY KEY AUTO_INCREMENT COMMENT '단어 고유 번호',
-vocabulary VARCHAR(100) NOT NULL COMMENT '영단어',
-meaning VARCHAR(255) NOT NULL COMMENT '뜻',
-example_sentence VARCHAR(500) NOT NULL COMMENT '예문',
-is_memorized BOOLEAN NOT NULL DEFAULT FALSE COMMENT '암기 여부',
-created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '생성일시'
+id BIGINT PRIMARY KEY AUTO_INCREMENT,
+vocabulary VARCHAR(100) NOT NULL,
+meaning VARCHAR(255) NOT NULL,
+example_sentence VARCHAR(500) NOT NULL,
+is_memorized BOOLEAN NOT NULL DEFAULT FALSE,
+created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE user_tbl (
+id BIGINT PRIMARY KEY AUTO_INCREMENT,
+username VARCHAR(50) NOT NULL UNIQUE,
+password VARCHAR(255) NOT NULL,
+created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 \`\`\`
 
-## 로컬 실행
+### 3. 애플리케이션 실행
 \`\`\`bash
-cd docker/mariadb
-docker compose up -d
+./gradlew bootRun
 \`\`\`
-IntelliJ에서 `ToeicVocabularyApplication` 메인 클래스 실행 → http://localhost:8080
 
-## 진행 로그
-- [x] 1~2일차: 환경 세팅, MariaDB Docker 연결, Spring Boot 기동 확인
-- [Δ] 3~4일차: Entity/Repository  entity까지 완료
-- [ ] 5~7일차: Service + Controller (REST API)
-- [ ] 8~10일차: 화면(Thymeleaf) / 검증 로직
-- [ ] 11~12일차: 암기 토글, 검색, 페이징
-- [ ] 13일차: 통합 테스트
-- [ ] 14일차: GitHub 정리 + 배포 연습
+### 4. 접속
+브라우저에서 `http://localhost:8080/login` 접속
+- 테스트 계정: `kyg` / `test1234` (최초 실행 시 자동 생성)
+
+## 📁 프로젝트 구조
+\`\`\`
+src/main/java/com/kyg/toeicvocabulary/
+├── domain/        # Entity (Word, User)
+├── repository/    # JPA Repository
+├── service/       # 비즈니스 로직
+├── controller/    # REST API + 화면 Controller
+├── dto/           # 요청 DTO
+├── auth/           # 세션/인터셉터
+├── config/        # 보안/웹 설정
+└── exception/     # 커스텀 예외 + 전역 예외 처리
+\`\`\`
+
+## 🧪 테스트
+\`\`\`bash
+./gradlew test
+\`\`\`
+- Repository / Service / Controller(MockMvc) 레벨 테스트 포함
+
+## 📝 개발 회고
+14일 로드맵으로 진행하며 Spring Boot 4.1의 패키지 구조 변경(테스트 애노테이션 경로 이동 등)에 자주 부딪혔지만, 공식 문서 확인 습관을 들이며 하나씩 해결했습니다.
